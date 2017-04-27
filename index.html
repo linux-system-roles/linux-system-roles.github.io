@@ -13,5 +13,53 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+<p>The <b>Linux System Roles</b> are a collection of roles and modules executed by Ansible to assist Linux admins in the configuration of common GNU/Linux subsystems.  Conceptually, the intent is to serve as a consistent "API" to a give Linux distribution that is consistent across multiple major and minor releases.  This collection is available in Ansible Galaxy at <a href="https://galaxy.ansible.com/linux-system-roles/">linux-system-roles</a>.</p>
+
+<p><strong><span style="font-size: larger;">Consistent and abstract</span></strong><br>
+A major objective is that the role will provide a consistent user interface to provide settings to a given subsystem that is abstract from any particular implementation.  For example, assigning an IP Address to a network interface should be a generic concept separate from any particular implementations such as init networking scripts, NetworkManager, or systemd-networkd.</p>
+
+<p>
+<span style="font-size: larger;"><strong>Utilize the subsystems' native libraries</strong></span><br>
+Whenever possible, the modules for this effort will take advantage of the native libraries and interfaces provided by the distribution, rather than calling upon CLI commands.  Example libraries include dbus, libnm, and similar interfaces which provide robust and strictly defined inputs.
+</p>
+
+<p><span style="font-size: larger;"><strong>Currently supported distributions</strong></span><br>
+<ul>
+<li>Fedora</li>
+<li>Red Hat Enterprise Linux (RHEL 6+)</li>
+<li>RHEL 6+ derivatives such as CentOS 6+</li>
+</ul></p>
+
+<p><span style="font-size: larger;"><strong>Currently supported subsystems</strong></span><br>
+<ul>
+<li>email (postfix)</li>
+<li><a href="https://galaxy.ansible.com/linux-system-roles/kdump/">kdump (kernel crash dump)</a></li>
+<li>networking</li>
+<li>selinux</li>
+<li><a href="https://galaxy.ansible.com/linux-system-roles/timesync/">timesync</a></li>
+</ul></p>
+
+<p><span style="font-size: larger;"><strong>Subsystems in progress</strong></span><br>
+<ul>
+<li>firewall</li>
+<li><a href="https://galaxy.ansible.com/linux-system-roles/tuned/">tuned (power management)</a></li>
+</ul></p>
+
+<p><span style="font-size: larger;"><strong>Sounds great! How do I try it out?</strong></span><br>
+First, install Ansible on the system that you intend to use as your "control node".  See the <a href="https://docs.ansible.com/ansible/intro_installation.html#installation">Ansible Installation</a> docs for instructions.
+</p>
+
+<p>Next, pull these roles from Ansible Galaxy.
+<br><code><br>
+# ansible-galaxy install linux-system-api.email<br>
+# ansible-galaxy install linux-system-api.kdump<br>
+# ansible-galaxy install linux-system-api.networking<br>
+# ansible-galaxy install linux-system-api.selinux<br>
+# ansible-galaxy install linux-system-api.timesync<br>
+</code>
+</p>
+<p><span style="font-size: larger;"><strong>Contributing</strong></span><br>
+Pull requests welcome!  Each subsystem is separated into individual repositories within the <a href="https://github.com/linux-system-roles">linux-system-roles</a> GitHub project.</p>
+
   </body>
 </html>
