@@ -31,18 +31,25 @@ Whenever possible, the modules for this effort will take advantage of the native
 <li>RHEL 6+ derivatives such as CentOS 6+</li>
 </ul></p>
 
+<p><span style="font-size: larger;"><strong><a href="https://galaxy.ansible.com/linux-system-roles/">Linux System Roles collection in Galaxy</a></strong></span><br>
+
 <p><span style="font-size: larger;"><strong>Currently supported subsystems</strong></span><br>
 <ul>
-<li><a href="https://galaxy.ansible.com/linux-system-roles/postfix/">email (postfix)</li>
+<li><a href="https://galaxy.ansible.com/linux-system-roles/postfix/">email (postfix)</a></li>
 <li><a href="https://galaxy.ansible.com/linux-system-roles/kdump/">kdump (kernel crash dump)</a></li>
 <li><a href="https://galaxy.ansible.com/linux-system-roles/network/">network</a></li>
 <li><a href="https://galaxy.ansible.com/linux-system-roles/selinux/">selinux</a></li>
 <li><a href="https://galaxy.ansible.com/linux-system-roles/timesync/">timesync</a></li>
 </ul></p>
 
-<p><span style="font-size: larger;"><strong>Subsystems in progress</strong></span><br>
+<p><span style="font-size: larger;"><strong>Subsystems on the roadmap</strong></span><br>
 <ul>
+<li>Red Hat Subscription Management</li>
 <li>firewall</li>
+<li>system logging</li>
+<li>storage</li>
+<li>kerberos authentication</li>
+<li>bootloader</li>
 <li><a href="https://galaxy.ansible.com/linux-system-roles/tuned/">tuned (power management)</a></li>
 </ul></p>
 
@@ -52,11 +59,11 @@ First, install Ansible on the system that you intend to use as your "control nod
 
 <p>Next, pull these roles from Ansible Galaxy.
 <br><code><br>
-# ansible-galaxy install linux-system-roles.email<br>
-# ansible-galaxy install linux-system-roles.kdump<br>
-# ansible-galaxy install linux-system-roles.network<br>
-# ansible-galaxy install linux-system-roles.selinux<br>
-# ansible-galaxy install linux-system-roles.timesync<br>
+# ansible-galaxy install linux-system-api.email<br>
+# ansible-galaxy install linux-system-api.kdump<br>
+# ansible-galaxy install linux-system-api.networking<br>
+# ansible-galaxy install linux-system-api.selinux<br>
+# ansible-galaxy install linux-system-api.timesync<br>
 </code>
 </p>
 <p><span style="font-size: larger;"><strong>Contributing</strong></span><br>
