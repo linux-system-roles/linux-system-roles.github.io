@@ -44,12 +44,22 @@ interfaces which provide robust and strictly defined inputs.
 ## Subsystems on the roadmap
 
 - Red Hat Subscription Management
-- firewall
+- [firewall](https://galaxy.ansible.com/linux-system-roles/firewall/)
 - system logging
 - storage
 - kerberos authentication
 - bootloader
 - [tuned (power management)](https://galaxy.ansible.com/linux-system-roles/tuned/)
+
+## Contributing
+
+Each subsystem is separated into individual repositories within the
+[linux-system-roles](https://github.com/linux-system-roles) GitHub project.
+Just open a new issue against the appropriate subsystem's issue tracker to
+report bugs or request enhancements.  New subsystem requests or feedback can be
+provided to the project's landing page at
+[linux-system-roles.github.io](https://linux-system-roles.github.io) Pull
+requests welcome!
 
 ## Sounds great! How do I try it out?
 
@@ -67,8 +77,32 @@ Next, pull these roles from Ansible Galaxy.
 # ansible-galaxy install linux-system-roles.timesync<br>
 ```
 
-## Contributing
+Here is an example playbook file we have named <em>example-network.yml</em> to
+test out the network role.
 
-Pull requests welcome!  Each subsystem is separated into individual
-repositories within the [linux system roles](https://github.com/linux-system-roles)
-GitHub project.
+```yaml
+---
+- hosts: TEST.local
+  become: yes
+  become_method: sudo
+  become_user: root
+  vars:
+    network_connections:
+      - name: DBnic
+        state: up
+        type: ethernet
+        interface_name: eth1
+        autoconnect: yes
+        ip:
+          dhcp4: yes
+          auto6: no
+  roles:
+    - role: rhel-system-roles.network
+```
+
+Execute the playbook against your test machine, called TEST.local for this
+example.
+
+```
+# ansible-playbook -l TEST.local example-network.yml
+```
