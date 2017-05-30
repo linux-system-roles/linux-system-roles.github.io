@@ -1,0 +1,15 @@
+title: Linux System Roles
+email: your-email@domain.com
+description: >
+  The Linux System Roles are a collection of roles and modules executed by
+  Ansible to assist Linux admins in the configuration of common GNU/Linux
+  subsystems.
+
+# Build settings
+markdown: kramdown
+kramdown:
+  input: GFM
+theme: minima
+exclude:
+  - Gemfile
+  - Gemfile.lock
