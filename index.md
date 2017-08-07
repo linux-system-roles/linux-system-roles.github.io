@@ -70,11 +70,11 @@ docs for instructions.
 Next, pull these roles from Ansible Galaxy.
 
 ```
-# ansible-galaxy install linux-system-roles.email<br>
-# ansible-galaxy install linux-system-roles.kdump<br>
-# ansible-galaxy install linux-system-roles.network<br>
-# ansible-galaxy install linux-system-roles.selinux<br>
-# ansible-galaxy install linux-system-roles.timesync<br>
+# ansible-galaxy install linux-system-roles.email
+# ansible-galaxy install linux-system-roles.kdump
+# ansible-galaxy install linux-system-roles.network
+# ansible-galaxy install linux-system-roles.selinux
+# ansible-galaxy install linux-system-roles.timesync
 ```
 
 Here is an example playbook file we have named <em>example-network.yml</em> to
