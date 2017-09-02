@@ -1,0 +1,29 @@
+---
+# Template playbook for Linux System Roles
+# https://linux-system-roles.github.io/
+# https://galaxy.ansible.com/linux-system-roles/
+# https://github.com/linux-system-roles/
+ 
+- hosts: rhel
+  become: yes
+  become_method: sudo
+  become_user: root
+
+  vars:
+    network_connections:
+      - name: DBnic
+        state: absent
+  
+      - name: WebBond
+        state: absent
+  
+      - name: WebBond-linkA
+        state: absent
+  
+      - name: WebBond-linkB
+        state: absent
+  
+  roles:
+    - role: rhel-system-roles.network
+    #- role: linux-system-roles.network
+  

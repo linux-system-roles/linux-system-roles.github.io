@@ -1,0 +1,31 @@
+---
+# Template playbook for Linux System Roles
+# https://linux-system-roles.github.io/
+# https://galaxy.ansible.com/linux-system-roles/
+# https://github.com/linux-system-roles/
+
+- hosts: rhel
+  become: yes
+  become_method: sudo
+  become_user: root
+  vars:
+
+    # Enable SELinux.  Yes, do it, else Dan Walsh cries.
+    SELinux_type: targeted
+    SELinux_mode: enforcing
+    SELinux_change_running: 1
+
+    SELinux_booleans:
+      - { name: 'samba_enable_home_dirs', state: 'on' }
+      - { name: 'ssh_sysadm_login', state: 'on', persistent: 'yes' }
+
+#    SELinux_file_contexts:
+#      - { target: '/var/mycrash(/.*)?', setype: 'kdump_crash_t', ftype: 'd' }
+
+
+  roles:
+    - rhel-system-roles.selinux
+    #- linux-system-roles.selinux
+
+
+

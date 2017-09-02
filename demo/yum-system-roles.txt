@@ -1,0 +1,228 @@
+[root@rhel74-controlnode demo]# 
+[root@rhel74-controlnode demo]# 
+[root@rhel74-controlnode demo]# 
+[root@rhel74-controlnode demo]# 
+
+$ yum install rhel-system-roles
+Loaded plugins: product-id, search-disabled-repos, subscription-manager
+rhel-7-server-rpms                                      | 4.0 kB  00:00:00     
+rhel-7-server-extras-rpms                               | 3.8 kB  00:00:00     
+rhel-7-server-extras-rpms                                    | 3.4 kB  00:00:00     
+rhel-7-server-rpms                                           | 3.5 kB  00:00:00     
+(1/6): rhel-7-server-rpms/x86_64/updateinfo             |   76 B  00:00:00     
+(2/6): rhel-7-server-rpms/x86_64/group                  | 707 kB  00:00:00     
+(3/6): rhel-7-server-extras-rpms/x86_64/updateinfo      |   76 B  00:00:00     
+(4/6): rhel-7-server-extras-rpms/x86_64/group           |  104 B  00:00:00     
+(5/6): rhel-7-server-extras-rpms/x86_64/primary_db      | 7.8 kB  00:00:00     
+(6/6): rhel-7-server-rpms/x86_64/primary_db             | 4.9 MB  00:00:01     
+Resolving Dependencies
+--> Running transaction check
+---> Package rhel-system-roles.noarch 0:0.1-2.el7 will be installed
+--> Processing Dependency: ansible for package: rhel-system-roles-0.1-2.el7.noarch
+--> Running transaction check
+---> Package ansible.noarch 0:2.3.0.0-4.el7 will be installed
+--> Processing Dependency: PyYAML for package: ansible-2.3.0.0-4.el7.noarch
+--> Processing Dependency: python-crypto for package: ansible-2.3.0.0-4.el7.noarch
+--> Processing Dependency: python-httplib2 for package: ansible-2.3.0.0-4.el7.noarch
+--> Processing Dependency: python-jinja2 for package: ansible-2.3.0.0-4.el7.noarch
+--> Processing Dependency: python-paramiko for package: ansible-2.3.0.0-4.el7.noarch
+--> Processing Dependency: sshpass for package: ansible-2.3.0.0-4.el7.noarch
+--> Running transaction check
+---> Package PyYAML.x86_64 0:3.10-11.el7 will be installed
+--> Processing Dependency: libyaml-0.so.2()(64bit) for package: PyYAML-3.10-11.el7.x86_64
+---> Package python-httplib2.noarch 0:0.9.1-3.el7 will be installed
+---> Package python-jinja2.noarch 0:2.7.2-2.el7 will be installed
+--> Processing Dependency: python-babel >= 0.8 for package: python-jinja2-2.7.2-2.el7.noarch
+--> Processing Dependency: python-markupsafe for package: python-jinja2-2.7.2-2.el7.noarch
+---> Package python-paramiko.noarch 0:2.1.1-2.el7 will be installed
+--> Processing Dependency: python-cryptography for package: python-paramiko-2.1.1-2.el7.noarch
+---> Package python2-crypto.x86_64 0:2.6.1-15.el7 will be installed
+--> Processing Dependency: libtomcrypt.so.0()(64bit) for package: python2-crypto-2.6.1-15.el7.x86_64
+---> Package sshpass.x86_64 0:1.06-2.el7 will be installed
+--> Running transaction check
+---> Package libtomcrypt.x86_64 0:1.17-25.el7 will be installed
+--> Processing Dependency: libtommath >= 0.42.0 for package: libtomcrypt-1.17-25.el7.x86_64
+--> Processing Dependency: libtommath.so.0()(64bit) for package: libtomcrypt-1.17-25.el7.x86_64
+---> Package libyaml.x86_64 0:0.1.4-11.el7_0 will be installed
+---> Package python-babel.noarch 0:0.9.6-8.el7 will be installed
+---> Package python-markupsafe.x86_64 0:0.11-10.el7 will be installed
+---> Package python2-cryptography.x86_64 0:1.7.2-1.el7 will be installed
+--> Processing Dependency: python-cffi >= 1.4.1 for package: python2-cryptography-1.7.2-1.el7.x86_64
+--> Processing Dependency: python-idna >= 2.0 for package: python2-cryptography-1.7.2-1.el7.x86_64
+--> Processing Dependency: python-pyasn1 >= 0.1.8 for package: python2-cryptography-1.7.2-1.el7.x86_64
+--> Processing Dependency: python-enum34 for package: python2-cryptography-1.7.2-1.el7.x86_64
+--> Processing Dependency: python-ipaddress for package: python2-cryptography-1.7.2-1.el7.x86_64
+--> Running transaction check
+---> Package libtommath.x86_64 0:0.42.0-6.el7 will be installed
+---> Package python-cffi.x86_64 0:1.6.0-5.el7 will be installed
+--> Processing Dependency: python-pycparser for package: python-cffi-1.6.0-5.el7.x86_64
+---> Package python-enum34.noarch 0:1.0.4-1.el7 will be installed
+---> Package python-idna.noarch 0:2.4-1.el7 will be installed
+---> Package python-ipaddress.noarch 0:1.0.16-2.el7 will be installed
+---> Package python2-pyasn1.noarch 0:0.1.9-7.el7 will be installed
+--> Running transaction check
+---> Package python-pycparser.noarch 0:2.14-1.el7 will be installed
+--> Processing Dependency: python-ply for package: python-pycparser-2.14-1.el7.noarch
+--> Running transaction check
+---> Package python-ply.noarch 0:3.4-11.el7 will be installed
+--> Finished Dependency Resolution
+
+Dependencies Resolved
+
+=========================================================================================
+ Package               Arch       Version         Repository                         Size
+=========================================================================================
+Installing:
+ rhel-system-roles     noarch     0.1-2.el7       rhel-7-server-extras-rpms     61 k
+Installing for dependencies:
+ PyYAML                x86_64     3.10-11.el7     rhel-7-server-rpms           153 k
+ ansible               noarch     2.3.0.0-4.el7   rhel-7-server-extras-rpms    5.7 M
+ libtomcrypt           x86_64     1.17-25.el7     rhel-7-server-extras-rpms    225 k
+ libtommath            x86_64     0.42.0-6.el7    rhel-7-server-extras-rpms     36 k
+ libyaml               x86_64     0.1.4-11.el7_0  rhel-7-server-rpms            55 k
+ python-babel          noarch     0.9.6-8.el7     rhel-7-server-rpms           1.4 M
+ python-cffi           x86_64     1.6.0-5.el7     rhel-7-server-rpms           218 k
+ python-enum34         noarch     1.0.4-1.el7     rhel-7-server-rpms            52 k
+ python-httplib2       noarch     0.9.1-3.el7     rhel-7-server-extras-rpms    115 k
+ python-idna           noarch     2.4-1.el7       rhel-7-server-rpms            94 k
+ python-ipaddress      noarch     1.0.16-2.el7    rhel-7-server-rpms            34 k
+ python-jinja2         noarch     2.7.2-2.el7     rhel-7-server-rpms           516 k
+ python-markupsafe     x86_64     0.11-10.el7     rhel-7-server-rpms            25 k
+ python-paramiko       noarch     2.1.1-2.el7     rhel-7-server-extras-rpms    267 k
+ python-ply            noarch     3.4-11.el7      rhel-7-server-rpms           123 k
+ python-pycparser      noarch     2.14-1.el7      rhel-7-server-rpms           105 k
+ python2-crypto        x86_64     2.6.1-15.el7    rhel-7-server-extras-rpms    477 k
+ python2-cryptography  x86_64     1.7.2-1.el7     rhel-7-server-rpms           502 k
+ python2-pyasn1        noarch     0.1.9-7.el7     rhel-7-server-rpms           100 k
+ sshpass               x86_64     1.06-2.el7      rhel-7-server-extras-rpms     21 k
+
+Transaction Summary
+=========================================================================================
+Install  1 Package (+20 Dependent packages)
+
+Total download size: 10 M
+Installed size: 47 M
+Is this ok [y/d/N]: y
+Downloading packages:
+warning: /var/cache/yum/x86_64/7Server/rhel-7-server-rpms/packages/PyYAML-3.10-11.el7.x86_64.rpm: Header V3 RSA/SHA256 Signature, key ID fd431d51: NOKEY-:--:-- ETA 
+Public key for PyYAML-3.10-11.el7.x86_64.rpm is not installed
+(1/21): PyYAML-3.10-11.el7.x86_64.rpm                                                                                                             | 153 kB  00:00:00     
+warning: /var/cache/yum/x86_64/7Server/rhel-7-server-extras-rpms/packages/libtomcrypt-1.17-25.el7.x86_64.rpm: Header V3 RSA/SHA256 Signature, key ID f21541eb: NOKEY
+Public key for libtomcrypt-1.17-25.el7.x86_64.rpm is not installed
+(2/21): libtomcrypt-1.17-25.el7.x86_64.rpm                 | 225 kB  00:00:00     
+(3/21): ansible-2.3.0.0-4.el7.noarch.rpm                   | 5.7 MB  00:00:01     
+(4/21): libtommath-0.42.0-6.el7.x86_64.rpm                 |  36 kB  00:00:00     
+(5/21): libyaml-0.1.4-11.el7_0.x86_64.rpm                  |  55 kB  00:00:00     
+(6/21): python-babel-0.9.6-8.el7.noarch.rpm                | 1.4 MB  00:00:00     
+(7/21): python-cffi-1.6.0-5.el7.x86_64.rpm                 | 218 kB  00:00:00     
+(8/21): python-enum34-1.0.4-1.el7.noarch.rpm               |  52 kB  00:00:00     
+(9/21): python-idna-2.4-1.el7.noarch.rpm                   |  94 kB  00:00:00     
+(10/21): python-httplib2-0.9.1-3.el7.noarch.rpm            | 115 kB  00:00:00     
+(11/21): python-ipaddress-1.0.16-2.el7.noarch.rpm          |  34 kB  00:00:00     
+(12/21): python-jinja2-2.7.2-2.el7.noarch.rpm              | 516 kB  00:00:00     
+(13/21): python-markupsafe-0.11-10.el7.x86_64.rpm          |  25 kB  00:00:00     
+(14/21): python-paramiko-2.1.1-2.el7.noarch.rpm            | 267 kB  00:00:00     
+(15/21): python-ply-3.4-11.el7.noarch.rpm                  | 123 kB  00:00:00     
+(16/21): python-pycparser-2.14-1.el7.noarch.rpm            | 105 kB  00:00:00     
+(17/21): python2-crypto-2.6.1-15.el7.x86_64.rpm            | 477 kB  00:00:00     
+(18/21): python2-cryptography-1.7.2-1.el7.x86_64.rpm       | 502 kB  00:00:00     
+(19/21): python2-pyasn1-0.1.9-7.el7.noarch.rpm             | 100 kB  00:00:00     
+(20/21): sshpass-1.06-2.el7.x86_64.rpm                     |  21 kB  00:00:00     
+(21/21): rhel-system-roles-0.1-2.el7.noarch.rpm            |  61 kB  00:00:00     
+-----------------------------------------------------------------------------
+Total                                                                                                                                    2.6 MB/s |  10 MB  00:00:03     
+Retrieving key from file:///etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-
+Importing GPG key 0xF21541EB:
+ Userid     : "Red Hat, Inc. (key 2) <security@redhat.com>"
+ Fingerprint: b08b 659e e86a f623 bc90 e8db 938a 80ca f215 41eb
+ Package    : redhat-release-server-7.4-11.el7.x86_64 (@anaconda/7.4)
+ From       : /etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-
+Is this ok [y/N]: y
+Importing GPG key 0x897DA07A:
+ Userid     : "Red Hat, Inc. (Beta Test Software) <rawhide@redhat.com>"
+ Fingerprint: 17e8 543d 1d4a a5fa a96a 7e9f fd37 2689 897d a07a
+ Package    : redhat-release-server-7.4-11.el7.x86_64 (@anaconda/7.4)
+ From       : /etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-
+Is this ok [y/N]: y
+Retrieving key from file:///etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release
+Importing GPG key 0xFD431D51:
+ Userid     : "Red Hat, Inc. (release key 2) <security@redhat.com>"
+ Fingerprint: 567e 347a d004 4ade 55ba 8a5f 199e 2f91 fd43 1d51
+ Package    : redhat-release-server-7.4-11.el7.x86_64 (@anaconda/7.4)
+ From       : /etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release
+Is this ok [y/N]: y
+Importing GPG key 0x2FA658E0:
+ Userid     : "Red Hat, Inc. (auxiliary key) <security@redhat.com>"
+ Fingerprint: 43a6 e49c 4a38 f4be 9abf 2a53 4568 9c88 2fa6 58e0
+ Package    : redhat-release-server-7.4-11.el7.x86_64 (@anaconda/7.4)
+ From       : /etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release
+Is this ok [y/N]: y
+Running transaction check
+Running transaction test
+Transaction test succeeded
+Running transaction
+  Installing : python2-pyasn1-0.1.9-7.el7.noarch          1/21 
+  Installing : libtommath-0.42.0-6.el7.x86_64             2/21 
+  Installing : libtomcrypt-1.17-25.el7.x86_64             3/21 
+  Installing : python2-crypto-2.6.1-15.el7.x86_64         4/21 
+  Installing : python-babel-0.9.6-8.el7.noarch            5/21 
+  Installing : sshpass-1.06-2.el7.x86_64                  6/21 
+  Installing : python-ipaddress-1.0.16-2.el7.noarch       7/21 
+  Installing : libyaml-0.1.4-11.el7_0.x86_64              8/21 
+  Installing : PyYAML-3.10-11.el7.x86_64                  9/21 
+  Installing : python-markupsafe-0.11-10.el7.x86_64      10/21 
+  Installing : python-jinja2-2.7.2-2.el7.noarch          11/21 
+  Installing : python-enum34-1.0.4-1.el7.noarch          12/21 
+  Installing : python-ply-3.4-11.el7.noarch              13/21 
+  Installing : python-pycparser-2.14-1.el7.noarch        14/21 
+  Installing : python-cffi-1.6.0-5.el7.x86_64            15/21 
+  Installing : python-httplib2-0.9.1-3.el7.noarch        16/21 
+  Installing : python-idna-2.4-1.el7.noarch              17/21 
+  Installing : python2-cryptography-1.7.2-1.el7.x86_64   18/21 
+  Installing : python-paramiko-2.1.1-2.el7.noarch        19/21 
+  Installing : ansible-2.3.0.0-4.el7.noarch              20/21 
+  Installing : rhel-system-roles-0.1-2.el7.noarch        21/21 
+rhel-7-server-rpms/x86_64/productid                      | 2.1 kB  00:00:00     
+rhel-7-server-extras-rpms/x86_64/productid               | 2.1 kB  00:00:00     
+rhel-7-server-rpms/7Server/x86_64/productid              | 2.1 kB  00:00:00     
+  Verifying  : python-idna-2.4-1.el7.noarch                1/21 
+  Verifying  : python-httplib2-0.9.1-3.el7.noarch          2/21 
+  Verifying  : python-jinja2-2.7.2-2.el7.noarch            3/21 
+  Verifying  : python-ply-3.4-11.el7.noarch                4/21 
+  Verifying  : python-enum34-1.0.4-1.el7.noarch            5/21 
+  Verifying  : python-markupsafe-0.11-10.el7.x86_64        6/21 
+  Verifying  : libyaml-0.1.4-11.el7_0.x86_64               7/21 
+  Verifying  : python2-crypto-2.6.1-15.el7.x86_64          8/21 
+  Verifying  : libtomcrypt-1.17-25.el7.x86_64              9/21 
+  Verifying  : python-cffi-1.6.0-5.el7.x86_64             10/21 
+  Verifying  : python-ipaddress-1.0.16-2.el7.noarch       11/21 
+  Verifying  : python-paramiko-2.1.1-2.el7.noarch         12/21 
+  Verifying  : sshpass-1.06-2.el7.x86_64                  13/21 
+  Verifying  : ansible-2.3.0.0-4.el7.noarch               14/21 
+  Verifying  : python2-cryptography-1.7.2-1.el7.x86_64    15/21 
+  Verifying  : PyYAML-3.10-11.el7.x86_64                  16/21 
+  Verifying  : python-pycparser-2.14-1.el7.noarch         17/21 
+  Verifying  : python-babel-0.9.6-8.el7.noarch            18/21 
+  Verifying  : rhel-system-roles-0.1-2.el7.noarch         19/21 
+  Verifying  : libtommath-0.42.0-6.el7.x86_64             20/21 
+  Verifying  : python2-pyasn1-0.1.9-7.el7.noarch          21/21 
+
+Installed:
+  rhel-system-roles.noarch 0:0.1-2.el7                                                                                                                                   
+Dependency Installed:
+  PyYAML.x86_64 0:3.10-11.el7              ansible.noarch 0:2.3.0.0-4.el7            
+  libtomcrypt.x86_64 0:1.17-25.el7         libtommath.x86_64 0:0.42.0-6.el7      
+  libyaml.x86_64 0:0.1.4-11.el7_0          python-babel.noarch 0:0.9.6-8.el7         
+  python-cffi.x86_64 0:1.6.0-5.el7         python-enum34.noarch 0:1.0.4-1.el7    
+  python-httplib2.noarch 0:0.9.1-3.el7     python-idna.noarch 0:2.4-1.el7            
+  python-ipaddress.noarch 0:1.0.16-2.el7   python-jinja2.noarch 0:2.7.2-2.el7    
+  python-markupsafe.x86_64 0:0.11-10.el7   python-paramiko.noarch 0:2.1.1-2.el7      
+  python-ply.noarch 0:3.4-11.el7           python-pycparser.noarch 0:2.14-1.el7  
+  python2-crypto.x86_64 0:2.6.1-15.el7     python2-cryptography.x86_64 0:1.7.2-1.el7 
+  python2-pyasn1.noarch 0:0.1.9-7.el7      sshpass.x86_64 0:1.06-2.el7           
+
+Complete!
+
+$ cat /etc/redhat-release 
+Red Hat Enterprise Linux Server release 7.4 Beta (Maipo)
+

@@ -1,0 +1,37 @@
+---
+# Template playbook for Linux System Roles
+# https://linux-system-roles.github.io/
+# https://galaxy.ansible.com/linux-system-roles/
+# https://github.com/linux-system-roles/
+
+- hosts: rhel
+  become: yes
+  become_method: sudo
+  become_user: root
+  vars:
+
+    ntp_servers:
+  
+      - hostname: 0.rhel.pool.ntp.org
+#      - hostname: {{ ntp1 }} 
+        iburst: true
+
+      - hostname: 1.rhel.pool.ntp.org
+        iburst: true
+
+      - hostname: foo.example.org
+        pool: true
+        minpoll: 6
+        maxpoll: 10
+        iburst: no
+
+      - hostname: bar.example.org
+        pool: false
+        minpoll: 4
+        maxpoll: 6
+        iburst: true
+
+  roles:
+    - rhel-system-roles.timesync
+    #- linux-system-roles.timesync
+

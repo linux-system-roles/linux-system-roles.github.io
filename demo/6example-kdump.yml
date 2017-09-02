@@ -1,0 +1,31 @@
+---
+# Template playbook for Linux System Roles
+# https://linux-system-roles.github.io/
+# https://galaxy.ansible.com/linux-system-roles/
+# https://github.com/linux-system-roles/
+
+- hosts: rhel
+  become: yes
+  become_method: sudo
+  become_user: root
+
+  pre_tasks:
+  - name: Creates custom kdump crash directory
+    file:
+      path: "/var/mycrash"
+      owner: root
+      group: root
+      mode: 0755
+      state: directory
+
+  roles:
+
+    - role: rhel-system-roles.selinux
+      SELinux_file_contexts:
+        - { target: '/var/mycrash(/.*)?', setype: 'kdump_crash_t', ftype: 'd' }
+
+    - role: rhel-system-roles.kdump
+      core_collector: "makedumpfile -l --message-level 2 -d 30"
+      path: "/var/mycrash"
+      system_action: reboot  # reboot | halt | poweroff | shell
+
