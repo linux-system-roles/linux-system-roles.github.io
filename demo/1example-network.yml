@@ -1,0 +1,56 @@
+---
+# Template playbook for Linux System Roles
+# https://linux-system-roles.github.io/
+# https://galaxy.ansible.com/linux-system-roles/
+# https://github.com/linux-system-roles/
+
+- hosts: rhel
+  become: yes
+  become_method: sudo
+  become_user: root
+  vars:
+    network_connections:
+      - name: DBnic
+        state: up
+        type: ethernet
+        interface_name: eth1
+        #mac: "52:54:00:e1:c2:4c"
+        autoconnect: yes
+        ip:
+          auto6: no
+          route_metric6: -1
+          gateway6: 2001:db8::1
+
+          address: 
+            - 192.168.99.99/24
+            - 2001:db8::80/7
+
+      - name: WebBond
+        state: up
+        type: bond
+        interface_name: WebBond
+        autoconnect: yes
+        ip:
+          dhcp4: yes
+          auto6: no
+
+      - name: WebBond-linkA
+        state: up
+        type: ethernet
+        interface_name: ens10
+        #mac: "52:54:00:ae:83:49"
+        master: WebBond
+        slave_type: bond
+
+      - name: WebBond-linkB
+        state: up
+        type: ethernet
+        interface_name: ens11
+        #mac: "52:54:00:95:c2:a2"
+        master: WebBond
+        slave_type: bond
+        
+  roles:
+    - role: rhel-system-roles.network
+   #- role: linux-system-roles.network
+

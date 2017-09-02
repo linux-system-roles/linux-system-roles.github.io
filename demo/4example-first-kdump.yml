@@ -1,0 +1,19 @@
+---
+# Template playbook for Linux System Roles
+# https://linux-system-roles.github.io/
+# https://galaxy.ansible.com/linux-system-roles/
+# https://github.com/linux-system-roles/
+
+- hosts: rhel
+  become: yes
+  become_method: sudo
+  become_user: root
+
+  roles:
+
+    - role: rhel-system-roles.kdump
+    #- role: linux-system-roles.kdump
+      core_collector: "makedumpfile -l --message-level 3 -d 30"
+      path: "/var/crash"
+      system_action: reboot  # reboot | halt | poweroff | shell
+

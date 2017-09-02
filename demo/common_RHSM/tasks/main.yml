@@ -1,0 +1,43 @@
+# Put this in /etc/ansible/roles
+#
+# See documentation for this core module as well as subscription-manager for further usage details.
+# http://docs.ansible.com/ansible/redhat_subscription_module.html
+#
+# All usernames and passwords should be stored in ansible-vault encrypted files - NOT in clear text.
+
+# name: Register system with Subscription Manager
+# see `ansible-doc redhat_subscription` for more options using this module
+
+- redhat_subscription: 
+    state: present
+    username: "{{ redhat_portal_username }}"
+    password: "{{ redhat_portal_password }}"
+    autosubscribe: false
+    #activationkey=1-222333444
+    #pool: '^Employee SKU$'   # Do Not do this, attaches multiple, over consuming
+    #pool: "{{ POOL_ID }}"    # Not yet supported in EPEL version 2.2.0.0-4
+  when: ansible_distribution == 'RedHat'
+
+- name: attach a valid subscription
+  command: subscription-manager attach --pool={{ POOL_ID }}
+  when: ansible_distribution == 'RedHat'
+
+# Verify with these commands
+#  subscription-manager status
+#  subscription-manager list
+#  subscription-manager list --consumed --pool-only
+#  subscription-manager list --consumed
+
+- name: Disable all to limit channels consumed
+  command: subscription-manager repos --disable=\*
+
+- name: Enabled desired channels
+  command: subscription-manager repos --enable={{ item }}
+  with_items: "{{ rhel7_channels }}"
+  when: ansible_distribution_major_version == '7'
+
+- name: Enabled desired channels
+  command: subscription-manager repos --enable={{ item }}
+  with_items: "{{ rhel6_channels }}"
+  when: ansible_distribution_major_version == '6'
+
