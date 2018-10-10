@@ -10,28 +10,27 @@
   become_user: root
   vars:
 
-    ntp_servers:
-  
+    timesync_ntp_servers:
+
       - hostname: 0.rhel.pool.ntp.org
-#      - hostname: {{ ntp1 }} 
-        iburst: true
+        # - hostname: {{ ntp1 }}
+        iburst: yes
 
       - hostname: 1.rhel.pool.ntp.org
-        iburst: true
+        iburst: yes
 
       - hostname: foo.example.org
-        pool: true
+        pool: yes
         minpoll: 6
         maxpoll: 10
         iburst: no
 
       - hostname: bar.example.org
-        pool: false
+        pool: no
         minpoll: 4
         maxpoll: 6
-        iburst: true
+        iburst: yes
 
   roles:
     - rhel-system-roles.timesync
-    #- linux-system-roles.timesync
-
+    # - linux-system-roles.timesync
