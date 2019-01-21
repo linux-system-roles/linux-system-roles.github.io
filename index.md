@@ -97,7 +97,7 @@ test out the network role.
           dhcp4: yes
           auto6: no
   roles:
-    - role: rhel-system-roles.network
+    - role: linux-system-roles.network
 ```
 
 Execute the playbook against your test machine, called TEST.local for this
