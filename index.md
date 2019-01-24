@@ -46,7 +46,7 @@ interfaces which provide robust and strictly defined inputs.
 - Red Hat Subscription Management
 - [firewall](https://galaxy.ansible.com/linux-system-roles/firewall/)
 - system logging
-- storage
+- [storage](https://galaxy.ansible.com/linux-system-roles/storage/)
 - kerberos authentication
 - bootloader
 - [tuned (power management)](https://galaxy.ansible.com/linux-system-roles/tuned/)
@@ -70,7 +70,7 @@ docs for instructions.
 Next, pull these roles from Ansible Galaxy.
 
 ```
-# ansible-galaxy install linux-system-roles.email
+# ansible-galaxy install linux-system-roles.postfix
 # ansible-galaxy install linux-system-roles.kdump
 # ansible-galaxy install linux-system-roles.network
 # ansible-galaxy install linux-system-roles.selinux
