@@ -1,0 +1,53 @@
+- hosts: fedora
+  remote_user: root
+  vars:
+  tasks:
+
+    - name: remove the image builder packages
+      package:
+        name: "lorax-composer, composer-cli, cockpit-composer"
+        state: absent
+
+    - name: Unmount the image builder disk
+      mount:
+        path: /var/lib/lorax/composer
+        state: unmounted
+
+    - name: clean out old files on image builder disk
+      file:
+        path: /var/lib/lorax/composer
+        #state: directory
+        #recurse: yes
+        state: absent
+        
+    - name: Unmount the image builder disk
+      mount:
+        path: /var/lib/lorax/composer
+        state: absent
+
+    - name: Delete all network except main System Interface (eth0)
+      include_role:
+        name: rhel-system-roles.network
+      ignore_errors: yes
+      vars:
+        network_connections:
+          - name: ib_bond_1
+            mac: "52:54:00:b5:3c:4e"
+            #interface_name: enp8s0
+            type: ethernet
+            state: down
+            persistent_state: absent
+    
+          - name: ib_bond_2
+            mac: "52:54:00:a5:df:15"
+            #interface_name: enp9s0
+            type: ethernet
+            state: down
+            persistent_state: absent
+
+          - name: IB_Bond
+            interface_name: "ib_bond"
+            type: bond
+            state: down
+            persistent_state: absent
+

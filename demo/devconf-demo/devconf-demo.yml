@@ -1,0 +1,142 @@
+---
+- hosts: fedora
+  remote_user: root
+
+# This demo playbook assumes:
+#   - Ansible and rhel/linux-system-roles installed on control node
+#   - additional roles installed from galaxy as shown below
+#   - your "managed node" is a RHEL 8 or Fedora virtual machine with
+#       - 3 nics, mgmt nic and 2 nics that can be configured
+#       - extra virtual disk attached as [vdb] 10-20GB for application data
+#
+# On Fedora
+#   yum install linux-system-roles ansible
+#
+# On RHEL/CentOS
+#   yum install --enablerepo=rhel-7-server-ansible-2-rpms rhel-system-roles ansible
+#
+# Assumes roles from Galaxy not yet in RPM packages
+#   ansible-galaxy install linux-system-roles.storage
+#   ansible-galaxy install linux-system-roles.firewall
+#   ansible-galaxy install linux-system-roles.cockpit
+#   ansible-galaxy install linux-system-roles.image_builder
+#
+# References to learn more
+#    https://access.redhat.com/articles/3050101
+#    https://linux-system-roles.github.io/
+#    https://galaxy.ansible.com/linux-system-roles/
+#    https://github.com/linux-system-roles/
+#
+
+  vars:
+    USE_FIREWALL: 1
+    CONFIG_STORAGE: 1
+    APP_NIC1: "52:54:00:b5:3c:4e"
+    APP_NIC2: "52:54:00:a5:df:15"
+    timesync_ntp_servers:
+      - hostname: 0.rhel.pool.ntp.org
+        iburst: yes
+        pool: yes
+      - hostname: 1.rhel.pool.ntp.org
+        iburst: yes
+        pool: yes
+      - hostname: 2.fedora.pool.ntp.org
+        iburst: yes
+        pool: yes
+
+  roles:
+    - rhel-system-roles.timesync
+
+# The above use of roles are called immediately on playbook
+# execution using the top level vars section.  There is no
+# guarantee what order they are completed.
+#
+# Below, we will continue calling additional roles 
+# sequentially as tasks. This allows us to control the 
+# order of execution and not preceed if a prior role/task
+# failed.
+
+  tasks:
+
+    - name: Install Cockpit Web Console
+      include_role:
+        name: linux-system-roles.cockpit
+
+    - name: Configure Firewall for Cockpit
+      include_role:
+        name: linux-system-roles.firewall
+      vars:
+        firewall:
+          service: cockpit
+          state: enabled
+      when: USE_FIREWALL
+
+
+    - name: Configure Image Builder Storage
+      include_role:
+        name: linux-system-roles.storage
+      vars:
+        use_partitions: false
+        storage_pools:
+          - name: image_builder
+            disks: ['vdb']
+            # type: lvm
+            state: present
+            volumes:
+              - name: composer
+                size: "19.5G"
+                # type: lvm
+                # fs_type: xfs
+                fs_label: "imgbldr"
+                mount_point: '/var/lib/lorax/composer'
+      when: CONFIG_STORAGE
+
+    - name: Install Image Builder with GUI
+      include_role:
+        name: linux-system-roles.image_builder
+      vars:
+        ib_with_gui: true
+
+
+
+# 
+# Additional examples configuring bonded networking,
+# time sync, and kdump with custom directory and selinux labels.
+#
+
+    - name: Configure Bonded Interface for Image Builder App
+      include_role:
+        name: rhel-system-roles.network
+      vars:
+        network_connections:
+          - name: IB_Bond            # can be any name you like
+            state: up
+            type: bond
+            interface_name: ib_bond  # can be any name you like
+            autoconnect: yes         # ONBOOT
+            ip:                     
+              dhcp4: yes             # ipv4 auto DHCP
+              auto6: no              # ipv6 no auto
+              #auto6: no             # optional manual settings for ipv4 & ipv6
+              #route_metric6: -1
+              #gateway6: 2001:db8::1
+              #address:
+              #  - 192.168.99.99/24  # specify ipv4 address
+              #  - 2001:db8::80/7    # specify ipv6 addres
+              
+          - name: ib_bond_1
+            state: up
+            type: ethernet
+            #interface_name: enp8s0
+            mac: "{{ APP_NIC1 }}"
+            master: IB_Bond
+            slave_type: bond
+
+          - name: ib_bond_2
+            state: up
+            type: ethernet
+            #interface_name: enp9s0
+            mac: "{{ APP_NIC2 }}"
+            master: IB_Bond
+            slave_type: bond
+
