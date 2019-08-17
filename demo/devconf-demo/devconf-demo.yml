@@ -1,6 +1,7 @@
 ---
 - hosts: fedora
   remote_user: root
+# https://github.com/linux-system-roles/linux-system-roles.github.io/tree/master/demo/devconf-demo
 
 # This demo playbook assumes:
 #   - Ansible and rhel/linux-system-roles installed on control node
