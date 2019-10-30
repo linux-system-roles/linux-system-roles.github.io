@@ -204,7 +204,7 @@ GEM
       jekyll (~> 3.5)
       jekyll-feed (~> 0.9)
       jekyll-seo-tag (~> 2.1)
-    minitest (5.12.2)
+    minitest (5.13.0)
     multipart-post (2.1.1)
     nokogiri (1.10.4)
       mini_portile2 (~> 2.4.0)
@@ -246,7 +246,6 @@ DEPENDENCIES
   github-pages
   jekyll-feed (~> 0.6)
   minima (~> 2.0)
-  nokogiri (>= 1.10.4)
   tzinfo-data
 
 RUBY VERSION
