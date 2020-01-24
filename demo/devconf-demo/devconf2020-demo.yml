@@ -1,0 +1,154 @@
+---
+- hosts: all
+# https://github.com/linux-system-roles/linux-system-roles.github.io/tree/master/demo/devconf-demo
+
+# This demo playbook assumes:
+#   - Ansible and rhel/linux-system-roles installed on control node
+#   - additional roles installed from galaxy as shown below
+#   - your "managed node" is a RHEL 8 or Fedora virtual machine with
+#       - 2 nics, mgmt nic and 1 nic that can be configured
+#   - the extra nic of the managed node is connected to a bridge on
+#     the host
+#       - the bridge has the IP address 172.24.12.42/24
+#       - and a VLAN with tag 80 and IP address 172.19.80.42/24
+#   - the host runs an iSCSI target listening on 172.19.80.42
+#       - allows connection from
+#         iqn.1994-05.com.redhat:centos8-storagetest in ACL
+#       - LU having at least 1 GB
+#
+# On Fedora
+#   yum install linux-system-roles ansible
+#
+# On RHEL/CentOS
+#   yum install --enablerepo=rhel-7-server-ansible-2-rpms rhel-system-roles ansible
+#
+# Assumes roles from Galaxy not yet in RPM packages
+#   ansible-galaxy install linux-system-roles.storage
+#   ansible-galaxy install linux-system-roles.firewall
+#   ansible-galaxy install oasis_roles.nfs_server
+#
+# References to learn more
+#    https://access.redhat.com/articles/3050101
+#    https://linux-system-roles.github.io/
+#    https://galaxy.ansible.com/linux-system-roles/
+#    https://github.com/linux-system-roles/
+#
+
+  vars:
+    iscsi_initiator_name: "iqn.1994-05.com.redhat:centos8-storagetest"
+    iscsi_portal: "172.19.80.42"
+    nfs_client: "172.24.12.42"
+    users_dir: /export/users
+    shared_dir: /export/shared
+
+  tasks:
+    - name: net role
+      include_role:
+        name: linux-system-roles.network
+      vars:
+        network_connections:
+          - name: eth1
+            state: up
+            type: ethernet
+            #interface_name: eth1
+            #mac: 52:54:00:cc:bf:61
+            autoconnect: yes
+            mtu: 9000
+            ip:
+              address:
+                - "172.24.12.34/24"
+          - name: vlan80
+            type: vlan
+            parent: eth1
+            vlan_id: 80
+            ip:
+              address:
+                - "172.19.80.34/24"
+
+    - name: install packages
+      package:
+        name:
+          - iscsi-initiator-utils
+          - sg3_utils
+
+    - name: Setup iSCSI Initiator name
+      lineinfile:
+        dest: '/etc/iscsi/initiatorname.iscsi'
+        regexp: '^InitiatorName='
+        line: "InitiatorName={{ iscsi_initiator_name }}"
+
+    - name: Start and enable iscsid service
+      service:
+        name: 'iscsid'
+        enabled: true
+        state: 'restarted'
+
+    - name: Connect to the named target, after updating the local persistent database (cache)
+      open_iscsi:
+        login: yes
+        portal: '{{ iscsi_portal }}'
+        show_nodes: yes
+        discover: yes
+      register: iscsiout
+
+    - name: include storage role
+      include_role:
+        name: linux-system-roles.storage
+      vars:
+        storage_pools:
+          - name: exportvg
+            disks: '{{ iscsiout.devicenodes }}'              
+            volumes:
+              - name: shared
+                size: "200M"
+                mount_point: '{{ shared_dir }}'
+                #fs_type: xfs
+                state: present
+              - name: users
+                size: "400M"
+                fs_type: ext4
+                mount_point: '{{ users_dir }}'
+
+    - name: make the users directory readable
+      file:
+        path: '{{ users_dir }}'
+        state: directory
+        mode: g+rx,o+rx
+
+    - name: make the shared directory readable
+      file:
+        path: '{{ shared_dir }}'
+        state: directory
+        mode: g+rx,o+rx
+
+    - name: create a file in the shared directory
+      file:
+        path: '{{ shared_dir }}/testfile'
+        state: touch
+        mode: g+r,o+r
+
+    - name: export NFS directories
+      include_role:
+        name: oasis_roles.nfs_server
+      vars:
+        nfs_server_shares:
+          - share_path: '{{ shared_dir }}'
+            host_allow: '{{ nfs_client }}'
+            opts: ro,sync
+            create_dir: false
+          - share_path: '{{ users_dir }}'
+            host_allow: '{{ nfs_client }}'
+            opts: rw,sync
+            create_dir: false
+        nfs_server_services:
+          - rpcbind
+          - nfs-mountd
+          - nfs-server
+
+    - name: Allow NFS on firewall
+      include_role:
+        name: linux-system-roles.firewall
+      vars:
+        firewall:
+          - service: 'nfs'
+            state: 'enabled'
