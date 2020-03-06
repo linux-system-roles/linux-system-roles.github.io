@@ -61,6 +61,10 @@ provided to the project's landing page at
 [linux-system-roles.github.io](https://linux-system-roles.github.io) Pull
 requests welcome!
 
+For discussions and questions, please use our [mailing
+list](https://lists.fedorahosted.org/admin/lists/systemroles.lists.fedorahosted.org/)
+([archives](https://lists.fedorahosted.org/archives/list/systemroles@lists.fedorahosted.org/)].
+
 ## Sounds great! How do I try it out?
 
 First, install Ansible on the system that you intend to use as your "control
