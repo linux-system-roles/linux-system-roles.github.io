@@ -63,7 +63,7 @@ requests welcome!
 
 For discussions and questions, please use our [mailing
 list](https://lists.fedorahosted.org/admin/lists/systemroles.lists.fedorahosted.org/)
-([archives](https://lists.fedorahosted.org/archives/list/systemroles@lists.fedorahosted.org/)].
+([archives](https://lists.fedorahosted.org/archives/list/systemroles@lists.fedorahosted.org/)).
 
 ## Sounds great! How do I try it out?
 
