@@ -64,7 +64,7 @@ requests welcome!
 For discussions and questions, please use our [mailing
 list](https://lists.fedorahosted.org/admin/lists/systemroles.lists.fedorahosted.org/)
 ([archives](https://lists.fedorahosted.org/archives/list/systemroles@lists.fedorahosted.org/)) or 
-join our IRC Channel `#systemroles` on [freenode](https://freenode.net/kb/answer/chat).
+join our IRC channel `#systemroles` on [freenode](https://freenode.net/kb/answer/chat).
 
 ## Sounds great! How do I try it out?
 
