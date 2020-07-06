@@ -1,4 +1,7 @@
-# Incremental Settings for Ansible Values
+---
+layout: page
+title: "Incremental Settings for Ansible Values"
+---
 
 Many existing Ansible modules allow for *incrementally* changing the state of
 the system or of the underlying managed object.  For example, when you use the

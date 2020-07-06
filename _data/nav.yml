@@ -25,6 +25,9 @@
   - title: "HowTo"
     path: "howto/"
 
+  - title: "Incremental Settings for Ansible Values"
+    path: "incremental_settings.html"
+
   - title: "External Resources"
     path: "external.html"
 
