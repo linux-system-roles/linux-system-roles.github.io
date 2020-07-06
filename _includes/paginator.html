@@ -1,0 +1,54 @@
+<!-- Paginator -->
+{% if paginator.total_pages > 1 %}
+<ul class="pagination {{include.position}}">
+  {% assign total_minus_4 = paginator.total_pages | minus: 4 %}
+  {% assign total_minus_6 = paginator.total_pages | minus: 6 %}
+  {% if paginator.total_pages > 9 %}
+    {% if paginator.page < 6 %}
+      {% assign min_page = 1 %}
+      {% assign max_page = 7 %}
+    {% elsif paginator.page >= total_minus_4 %}
+      {% assign min_page = total_minus_6 %}
+      {% assign max_page = paginator.total_pages %}
+    {% else %}
+      {% assign min_page = paginator.page | minus: 2 %}
+      {% assign max_page = paginator.page | plus: 2 %}
+    {% endif %}
+  {% else %}
+     {% assign min_page = 1 %}
+     {% assign max_page = paginator.total_pages %}
+  {% endif %}
+
+  {% if paginator.previous_page %}
+  <li class="normal"><a href="{{ paginator.previous_page_path | prepend: site.baseurl | replace: '//', '/' }}">&lt;</a></li>
+  {% else %}
+  <li class="disabled">&lt;</li>
+  {% endif %}
+
+  {% if min_page > 1 %}
+  <li class="normal"><a href="{{ site.paginate_path | prepend: site.baseurl | replace: '/page/', '/' | replace: ':num/', '' }}">1</a></li>
+  <li class="disabled">&hellip;</li>
+  {% endif %}
+
+  {% for page in (min_page..max_page) %}
+    {% if page == paginator.page %}
+    <li class="active"><a href="">{{ page }}</a></li>
+    {% elsif page == 1 %}
+    <li class="normal"><a href="{{ site.paginate_path | prepend: site.baseurl | replace: '/page/', '/' | replace: ':num/', '' }}">{{ page }}</a></li>
+    {% else %}
+    <li class="normal"><a href="{{ site.paginate_path | prepend: site.baseurl | replace: '//', '/' | replace: ':num', page }}">{{ page }}</a></li>
+    {% endif %}
+  {% endfor %}
+
+  {% if max_page < paginator.total_pages %}
+  <li class="disabled">...</li>
+  <li class="normal"><a href="{{ site.paginate_path | prepend: site.baseurl | replace: ':num', paginator.total_pages }}">{{ paginator.total_pages }}</a></li>
+  {% endif %}
+
+  {% if paginator.next_page %}
+  <li class="normal"><a href="{{ paginator.next_page_path | prepend: site.baseurl | replace: '//', '/' }}">&gt;</a></li>
+  {% else %}
+  <li class="disabled">&gt;</li>
+  {% endif %}
+</ul>
+{% endif %}

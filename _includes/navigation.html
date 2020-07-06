@@ -1,0 +1,20 @@
+<nav class="navbar-block">
+  <nav class="row navbar">
+    <div id="nav">
+      <ul class="columns medium-12 left primary-nav">
+	<li id="toggleMenu"><a href="#nav">Menu</a></li>
+	<li id="hideMenu"><a href="#toggleMenu">Menu</a></li>
+        {% for _node in site.data.nav %}{% assign level = 1 %}{% include nav.html level=level path="/" node=_node %}{% endfor %}
+	{% for socials in site.data.socials %}
+	<li class="right">
+          {% if socials.icon %}
+	  <a href="{{ socials.href }}"><img src="{{ socials.icon }}"></a>
+          {% else %}
+	  <a href="{{ socials.href }}"><span class="icon-{{ socials.title }} socials"></span></a>
+          {% endif %}
+	</li>
+        {% endfor %}
+      </ul>
+    </div>
+  </nav>
+</nav>

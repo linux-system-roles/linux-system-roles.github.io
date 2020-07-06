@@ -1,0 +1,9 @@
+---
+layout: page
+title: "All Releases"
+section: Download
+---
+
+{% for post in site.categories["release"] %}
+  <a href="{{ site.baseurl }}{{ post.url }}">{% if site.titlecase %}{{ post.title | titlecase }}{% else %}{{ post.title }}{% endif %}</a><br>
+{% endfor %}

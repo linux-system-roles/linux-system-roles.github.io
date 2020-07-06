@@ -1,0 +1,26 @@
+{%
+  if include.path == null %}{%
+    assign subnav_title = "/" | split: "/" %}{%
+    assign subnav_url = "/" | split: "/" %}{%
+    for _node in site.data.nav %}{%
+      include subnav.html path="/" %}{%
+    endfor %}{%
+    assign subnav_title_size = subnav_title | size %}{%
+  else %}{%
+    if _node.href %}{%
+      assign node_url = _node.href %}{%
+    else %}{%
+      assign node_url = include.path | append: _node.path | remove: page.path %}{%
+    endif %}{%
+    if node_url != "/" and page.url contains node_url and node_url != page.url %}{%
+      assign subnav_title = subnav_title | push: _node.title %}{%
+      assign _url = site.baseurl | append: node_url %}{%
+      assign subnav_url = subnav_url | push: _url %}{%
+      if _node.subitems != null %}{%
+        assign _path = include.path | append: _node.path %}{%
+        for _node in _node.subitems %}{%
+          include subnav.html path=_path %}{%
+        endfor %}{%
+      endif %}{%
+    endif %}{%
+  endif %}

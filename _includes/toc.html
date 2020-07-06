@@ -1,0 +1,30 @@
+{% if include.node.href contains "http://" %}{%
+     assign url = include.node.href %}{%
+   else %}{%
+     assign url = site.baseurl | append: include.path | append: include.node.path %}{%
+   endif %}{%
+   assign page_name = page.name | remove: ".html" %}{%
+   assign base_path = include.base_path | remove: page_name %}{%
+   if include.path contains base_path %}
+<li>
+  <a href='{{url}}'>{{include.node.title}}</a>
+{%   if include.node.subitems != null %}
+  <ol>
+{%
+       for _node in include.node.subitems %}{%
+         assign _level = include.level | plus: 1 %}{%
+         assign _path = include.path | append: include.node.path %}{%
+         include toc.html level=_level path=_path base_path=base_path node=_node %}{%
+       endfor %}
+  </ol>
+{%   endif %}
+</li>
+{% else %}{%
+     if include.node.subitems != null %}{%
+       for _node in include.node.subitems %}{%
+         assign _level = include.level | plus: 1 %}{%
+         assign _path = include.path | append: include.node.path %}{%
+         include toc.html level=_level path=_path base_path=base_path node=_node %}{%
+       endfor %}{%
+     endif %}{%
+   endif %}

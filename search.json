@@ -1,0 +1,22 @@
+---
+layout: compress
+---
+
+[{% for post in site.posts %}{%
+    assign content = post.content | markdownify | newline_to_br | replace: '<br />', ' ' | replace: '	', ' ' | strip_html | strip | xml_escape | strip_newlines %}
+    {
+        "title"    : "{{ post.title | escape }}",
+        "category" : "{{ post.category }}",
+        "tags"     : "{{ post.tags | join: ', ' }}",
+        "url"      : "{{ site.baseurl }}{{ post.url }}",
+        "section"  : "{{ post.section }}",
+        "content"  : "{{ content }}"
+    }{% unless forloop.last %},{% endunless %}{%
+  else %}
+    {}
+  {% endfor %}{%
+  for _node in site.data.nav %}{%
+    assign level = 1 %}{%
+    include search-nav.html level=level path="/" base_path="/" name="" node=_node %}{%
+  endfor %}
+]

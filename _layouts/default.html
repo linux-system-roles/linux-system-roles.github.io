@@ -1,17 +1,20 @@
 <!DOCTYPE html>
-<html lang="{{ page.lang | default: site.lang | default: "en" }}">
-
+<html>
+  {% include subnav.html %}
   {% include head.html %}
-
   <body>
-
-    {% include header.html %}
-
-    <main class="page-content" aria-label="Content">
-      <div class="wrapper">
-        {{ content }}
+    <main class="wrap">
+      {% include header.html %}
+      {% include navigation.html %}
+      <div class="row page-navigation">
+      <ul class="breadcrumb">
+        {% if subnav_title_size > 0 %}
+          {% for title in subnav_title %}{% assign idx = forloop.index | minus: 1 %}<li><a href="{{ subnav_url[idx] }}">{{title}}</a></li>{% endfor %}
+      {% endif %}
+      </ul>
       </div>
+      {{ content }}
     </main>
+    {% include footer.html %}
   </body>
-
 </html>

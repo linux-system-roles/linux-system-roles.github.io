@@ -1,0 +1,34 @@
+{% if include.node.href contains "http://" %}{%
+     assign url = include.node.href %}{%
+   else %}{%
+     assign url = include.path | append: include.node.path %}{%
+   endif %}{%
+   assign page_name = page.name | remove: ".html" %}{%
+   assign base_path = include.base_path | remove: page_name %}{%
+   if include.path contains base_path %}{%
+   assign content = "" %}{%
+   for page in site.pages %}{%
+     assign page_path = "/" | append: page.path | replace: ".md",".html" | replace: "index.html","" %}{%
+     if page_path == url %}{%
+       assign content = page.content | markdownify | newline_to_br | replace: '<br />', ' ' | replace: '	', ' ' | strip_html | strip | xml_escape | strip_newlines %}
+    ,
+    {
+        "title"    : "{{ include.node.title | escape }}",
+        "category" : "{{ include.node.category }}",
+        "tags"     : "{{ include.node.tags | join: ', ' }}",
+        "url"      : "{{ site.baseurl | append: url }}",
+        "section"  : "{{ include.name | remove_first: "> " }}",
+        "content"  : "{{ content }}"
+    }
+       {% break %}{%
+     endif %}{%
+   endfor %}
+{% endif %}{%
+   if include.node.subitems != null %}{%
+     for _node in include.node.subitems %}{%
+       assign _level = include.level | plus: 1 %}{%
+       assign _path = include.path | append: include.node.path %}{%
+       assign _name = include.name | append: "> " | append: include.node.title %}{%
+       include search-nav.html level=_level path=_path base_path=base_path name=_name node=_node %}{%
+     endfor %}{%
+   endif %}

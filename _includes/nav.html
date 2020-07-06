@@ -1,0 +1,47 @@
+{%
+  if include.node.href contains "http://" %}{%
+    assign url = include.node.href %}{%
+  else %}{%
+    assign url = site.baseurl | append: include.path | append: include.node.path %}{%
+  endif %}{%
+  assign dropdown = "" %}{%
+  if include.node.subitems != null %}{%
+    if include.level > 1 %}{%
+      assign dropdown = "subdropdown " %}{%
+    else %}{%
+      assign dropdown = "dropdown " %}{%
+    endif %}{%
+  endif %}{%
+  assign page_url = page.url | remove: ".html" %}{%
+  assign node_url = include.path | append: include.node.path | remove: ".html" %}{%
+  assign page_url_size = page.url | split: "/" | size %}{%
+  assign node_url_size = include.path | append: include.node.path | split: "/" | size %}{%
+  if node_url != "/" and page_url_size != node_url_size and page_url contains node_url %}{%
+    assign active_normal = "active" %}{%
+  elsif node_url == page.url %}{%
+    assign active_normal = "active" %}{%
+  elsif page.section == include.node.title and include.level == 1 %}{%
+    assign active_normal = "active" %}{%
+  else %}{%
+    assign active_normal = "normal" %}{%
+  endif %}
+<li class="{{dropdown}}{{active_normal}}">
+  <a href='{{url}}'>{{include.node.title}}</a>
+{% if include.node.autosubitems == true %}
+  <ul>
+    {% for file in site.pages | sort:"" %}
+    {% if file.dir == node_url %}
+    {% assign _level = include.level | plus: 1 %}
+    {% assign _path = include.path | append: include.node.path | append: _file %}
+    {% include nav.html level=_level path=_path node=file autosubitem=true %}
+    {% endif %}
+    {% endfor %}
+  </ul>
+{% else %}
+{% if include.node.subitems != null %}
+  <ul>
+    {% for _node in include.node.subitems %}{% assign _level = include.level | plus: 1 %}{% assign _path = include.path | append: include.node.path %}{% include nav.html level=_level path=_path node=_node %}{% endfor %}
+  </ul>
+{% endif %}
+{% endif %}
+</li>

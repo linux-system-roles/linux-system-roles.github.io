@@ -1,0 +1,29 @@
+---
+layout: default
+---
+
+<div class="row">
+
+  <article class="page-content row">
+    <section class="columns medium-9">
+      <div class="blog-navigation">
+	{% if page.previous.url %}
+          <a class="prev" href="{{ site.baseurl }}{{ page.previous.url }}">{{ page.previous.title }}</a>
+	{% endif %}
+	{% if page.next.url %}
+          <a class="next" href="{{ site.baseurl }}{{ page.next.url }}">{{ page.next.title }}</a>
+	{% endif %}
+      </div>
+
+      <h1 >{{ page.title }}</h1>
+      <p class="post-meta">{{ page.date | date: "%b %-d, %Y" }}{% if page.author %} • {{ page.author }}{% endif %}{% if page.meta %} • {{ page.meta }}{% endif %}</p>
+      {{ content }}
+    </section>
+    <section class="columns medium-3">
+      {% include asides/search.html %}
+      {% include asides/recent_posts.html %}
+      {% include asides/quick_links.html %}
+    </section>
+  </article>
+
+</div>

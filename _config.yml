@@ -1,15 +1,45 @@
-title: Linux System Roles
-email: your-email@domain.com
-description: >
-  The Linux System Roles are a collection of roles and modules executed by
-  Ansible to assist Linux admins in the configuration of common GNU/Linux
-  subsystems.
+# Site settings
+name: Linux System Roles
+email: twoerner<AT>redhat.com
+author: Thomas Woerner
+lang: "en"
+
+keywords: Automation, linux, Ansible, roles, system roles
+description: > # this means to ignore newlines until "baseurl:"
+  Welcome to the Linux System Roles project homepage!
+
+baseurl:
+url: linux-system-roles.github.io
+#production_url: http://linux-system-roles.org
+
+# Exclude our ruby stuff
+exclude: [.bundle, bin, vendor, Gemfile, Gemfile.lock, Rakefile, s3_website.yml, .last_optimized, slim-pickins-jekyll-theme-master]
+
 
 # Build settings
 markdown: kramdown
 kramdown:
   input: GFM
-theme: minima
-exclude:
-  - Gemfile
-  - Gemfile.lock
+
+destination: _site
+
+gems:
+  - jekyll-feed
+  - jekyll-paginate
+  - jekyll-seo-tag
+
+feed:
+  path: atom.xml
+  
+# Compress our Css
+sass:
+    style: :compressed
+
+permalink: /:year/:month/:title
+paginate: 5
+paginate_path: "/blog/page/:num/"
+
+#### SEO Stuff
+# Google Analytics
+#google_universal_analytics: 
+#google_universal_analytics_cookiedomain: auto

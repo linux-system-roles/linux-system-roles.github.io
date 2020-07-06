@@ -1,0 +1,262 @@
+// Wrap
+.wrap {
+    max-width: 1920px;
+    min-height: 100%;
+    display: block;
+    margin-bottom: -$footer-height;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+// Styling for mobile devices
+@media screen and (max-width: 768px) {
+  .wrap {
+    margin-bottom: -$footer-height * 2.8;
+  }
+}
+
+.wrap:after {
+    content: "";
+    display: block;
+}
+
+//Banner
+.banner-block {
+    background-color: $banner-color;
+    background-image: url(/images/banner-bg.png);
+}
+.banner {
+    padding-right: $spacing-unit;
+    padding-left: $spacing-unit;
+    padding-top: ($spacing-unit/2);
+}
+.banner-image {
+}
+
+.page-navigation {
+    padding-top: ($spacing-unit/2);
+    padding-left: $spacing-unit;
+    padding-right: $spacing-unit;
+    padding-bottom: 0;
+}
+
+// Pages
+.page-content {
+    padding-left: $spacing-unit;
+    padding-right: $spacing-unit;
+    padding-bottom: $spacing-unit;
+}
+
+.page-heading {
+    font-size: 20px;
+}
+
+// Posts
+
+.post-header {
+    margin: $spacing-unit;
+}
+
+.post-title {
+    font-size: 2em;
+    letter-spacing: -1px;
+    line-height: 1;
+}
+
+.post-content {
+    margin-bottom: $spacing-unit;
+    padding: 0 $spacing-unit $spacing-unit;
+}
+
+.post-list {
+    margin-left: 0;
+    list-style: none;
+
+    > li {
+        margin-bottom: $spacing-unit;
+    }
+}
+
+.post-meta {
+    font-size: $small-font-size;
+    color: darken($complimentary-color, 35%)
+}
+
+.post-link {
+    display: block;
+    font-size: 24px;
+}
+
+.search-form {
+    margin-bottom: 1em;
+    width: 100%;
+}
+
+.search-input {
+    max-width: 100%;
+    width: 70%;
+    padding: 2px 4px;
+    padding-left: 26px;
+    background-image: url('/images/search.png');
+    background-position: 2px 3px;
+    background-repeat: no-repeat;
+    line-height: $form-height;
+}
+aside .search-input {
+    width: 100%;
+}
+
+.search-submit {
+    padding: 2px 8px;
+}
+
+input[type=text] {
+    border: none;
+    border: $form-border;
+    background-color: $form-color;
+}
+input[type=text]:focus {
+    background-color: $form-focus-color;
+}
+input[type=button], input[type=submit], input[type=reset] {
+    background-color: $form-border-color;
+    border: none;
+    padding: 2px 5px;
+    border: $form-border;
+    line-height: $form-height;
+}
+input[type=submit]:hover {
+    background-color: $form-border-color;
+}
+
+.search-item {
+    padding-top: $spacing-unit;
+}
+
+.search-excerpt {
+    font-size: $small-font-size;
+    padding-top: ($spacing-unit/4);
+}
+
+.recent-posts ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    margin-bottom: 1em;
+}
+
+.recent-posts ul li {
+    margin-bottom: 0.1em;
+}
+
+.quick-links ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    margin-bottom: 1em;
+}
+
+.quick-links ul li {
+    margin-bottom: 0.1em;
+}
+
+// Body
+html,body {
+    height: 100%;
+}
+
+#wrap {
+    min-height: 100%;
+}
+
+#main {
+    overflow: auto;
+    padding-bottom: $footer-height;
+}
+
+// Footer
+#footer {
+    z-index: 0;
+    background-color: $footer-color;
+}
+
+.site-footer, .wrap:after {
+    z-index: 0;
+    height: $footer-height; 
+}
+.site-footer {
+    z-index: 0;
+    color: $footer-text-color;
+    background: $footer-color;
+    background: linear-gradient(bottom, lighten($footer-color, 10%) 0%, $footer-color 100%);
+    background: -moz-linear-gradient(bottom, lighten($footer-color, 10%) 0%, $footer-color 100%);
+    background: -webkit-linear-gradient(bottom, lighten($footer-color, 10%) 0%, $footer-color 100%);
+    font-size: $small-font-size;
+    position: relative;
+    line-height: $footer-height;
+    text-align: left;
+    right:0;
+    left:0;
+    bottom:0;
+    margin-top: -$footer-height;
+}
+
+.site-footer a {
+    color: $footer-link-color;
+}
+
+.page-title {
+    font-size: 26px;
+    font-weight: 300;
+    letter-spacing: -1px;
+    color: $body-font-color;
+}
+
+.page-content p>img {
+    display: block;
+    align: center;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+.page-content p>img + em {
+    content: "";
+    display: block;
+    color: darken($complimentary-color, 35%);
+    margin-top: $spacing-unit/2;
+    margin-bottom: $spacing-unit/2;
+    text-align: center;
+}
+
+// Styling for mobile devices
+@media screen and (max-width: 768px) {
+  .site-footer, .wrap:after {
+    z-index: 0;
+    height: $footer-height * 2.8;
+  }
+}
+
+@media print {
+    .banner {
+	padding:0;
+    }
+    .page-navigation {
+	border-top: 1px solid #000000;
+	padding: 0;
+    }
+    .page-content {
+	padding: 0;
+    }
+    .recent-posts {
+	display: none;
+    }
+    .quick-links {
+	display: none;
+    }
+    .search-form {
+	display: none;
+    }
+    pre {
+        white-space: pre-wrap;
+    }
+}

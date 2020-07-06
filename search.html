@@ -1,0 +1,47 @@
+---
+layout: home
+title: "Search"
+---
+
+<script src="{{ site.baseurl }}/js/jquery-3.5.1.min.js"></script>
+<script src="{{ site.baseurl }}/js/search.js"></script>
+
+<form class="search-form" action="{{ site.baseurl }}/search.html" method="get">
+  <input id="search-input" class="search-input" type="text" name="search" placeholder="Search..."></input><input class="search-submit" type="submit" value="Search"></input>
+</form>
+
+<script type="text/javascript">
+  var search = getGetVariable("search");
+  if (search != null && search != "") {
+    document.title = document.title.replace("{{page.title}} | ", "{{page.title}} for \""+search+"\" | ");
+    document.getElementById("search-input").value = htmlDecode(search);
+
+    var regex = new RegExp(search, 'igm');
+    $.getJSON( "search.json", function( data ) {
+      var items = [];
+
+      for (var i = 0; i < data.length; i++) {
+        if (regex.test(data[i].title) || regex.test(data[i].content) ||
+            regex.test(data[i].tags) || regex.test(data[i].category)) {
+	  items.push("<div class=\"search-item\">");
+          if (data[i].section != "") {
+            items.push(data[i].section + "> ");
+          }
+      	  items.push("<a href=\""+ data[i].url +"\">" + data[i].title + "</a>");
+          items.push("<div class=\"search-excerpt\">" + getExcerpt(unescape(htmlDecode(data[i].content)), regex, 320) + "</div></div>");
+        }
+      }
+      if (items.length < 1) {
+        items.push("<div class=\"search-item\">No results</div>");
+      }
+
+      $( "<div/>", {
+        "class": "search-results",
+        html: items.join("")
+      }).appendTo(".results-container");
+    });
+  } else {
+  }
+</script>
+
+<div class="results-container"></div>

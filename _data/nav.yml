@@ -1,0 +1,42 @@
+#
+# Only use spaces in here, no tabs!
+#
+
+- title: "Home"
+  path: ""
+
+- title: "Blog"
+  path: "blog/"
+
+- title: "Community"
+  path: "community.html"
+
+- title: "Contribute"
+  path: "contribute.html"
+
+- title: "Documentation"
+  path: "documentation/"
+  #autosubitems: true
+
+  subitems:
+  - title: "Concepts"
+    path: "concepts.html"
+
+  - title: "HowTo"
+    path: "howto/"
+
+  - title: "External Resources"
+    path: "external.html"
+
+  - title: "Working With The Source"
+    path: "working-with-the-source.html"
+
+- title: "Download"
+  path: "download/"
+
+  subitems:
+  - title: "All Releases"
+    path: "all.html"
+
+- title: "Search"
+  path: "search.html"

@@ -1,0 +1,82 @@
+// Base Colors
+$primary-color: #272727;
+$secondary-color: #ccc;
+$complimentary-color: #fff;
+$body-bg: #fdfdfd;
+$body-font-color: #222;
+
+// Links
+$link-color: #600000;
+$link-hover-color: $body-font-color;
+$link-visited-color: $link-color;
+
+// Text
+$base-font-family: Helvetica, Arial, sans-serif;
+$base-font-size: 1.0em;
+$small-font-size: $base-font-size * 0.875;
+$base-line-height: 1.5;
+
+// Primary Navbar Settings
+$navbar-height: 40px;
+$navbar-color: $primary-color;
+$navbar-text-color: $secondary-color;
+$navbar-hover-text-color: $complimentary-color;
+$navbar-active-color: #003080;
+$navbar-hover-color: #004090;
+$navbar-hover-active-color: lighten($navbar-hover-color, 5%);
+$navbar-font-size: 13px;
+$navbar-font-family: Helvetica, Arial, sans-serif;
+$navbar-menu-width: 220px;
+
+// Socials Navbar Settings
+$socials-font-color: $secondary-color;
+$socials-font-size: 1.5em;
+
+// Utility
+$spacing-unit: 30px;
+
+// Banner
+$banner-color: lighten($primary-color, 75%);
+
+// Footer
+$footer-height: 30px;
+$footer-text-color: $secondary-color;
+$footer-color: $primary-color;
+$footer-link-color: $complimentary-color;
+
+// Page Navigation
+$page-navigation-height: 18px;
+$page-navigation-text-color: lighten($primary-color, 50%);
+$page-navigation-link-color: lighten($primary-color, 80%);
+$page-navigation-color: $primary-color;
+
+// Breadcrumb Navigation
+$breadcrumb-height: 24px;
+$breadcrumb-color: #e0e0e0;
+$breadcrumb-link-color: $link-color;
+$breadcrumb-spacing: 10px;
+$breadcrumb-half-height: $breadcrumb-height/2;
+
+// Blog Navigation
+$blog-navigation-height: 24px;
+$blog-navigation-color: #e0e0e0;
+$blog-navigation-link-color: $link-color;
+$blog-navigation-spacing: 10px;
+$blog-navigation-half-height: $blog-navigation-height/2;
+
+// Pagination
+$pagination-height: 24px;
+$pagination-color: #e0e0e0;
+$pagination-text-color: $link-color;
+$pagination-active-color: #ee4e53;
+$pagination-active-text-color: #fdfdfd;
+$pagination-disabled-color: lighten($pagination-color, 5%);
+$pagination-disabled-text-color: #ffffff;
+$pagination-item-width: 30px;
+
+// form
+$form-border-color: #c0c0c0;
+$form-color: #fdfdfd;
+$form-border: 1px $form-border-color solid;
+$form-height: 24px;
+$form-focus-color: #feffe9;

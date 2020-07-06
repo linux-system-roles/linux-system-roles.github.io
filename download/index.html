@@ -1,0 +1,12 @@
+---
+layout: page
+title: Download
+---
+
+{% for post in site.categories["release"] limit:1 %}
+  <div class="entry">
+    <h2>{{ post.title }}</h2>
+      <p class="post-meta">{{ post.date | date: "%b %-d, %Y" }}{% if post.author %} • {{ post.author }}{% endif %}{% if post.meta %} • {{ post.meta }}{% endif %}</p>
+      {{ post.content }}
+  </div>
+{% endfor %}
