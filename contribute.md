@@ -5,7 +5,7 @@ title: Contribute
 
 Each subsystem is separated into individual repositories within the
 [linux-system-roles](https://github.com/linux-system-roles) GitHub project.
-Just open a new issue against the appropriate subsystem's issue tracker to
+Open a new issue against the appropriate subsystem's issue tracker to
 report bugs or request enhancements. New subsystem requests or feedback can be
 provided to the project's landing page at
 [linux-system-roles.github.io](https://linux-system-roles.github.io) Pull
@@ -15,7 +15,7 @@ requests welcome!
 ## Code structure
 The repository is structured as described in [Ansible Roles documentation](https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse_roles.html#role-directory-structure)
 
-In addition to the standard roles files described in the roles documentation, there may be some addition directories like 
+In addition to the standard roles files described in the roles documentation, there may be some additional directories:
 
 - `./examples/` - Contains YAML examples for different configurations.
 
@@ -25,7 +25,7 @@ In addition to the standard roles files described in the roles documentation, th
   Note that for the `network` role, `./tests/tests_*.yml` are shims to run tests 
   once for every provider and `./tests/playbooks/` contain the actual tests. 
 
-The rest of files in the root folder mostly serve as configuration files for diferent
+The rest of files in the root folder mostly serve as configuration files for different
 testing tools and bots that help with the maintenance of the project.
 
 
@@ -39,7 +39,7 @@ run formatting tests or use `tox` to run all configured tests.
 
 Before starting to contribute, make sure you have the basic git configuration: Your name
 and email. This will be useful when signing your contributions. The following commands
-will set your global name and email, although you can change it later for every repo:
+will set your global name and email, although you can change it later per repo:
 
 ```
 git config --global user.name "Jane Doe"
@@ -55,6 +55,7 @@ git config --global core.editor vim
 
 If you want to check your settings, use `git config --list` to see all the settings Git can find.
 
+If you prefer using the command line to interact with github, you are strongly encouraged to use a tool like [gh](https://cli.github.com/) or [hub](https://hub.github.com/).  These tools will allow you to fork repos, submit pull requests, and much more, without leaving the comfort of your cli.
 
 ## How to contribute
 
@@ -78,24 +79,26 @@ of this repository.
   - Integration tests are executed as
     [ansible-playbooks](https://docs.ansible.com/ansible/latest/user_guide/playbooks.html).
 
-To run them you can use a cloud image like the [CentOS 8.1
+To run integration tests, use a cloud image like the [CentOS 8.1
 VM](https://cloud.centos.org/centos/8/x86_64/images/CentOS-8-GenericCloud-8.1.1911-20200113.3.x86_64.qcow2)
 and execute the command and download the package
 `standard-test-roles-inventory-qemu` from the Fedora repository:
 
 `dnf install standard-test-roles-inventory-qemu`
 
-Note that the last path is the one of the test you want to run:
+Then `cd tests` to change to the `tests` subdirectory, and run the test playbook like this:
+```
+ANSIBLE_STDOUT_CALLBACK=debug TEST_SUBJECTS=CentOS-8-GenericCloud-8.1.1911-20200113.3.x86_64.qcow2
+ansible-playbook -vv -i /usr/share/ansible/inventory/standard-inventory-qcow2
+tests_default.yml
+```
+Use the stdout callback to format the output nicely.  Replace `tests_default.yml` with the actual test you want to run.
 
-`TEST_SUBJECTS=CentOS-8-GenericCloud-8.1.1911-20200113.3.x86_64.qcow2
-ansible-playbook -v -i /usr/share/ansible/inventory/standard-inventory-qcow2
-tests/tests_default.yml`
+4. Once the work is ready and committed, push the branch to your remote fork and click on
+   "new Pull Request" on Github (or use `gh` or `hub`).
 
-4. Once the work is ready and commited, push the branch to your remote fork and click on
-   "new Pull Request" on Github.
-
-5. All set! Now wait for the continuous integration to pass and go over your commit if
-   there are any errors. If there is no problem with your contribution, the mantainer
+5. Check the continuous integration test results.  If
+   there are any errors, fix them and re-push your commits. If there is no problem with your contribution, the maintainer
    will merge it to the main project.
 
 ### Some important tips
@@ -103,8 +106,7 @@ tests/tests_default.yml`
 - Make sure your fork and branch are up-to-date with the main project. First of all, 
   [configure a remote upstream for your
 fork](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/configuring-a-remote-for-a-fork), 
-and keep your branch up-to-date with the upstream using `git pull --rebase upstream
-master`
+and keep your branch up-to-date with the upstream using `git pull --rebase upstream master`
 
 - Try to make a commit per issue.
 
@@ -126,7 +128,7 @@ added, and merge both file versions into one that combines it all.
 
 ### Best Practices
 
-Please refer to [Meta Best Practices](https://github.com/oasis-roles/meta_standards/blob/master/README.md) for best practices to follow while making a contribution .
+Please refer to [Best Practices](https://github.com/oasis-roles/meta_standards/blob/master/README.md) for best practices to follow while making a contribution .
 
 The following sections are a good place to start:
 
@@ -153,7 +155,7 @@ Here are a few rules to keep in mind while writing a commit message
 
  A good commit message looks something like this
 ```
-  Summarize changes in around 50 characters or less
+ Summarize changes in around 50 characters or less
 
  More detailed explanatory text, if necessary. Wrap it to about 72
  characters or so. In some contexts, the first line is treated as the
@@ -191,33 +193,33 @@ how to write a good commit message). This content is licensed under
 [CC-BY-SA](https://creativecommons.org/licenses/by-sa/4.0/).
 
 ### Debugging
-For debugging, use `TEST_DEBUG=true`.Remember that the last path is one of the test you
-want to run.
-
-`TEST_DEBUG=true TEST_SUBJECTS=CentOS-8-GenericCloud-8.1.1911-20200113.3.x86_64.qcow2 \
-ANSIBLE_STDOUT_CALLBACK=debug \
+For debugging, use `TEST_DEBUG=true`.  Remember that the last path is one of the test you want to run.
+```
+cd tests
+TEST_DEBUG=true ANSIBLE_STDOUT_CALLBACK=debug \
+TEST_SUBJECTS=CentOS-8-GenericCloud-8.1.1911-20200113.3.x86_64.qcow2 \
 ansible-playbook -vv -i /usr/share/ansible/inventory/standard-inventory-qcow2 \
-tests/tests_default.yml`
-
-Using ANSIBLE_STDOUT_CALLBACK=debug will format the output in a much more human 
-friendly manner, and using TEST_DEBUG=true will allow you to ssh into the managed host
+tests_default.yml
+```
+Using `TEST_DEBUG=true` will allow you to `ssh` into the managed host
 after the test has run. It will print out instructions about the exact command to use 
-to ssh, and how to destroy the managed host after you are done.
+to `ssh`, and how to destroy the managed host after you are done.
 
 **The next part is specific for debugging the network role**
 
 When using the `nm` provider, NetworkManager create a checkpoint and reverts the changes
 on failures. This makes it hard to debug the error. To disable this, set the Ansible
-variable `__network_debug_flags to include the value `disable-checkpoints`. Also tests
+variable `__network_debug_flags` to include the value `disable-checkpoints`. Also tests
 clean up by default in case there are failures. They should be tagged as
 `tests::cleanup` and can be skipped. To use both, run the test playbooks like this:
-
 ```bash
+cd tests
+ANSIBLE_STDOUT_CALLBACK=debug \
+TEST_SUBJECTS=CentOS-8-GenericCloud-8.1.1911-20200113.3.x86_64.qcow2 \
 ansible-playbook --skip-tags tests::cleanup \
     -e "__network_debug_flags=disable-checkpoints" \
-    -i testhost, tests/playbooks/tests_802_1x.yml
+    -vv -i /usr/share/ansible/inventory/standard-inventory-qcow2 playbooks/tests_802_1x.yml
 ```
-
 ### Continuous integration
 
 The [continuous integration](https://en.wikipedia.org/wiki/Continuous_integration) (CI)
