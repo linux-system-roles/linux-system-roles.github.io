@@ -34,6 +34,9 @@
   - title: "Working With The Source"
     path: "working-with-the-source.html"
 
+  - title: "TLS/Crypto Parameter and Key Naming"
+    path: "tls_crypto_parameter_and_key_names.html"
+
 - title: "Download"
   path: "download/"
 
