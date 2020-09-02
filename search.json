@@ -3,7 +3,7 @@ layout: compress
 ---
 
 [{% for post in site.posts %}{%
-    assign content = post.content | markdownify | newline_to_br | replace: '<br />', ' ' | replace: '	', ' ' | strip_html | strip | xml_escape | strip_newlines %}
+    assign content = post.content | markdownify | newline_to_br | replace: '<br />', ' ' | replace: '	', ' ' | replace: '\', '\\\' | strip_html | strip | xml_escape | strip_newlines %}
     {
         "title"    : "{{ post.title | escape }}",
         "category" : "{{ post.category }}",
