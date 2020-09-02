@@ -10,7 +10,7 @@
    for page in site.pages %}{%
      assign page_path = "/" | append: page.path | replace: ".md",".html" | replace: "index.html","" %}{%
      if page_path == url %}{%
-       assign content = page.content | markdownify | newline_to_br | replace: '<br />', ' ' | replace: '	', ' ' | strip_html | strip | xml_escape | strip_newlines %}
+       assign content = page.content | markdownify | newline_to_br | replace: '<br />', ' ' | replace: '	', ' ' | replace: '\', '\\\' | strip_html | strip | xml_escape | strip_newlines %}
     ,
     {
         "title"    : "{{ include.node.title | escape }}",
