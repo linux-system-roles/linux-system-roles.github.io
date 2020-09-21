@@ -193,7 +193,7 @@ html,body {
     background: -webkit-linear-gradient(bottom, lighten($footer-color, 10%) 0%, $footer-color 100%);
     font-size: $small-font-size;
     position: relative;
-    line-height: $footer-height;
+    line-height: normal;
     text-align: left;
     right:0;
     left:0;
