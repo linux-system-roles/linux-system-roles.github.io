@@ -1,6 +1,10 @@
 ---
-layout: page
+layout: post
 title: "Conversion to Collection - YAML roundtrip with ruamel"
+section: Blog
+date: 2020-09-22T12:00:00
+author: Rich Megginson
+category: talk
 ---
 The System Roles team is working on making the roles available as a collection.
 One of the challenges is that we have to continue to support the old style roles
@@ -244,19 +248,23 @@ problems.  So for now, we just live with improperly indented Ansible comments.
 
 We use `yamllint` and have had to use some creative wrapping/folding to abide by
 the line length restriction e.g.
+<!-- {% raw %} -->
 ```yaml
     - "{{ ansible_facts['distribution'] }}_\
         {{ ansible_facts['distribution_version'] }}.yml"
     - "{{ ansible_facts['distribution'] }}_\
         {{ ansible_facts['distribution_major_version'] }}.yml"
 ```
+<!-- {% endraw %} -->
 is converted to
+<!-- {% raw %} -->
 ```yaml
     - "{{ ansible_facts['distribution'] }}_{{ ansible_facts['distribution_version']\
         \ }}.yml"
     - "{{ ansible_facts['distribution'] }}_{{ ansible_facts['distribution_major_version']\
         \ }}.yml"
 ```
+<!-- {% endraw %} -->
 that is, ruamel imposes its own line length and wrapping convention.
 
 We also didn't have to worry about how to handle usage of plugins inside of
