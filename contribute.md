@@ -256,14 +256,16 @@ release` if this is an announcement of a new release.  NOTE: If you have
 examples of Jinja2 templates in your blog post e.g. an excerpt from an Ansible
 file, you should enclose the code using `raw` and `endraw` directives:
 ```
-<!-- {% raw %} -->
+{%- assign lcub = '{' %}
+{%- assign rcub = '}' %}
+<!-- {{ lcub }}% raw %{{ rcub }} -->
 Ansible/jinja2 goes here
-<!-- {% endraw %} -->
+<!-- {{ lcub }}% endraw %{{ rcub }} -->
 ```
 Then submit a PR to
 https://github.com/linux-system-roles/linux-system-roles.github.io/pulls - once
 your PR is merged, it may take a few minutes before it is published at
-https://linux-system-roles.github.io/blog/
+https://linux-system-roles.github.io/blog/  NOTE: If you are viewing the above in plain text or github markdown render, replace the `lcub` template with `{` and the `rcub` template with `}`.
 
 ## How to reach us
 The mailing list for developers: systemroles@lists.fedorahosted.org
