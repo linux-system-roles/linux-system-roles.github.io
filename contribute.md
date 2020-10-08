@@ -235,6 +235,36 @@ comment. The available commands are:
 - [citest commit:<sha1\>] - Whitelist a commit to be tested if the submitter is not
 trusted.
 
+## Blog Post Contribution
+
+Create a new file in the `blog/_posts/` directory.  The file should be in
+markdown format, and the filename should begin with the date in this format -
+`YYYY-MM-DD-` - and end in `.md`.  The file should begin with a header like
+this:
+```yaml
+---
+layout: post
+title: "The Title of My Post"
+section: Blog
+date: YYYY-MM-DDTHH:MM:SS
+author: Your Name
+category: talk
+---
+```
+Change the values for the `title`, `date`, and `author` fields.  Use `category:
+release` if this is an announcement of a new release.  NOTE: If you have
+examples of Jinja2 templates in your blog post e.g. an excerpt from an Ansible
+file, you should enclose the code using `raw` and `endraw` directives:
+```
+<!-- {% raw %} -->
+Ansible/jinja2 goes here
+<!-- {% endraw %} -->
+```
+Then submit a PR to
+https://github.com/linux-system-roles/linux-system-roles.github.io/pulls - once
+your PR is merged, it may take a few minutes before it is published at
+https://linux-system-roles.github.io/blog/
+
 ## How to reach us
 The mailing list for developers: systemroles@lists.fedorahosted.org
 
