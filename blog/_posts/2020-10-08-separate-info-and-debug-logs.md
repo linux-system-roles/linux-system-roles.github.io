@@ -20,7 +20,7 @@ We can reproduce this network module bug by doing qemu test.
 TEST_SUBJECTS=CentOS-8-GenericCloud-8.1.1911-20200113.3.x86_64.qcow2 ansible-playbook -vv -i /usr/share/ansible/inventory/standard-inventory-qcow2 ./tests/playbooks/tests_ethernet.yml
 ```
 
-![](images/wenliang_blog_figure1.png)
+![](../../images/wenliang_blog_figure1.png)
 
 ## How to resolve it
 
@@ -34,7 +34,7 @@ network_connections task failed and abort.
 
 After bug fixed, we can also use the same qemu test to compare the result:
 
-![](images/wenliang_blog_figure2.png)
+![](../../images/wenliang_blog_figure2.png)
 
 ## Additional test cases
 
@@ -75,7 +75,7 @@ _network_connections_result, and assert stderr in _network_connections_result.
 
 The following Ansible logs is extracted from same qemu testing result after the bug fixed:
 
-![](images/wenliang_blog_figure3.png)
+![](../../images/wenliang_blog_figure3.png)
 
 
 ## Demo video
