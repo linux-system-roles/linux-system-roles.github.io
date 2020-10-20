@@ -37,6 +37,13 @@
   - title: "TLS/Crypto Parameter and Key Naming"
     path: "tls_crypto_parameter_and_key_names.html"
 
+  - title: "Design Documents"
+    path: "design_docs/"
+
+    subitems:
+    - title: "Logging"
+      path: "logging/"
+
 - title: "Download"
   path: "download/"
 
