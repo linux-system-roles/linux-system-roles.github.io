@@ -234,3 +234,101 @@ conn {{ construct name based on local and remote host properties }}
     right={{ host }}
     rightid={{ remotevars.remoteid }}
 ```
+
+For the host-to-host cases where we need to specify the relationships explicitly, we
+can make `vpn_connections` a global variable:
+```yaml
+all:
+  hosts:
+    bastion1.example.com: {...}
+    bastion2.example.com: {...}
+    bastion3.example.com: {...}
+  vars:
+    vpn_connections:
+      - shared_key: Vault!b1_to_b2_abc..  # PSK - shared between the hosts in the peer group
+        peer1:
+          name: bastion1-bastion2  #  e.g. for libreswan, the name of the conn
+          host: bastion1.example.com
+          hostid: ...
+          ... other host specific params, if any ...
+        peer2:
+          name: bastion2-bastion1
+          host: bastion2.example.com
+          hostid: ...
+      - shared_key: Vault!b2_to_b3_abc..
+        peer1:
+          name: bastion2-bastion3
+          host: bastion2.example.com
+          hostid: ...
+        peer2:
+          name: bastion3-bastion2
+          host: bastion3.example.com
+          hostid: ...
+      - # a peer group for each pair of hosts
+```
+One optimization is that if the `host` is in the inventory in `hostvars[host]`,
+the host specific parameters can be defined in 1 place, under the hostname in
+the global `hosts` section.  If the `host` is not in the inventory (e.g. the
+remote datacenter), all of the parameters must be specified under `peer2`.
+
+The pseudo jinja template code in the role and/or ipsec.conf template would look
+like this:
+```
+{% for peergroup in vpn_connections %}
+{%   if peergroup.peer1.host == inventory_hostname %}
+{%     set left = peergroup.peer1 %}
+{%     set right = peergroup.peer2 %}
+{%   elif peergroup.peer1.host == inventory_hostname %}
+{%     set left = peergroup.peer2 %}
+{%     set right = peergroup.peer1 %}
+{%   else %}
+{%     continue  # we are not configuring this host %}
+{%   endif %}
+conn {{ left.name }}
+    left={{ inventory_hostname }}
+    leftid={{ left.hostid | d(vpn_hostid) }}
+    leftxxx={{ left.xxxx | d(vpn_xxx) }}
+    right={{ right.host }}
+    rightid={{ right.hostid }}
+    rightxxx={{ right.xxx }}
+    ... other params ...
+
+{% endfor %}
+```
+
+In the simplest case, where all of the hosts are in the inventory, and you can
+use global defaults, certs are already in place, or the psk can be dynamically
+generated, and you can construct the connection name for libreswan, the
+inventory would look like this:
+```yaml
+all:
+  hosts:
+    bastion1.example.com: {...}
+    bastion2.example.com: {...}
+    bastion3.example.com: {...}
+  vars:
+    vpn_connections:
+      - peer1:
+          host: bastion1.example.com
+        peer2:
+          host: bastion2.example.com
+      - peer1:
+          host: bastion2.example.com
+        peer2:
+          host: bastion3.example.com
+```
+We could simplify this further, and say that if you specify a `string` value for
+`peerN` instead of a `dict`, that it is the name of a host:
+```yaml
+all:
+  hosts:
+    bastion1.example.com: {...}
+    bastion2.example.com: {...}
+    bastion3.example.com: {...}
+  vars:
+    vpn_connections:
+      - peer1: bastion1.example.com
+        peer2: bastion2.example.com
+      - peer1: bastion2.example.com
+        peer2: bastion3.example.com
+```
