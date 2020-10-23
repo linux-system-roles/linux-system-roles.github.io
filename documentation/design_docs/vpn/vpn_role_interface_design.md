@@ -5,238 +5,11 @@ title: VPN Role Interface Design
 One of the big problems is - how will users provide the hosts and host specific
 information in their Ansible inventory?
 
-Consider the following use cases:
+The variable `vpn_connections` is a list of tunnels.  Each tunnel specifies two
+or more hosts.  The role creates tunnels between each pair of hosts, using a
+common set of parameters (e.g. if using PSK they all share the same key).
 
-* Host-to-Host (openstack): Specific nodes connecting to each other. Use IPsec
-  for IP failover between these nodes (so all other nodes don't need to be aware
-  of anything happening). Authentication Methods are FreeIPA certificates, and
-  pre-shared keys. More information at (OpenStack IPSec
-  docs)[https://docs.openstack.org/project-deploy-guide/tripleo-docs/latest/features/ipsec.html]
-* Host-to-Host (data centers): Two systems in different data centers communicate
-  encrypted with each other using FreeIPA certificates, pre-shared keys and rsa
-  keys
-
-In the general case, the user runs one or more playbooks to configure a large
-group of machines using several different roles (e.g. storage, network, selinux,
-firewall, apache, postgres, etc.), and the inventory specifies the hosts,
-groups, and variables to apply globally, to specific groups, and to specific
-hosts.
-
-For example, here is an inventory that sets up dbservers and webservers:
-```yaml
-all:
-  vars:
-    a_global_var: value
-  hosts:
-    db1.example.com:
-      a_host_specific_var: value
-    db2.example.com:
-    web1.example.com:
-    web2.example.com:
-  children:
-    dbservers:  # name of group of db servers
-      hosts:
-        db1.example.com:
-        db2.example.com:
-      vars:
-        a_group_var: value  # vars that apply to all hosts in the dbservers group
-    webservers:
-      hosts:
-        web1.example.com:
-        web2.example.com:
-      vars:
-        another_group_var: value
-```
-And I'll use a playbook like this:
-```yaml
-- hosts: dbservers
-  roles:
-    - linux-system-roles.network
-    - linux-system-roles.storage
-    - postgres.postgres
-- hosts: webservers
-  roles:
-    - linux-system-roles.network
-    - linux-system-roles.storage
-    - apache.apache
-```
-Now, let's add two hosts called bastion1 and bastion2 that we want to setup vpn
-between, using PSK.  Let's also assume that bastion1 is "local" - that is, we
-have Ansible ssh access to it directly, but bastion2 is "remote" - that is, we
-will have to configure it separately e.g. bastion2 is in a different data center
-that will we have to somehow log into to set it up.
-```yaml
-all:
-  vars:
-    a_global_var: value
-  hosts:
-    db1.example.com:
-      a_host_specific_var: value
-    db2.example.com:
-    web1.example.com:
-    web2.example.com:
-    bastion1.example.com:
-      vpn_hostid: '@bastion1'
-      vpn_shared_key: Vault!abc..  #  vault encrypted value
-      vpn_connections:
-        - name: bastion1-bastion2  #  name of conn in ipsec conf
-          remote: bastion2.example.com
-          remoteid: '@bastion2'
-          shared_key: Vault!def..
-  children:
-    dbservers:  # name of group of db servers
-      hosts:
-        db1.example.com:
-        db2.example.com:
-      vars:
-        a_group_var: value  # vars that apply to all hosts in the dbservers group
-    webservers:
-      hosts:
-        web1.example.com:
-        web2.example.com:
-      vars:
-        another_group_var: value
-```
-And I'll use a playbook like this:
-```yaml
-- hosts: dbservers
-  roles:
-    - linux-system-roles.network
-    - linux-system-roles.storage
-    - postgres.postgres
-- hosts: webservers
-  roles:
-    - linux-system-roles.network
-    - linux-system-roles.storage
-    - apache.apache
-- hosts: bastion1.example.com
-  roles:
-    - linux-system-roles.vpn
-```
-We will use a template for ipsec.conf like this (assuming we have some sort of
-loop over all of the vpn_connections array values)
-```
-conn {{ vpn_connections[index].name }}
-    left={{ inventory_hostname }}
-    leftid={{ vpn_hostid }}
-    right={{ vpn_connections[index].remote }}
-    rightid={{ vpn_connections[index].remoteid }}
-# and the shared key comes from vpn_connections[index].shared_key
-```
-expanded:
-```
-conn bastion1-bastion2
-    left=bastion1.example.com
-    leftid=@bastion1
-    right=bastion2.example.com
-    rightid=@bastion2
-```
-We would have to do something similar at the remote site, except we would swap
-the values for local and remote.
-
-If we want all of the vpn connections to use the same encryption algorithms,
-auto behavior, etc. we can set them as global variables in the `all.vars`
-section and refer to them as e.g. `ike={{ vpn_sec_alg }}` in the ipsec conf
-file.
-
-The benefit of this approach is that it is simple - there is one connection, and
-you specify all of the necessary parameters.  The problem is that it doesn't
-scale very well - if you have more than two hosts, representing it this way in
-the inventory gets painful.
-
-This approach can be slightly simplified if we assume all hosts are defined in
-the inventory and can be managed by the same ansible playbook:
-```yaml
-all:
-  hosts:
-    bastion1.example.com:
-      vpn_hostid: '@bastion1'
-      vpn_shared_key: Vault!abc..  #  vault encrypted value
-      vpn_connections:
-        - name: bastion1-bastion2
-          remote: bastion2.example.com
-    bastion2.example.com:
-      vpn_hostid: '@bastion2'
-      vpn_shared_key: Vault!def..  #  vault encrypted value
-      vpn_connections:
-        - name: bastion2-bastion1
-          remote: bastion1.example.com
-        - name: bastion2-bastion3
-          remote: bastion3.example.com
-    bastion3.example.com:
-      vpn_hostid: '@bastion3'
-      vpn_shared_key: Vault!ghi..  #  vault encrypted value
-      vpn_connections:
-        - name: bastion3-bastion2
-          remote: bastion2.example.com
-  children:
-    vpn:
-      bastion1.example.com:
-      bastion2.example.com:
-      bastion3.example.com:
-```
-And I'll use a playbook like this:
-```yaml
-- hosts: vpn
-  roles:
-    - linux-system-roles.vpn
-```
-We can use `hostvars` to look up the parameters of the other hosts:
-```
-set remotehost = vpn_connections[index].remote  #  e.g. bastion2.example.com
-set remotevars = hostvars[remotehost]
-conn {{ vpn_connections[index].name }}
-    left={{ inventory_hostname }}
-    leftid={{ vpn_hostid }}
-    right={{ remotehost }}
-    rightid={{ remotevars.remoteid }}
-# and the shared key comes from remotevars.shared_key
-```
-We could also define `vpn_connections` at the global level, but we would have to
-add some sort of logic to the template so that it would skip setting up tunnels
-to itself (e.g. when `inventory_hostname == remotehost`)
-
-If we wanted to do a full mesh configuration, we would omit the
-`vpn_connections`, and include the logic to skip setting up tunnels to itself.
-```yaml
-all:
-  hosts:
-    bastion1.example.com:
-      vpn_hostid: '@bastion1'
-      vpn_shared_key: Vault!abc..  #  vault encrypted value
-    bastion2.example.com:
-      vpn_hostid: '@bastion2'
-      vpn_shared_key: Vault!def..  #  vault encrypted value
-    bastion3.example.com:
-      vpn_hostid: '@bastion3'
-      vpn_shared_key: Vault!ghi..  #  vault encrypted value
-  children:
-    vpn:
-      bastion1.example.com:
-      bastion2.example.com:
-      bastion3.example.com:
-```
-And I'll use a playbook like this:
-```yaml
-- hosts: vpn
-  roles:
-    - linux-system-roles.vpn
-```
-The vpn role would be called for each host in the group. The vpn role code would
-loop over all hosts defined in the current play, excluding the current host, and
-set up vpn tunnels to all of them:
-```
-for host in all_hosts | reject('==', inventory_hostname)
-set remotevars = hostvars[host]
-conn {{ construct name based on local and remote host properties }}
-    left={{ inventory_hostname }}
-    leftid={{ vpn_hostid }}
-    right={{ host }}
-    rightid={{ remotevars.remoteid }}
-```
-
-For the host-to-host cases where we need to specify the relationships explicitly, we
-can make `vpn_connections` a global variable:
+The simplest case looks like this:
 ```yaml
 all:
   hosts:
@@ -245,90 +18,137 @@ all:
     bastion3.example.com: {...}
   vars:
     vpn_connections:
-      - shared_key: Vault!b1_to_b2_abc..  # PSK - shared between the hosts in the peer group
-        peer1:
-          name: bastion1-bastion2  #  e.g. for libreswan, the name of the conn
-          host: bastion1.example.com
-          hostid: ...
-          ... other host specific params, if any ...
-        peer2:
-          name: bastion2-bastion1
-          host: bastion2.example.com
-          hostid: ...
-      - shared_key: Vault!b2_to_b3_abc..
-        peer1:
-          name: bastion2-bastion3
-          host: bastion2.example.com
-          hostid: ...
-        peer2:
-          name: bastion3-bastion2
-          host: bastion3.example.com
-          hostid: ...
-      - # a peer group for each pair of hosts
+      - hosts:
+          bastion1.example.com:
+          bastion2.example.com:
+          bastion3.example.com:
 ```
-One optimization is that if the `host` is in the inventory in `hostvars[host]`,
-the host specific parameters can be defined in 1 place, under the hostname in
-the global `hosts` section.  If the `host` is not in the inventory (e.g. the
-remote datacenter), all of the parameters must be specified under `peer2`.
+The role will set up a vpn tunnel between each pair of hosts in the list, using
+the default parameters, including generating keys as needed (depending on what
+is the default secret type).  This assumes the names of the hosts under `hosts`
+are the same as the names of the hosts used in the Ansible inventory, and that
+you can use those names to configure the tunnels (i.e. they are real FQDNs that
+resolve correctly).
 
-The pseudo jinja template code in the role and/or ipsec.conf template would look
-like this:
+The user may also provide other variables that should be applied to the
+configuration for each tunnel:
+```yaml
+    vpn_connections:
+      - name: vpn-tunnel-x
+        shared_key: Vault!abc...
+        sec_alg: AES-GCM
+        auto: on-demand
+        hosts:
+          bastion1.example.com:
+          bastion2.example.com:
+          bastion3.example.com:
 ```
-{% for peergroup in vpn_connections %}
-{%   if peergroup.peer1.host == inventory_hostname %}
-{%     set left = peergroup.peer1 %}
-{%     set right = peergroup.peer2 %}
-{%   elif peergroup.peer1.host == inventory_hostname %}
-{%     set left = peergroup.peer2 %}
-{%     set right = peergroup.peer1 %}
-{%   else %}
-{%     continue  # we are not configuring this host %}
-{%   endif %}
-conn {{ left.name }}
-    left={{ inventory_hostname }}
-    leftid={{ left.hostid | d(vpn_hostid) }}
-    leftxxx={{ left.xxxx | d(vpn_xxx) }}
-    right={{ right.host }}
-    rightid={{ right.hostid }}
-    rightxxx={{ right.xxx }}
-    ... other params ...
+There may be cases where the names of the hosts in the inventory are not FQDN
+hostnames that you can use directly (e.g. they may be host aliases like
+bastion_east).  There are a couple of ways to handle this case:
 
-{% endfor %}
-```
-
-In the simplest case, where all of the hosts are in the inventory, and you can
-use global defaults, certs are already in place, or the psk can be dynamically
-generated, and you can construct the connection name for libreswan, the
-inventory would look like this:
+Use the Ansible `hosts` configuration:
 ```yaml
 all:
   hosts:
-    bastion1.example.com: {...}
-    bastion2.example.com: {...}
-    bastion3.example.com: {...}
+    bastion_east:
+      ansible_host: bastion1.example.com
+      vpn_hostid: '@bastion-east'
+    bastion_west:
+      ansible_host: bastion2.example.com
+      vpn_hostid: '@bastion-west'
+    bastion_north:
+      ansible_host: bastion3.example.com
+      vpn_hostid: '@bastion-north'
   vars:
     vpn_connections:
-      - peer1:
-          host: bastion1.example.com
-        peer2:
-          host: bastion2.example.com
-      - peer1:
-          host: bastion2.example.com
-        peer2:
-          host: bastion3.example.com
+      - hosts:
+          bastion_east:
+          bastion_west:
+          bastion_north:
 ```
-We could simplify this further, and say that if you specify a `string` value for
-`peerN` instead of a `dict`, that it is the name of a host:
+The role would lookup the value of the host to use from
+`hostvars[hostname].ansible_host`.  You can specify other variables which are
+always associated with a particular host, like `vpn_hostid`, in the host
+configuration, which would be used for every connection where that host is
+referenced.
+
+You can also specify the host to use directly.  For example, in some cases, the
+host/IP used by Ansible for SSH may not be the same as the host/IP for which you
+want to set up a vpn connection:
 ```yaml
 all:
   hosts:
-    bastion1.example.com: {...}
-    bastion2.example.com: {...}
-    bastion3.example.com: {...}
+    bastion_east:
+      ansible_host: bastion1.example.com # the hostname that Ansible uses
+      vpn_host: 192.168.122.101 # the IP address we want to use for the tunnel
+    bastion_west:
+      ansible_host: bastion2.example.com
+      vpn_host: 192.168.122.102
+    bastion_north:
+      ansible_host: bastion3.example.com
   vars:
     vpn_connections:
-      - peer1: bastion1.example.com
-        peer2: bastion2.example.com
-      - peer1: bastion2.example.com
-        peer2: bastion3.example.com
+      - hosts:
+          bastion_east:
+          bastion_west:
+          bastion_north:
+            vpn_host: 192.168.122.103
+```
+Note that users can provide the host specific parameters with either the host's
+definition in the Ansible `all.hosts` section, or under each host in the `hosts`
+list under `vpn_connections`.  This gives the admin flexibility in case they
+cannot edit values in one or the other section.
+
+There are a couple of use cases where you cannot use per-host settings in
+`all.hosts`:
+* The hosts are external to the inventory e.g. in a remote datacenter, and you can only set up the local ends of the tunnels.
+```yaml
+all:
+  hosts:
+    bastion_east:
+      ansible_host: bastion1.example.com
+    bastion_west:
+      ansible_host: bastion2.example.com
+  vars:
+    vpn_connections:
+      - hosts:
+          bastion_east:
+          bastion_west:
+          bastion_north: # not in the hosts list
+            vpn_host: 192.168.122.103
+            external: true
+```
+The `external: true` means that we know `bastion_north` is not in the Ansible
+inventory, so do not warn that this host is unknown.  Or perhaps we can assume
+that if the host is not in the list, but sufficient parameters are specified,
+the host is external, and do not warn.  We might also use `external: true` as a
+hint that verification can fail if the remote end of the tunnel is not yet set
+up.
+
+* The hosts have multiple vpn tunnels associated with multiple NICs e.g. some OpenStack and OpenShift use cases:
+```yaml
+all:
+  hosts:
+    bastion_east: {...}
+    bastion_west: {...}
+    bastion_north: {...}
+  vars:
+    vpn_connections:
+      - name: control_plane_vpn
+        hosts:
+          bastion_east:
+            vpn_host: 192.168.122.101 # IP for control plane
+          bastion_west:
+            vpn_host: 192.168.122.102
+          bastion_north:
+            vpn_host: 192.168.122.103
+      - name: data_plane_vpn
+        hosts:
+          bastion_east:
+            vpn_host: 10.0.0.1 # IP for data plane
+          bastion_west:
+            vpn_host: 10.0.0.2
+          bastion_north:
+            vpn_host: 10.0.0.3
 ```
