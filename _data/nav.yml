@@ -37,6 +37,9 @@
   - title: "TLS/Crypto Parameter and Key Naming"
     path: "tls_crypto_parameter_and_key_names.html"
 
+  - title: "System Roles Collection - How to Build and Publish"
+    path: "collection-building-publishing.html"
+
   - title: "FAQ"
     path: "faq/"
 
