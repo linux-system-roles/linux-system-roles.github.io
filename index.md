@@ -3,12 +3,15 @@ layout: home
 title: Home
 ---
 
-The **Linux System Roles** are a set of Ansible Roles (and coming soon, an
-Ansible Collection) used to manage and configure common GNU/Linux operating
+The **Linux System Roles** are a set of Ansible Roles, also available as an
+Ansible Collection, used to manage and configure common GNU/Linux operating
 system components. Conceptually, the intent is to provide for the operating
-system components an automation "API" that is consistent across
-multiple major and minor releases. The roles are available in Ansible Galaxy at
-[linux-system-roles](https://galaxy.ansible.com/linux-system-roles/).
+system components an automation "API" that is consistent across multiple major
+and minor releases. The roles are available in Ansible Galaxy at
+[linux-system-roles](https://galaxy.ansible.com/linux-system-roles/).  If you
+would prefer to use a collection instead of individual roles, see
+[https://galaxy.ansible.com/fedora/linux_system_roles](https://galaxy.ansible.com/fedora/linux_system_roles)
+
 
 ## Consistent and abstract
 
@@ -39,6 +42,10 @@ interfaces which provide robust and strictly defined inputs.
 Note that some components are not available on EL6, and some are available
 only on EL8/Fedora.  See the documentation for the individual roles.
 
+## Collection
+If you would prefer to use a collection instead of individual roles, see
+https://galaxy.ansible.com/fedora/linux_system_roles
+
 ## Currently supported subsystems
 
 - [email (postfix)](https://galaxy.ansible.com/linux-system-roles/postfix/)
@@ -57,14 +64,14 @@ only on EL8/Fedora.  See the documentation for the individual roles.
 
 ## Subsystems on the roadmap
 
-- SSH server and client
-- IPSec/VPN
-- Crypto policy
+- SSH server and client (for now we are using [ansible-sshd](https://github.com/willshersystems/ansible-sshd))
+- [VPN (IPSec - libreswan)](https://github.com/linux-system-roles/vpn)
+- [Crypto policy](https://github.com/linux-system-roles/crypto_policies/)
+- [firewall](https://galaxy.ansible.com/linux-system-roles/firewall/)
+- [Cockpit](https://github.com/linux-system-roles/cockpit)
 - Cluster HA (pacemaker/corosync)
 - AuditD
 - Red Hat Subscription Management
-- [firewall](https://galaxy.ansible.com/linux-system-roles/firewall/)
 - Kerberos authentication
 - Bootloader
 - [tuned (power management)](https://galaxy.ansible.com/linux-system-roles/tuned/)
-- Cockpit
