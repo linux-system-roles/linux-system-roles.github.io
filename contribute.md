@@ -11,6 +11,22 @@ provided to the project's landing page at
 [linux-system-roles.github.io](https://linux-system-roles.github.io) Pull
 requests welcome!
 
+## Using tox and tox-lsr
+
+Local unit tests and linting is done using
+[tox](https://tox.readthedocs.io/en/latest/).  You will typically install this
+using your platform packages e.g. `dnf install python3-tox`.  You can also
+install this using `pip` e.g. `pip install tox --user` (and you will need to
+install `pip` using your platform packages e.g. `dnf install python3-pip`).
+
+We use a special linux-system-roles tox plugin called
+[tox-lsr](https://github.com/linux-system-roles/tox-lsr) which provides all of
+the linters, unit tests, etc.  See the
+[README.md](https://github.com/linux-system-roles/tox-lsr/blob/main/README.md)
+for information about how to install and use this plugin.
+
+After making changes, you should run `tox` to check that your changes conform to
+project coding standards.  Otherwise, your pull request will likely be flagged.
 
 ## Code structure
 The repository is structured as described in [Ansible Roles documentation](https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse_roles.html#role-directory-structure)
