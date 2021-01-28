@@ -40,7 +40,7 @@ There is another step to convert the logging_inputs and logging_outputs paramete
 ```
 - name: Set rsyslog_output_newoutput
   set_fact:
-    rsyslog_output_newoutput: "{% raw %}{{ logging_outputs | selectattr('name', 'defined') | selectattr('type', 'defined') | selectattr('type', '==', 'newoutput') | list }}{% endraw %}"
+    rsyslog_output_newoutput: "{% raw %}{{ logging_outputs | selectattr('name', 'defined') | selectattr('type', 'defined') | selectattr('type', 'match', '^newoutput$') | list }}{% endraw %}"
 ```
 Then, add the newoutput to  the "Set rsyslog_outputs" task.
 ```
