@@ -117,6 +117,32 @@ Use the stdout callback to format the output nicely.  Replace `tests_default.yml
    there are any errors, fix them and re-push your commits. If there is no problem with your contribution, the maintainer
    will merge it to the main project.
 
+### Running integration tests with CentOS7 container from CI
+
+CI testing runs Ansible 2.8 tests in a CentOS7 container using Python 2.7 and Jinja 2.7.
+If you are getting a test failure in this environment that you cannot reproduce outside of
+this environment, you can run tests locally using `podman`.  This assumes you have a qcow2
+image somewhere that can be accessed from the container.  The simplest way to handle this
+is to copy the qcow2 image you want to use to `$HOME/linux-system-roles/ROLENAME/tests` and
+refer to it as `TEST_SUBJECTS=./IMAGE.qcow2`.  This assumes you have cloned the
+role at `$HOME/linux-system-roles/ROLENAME`.  If not, adjust the argument to `podman -v`.
+
+```bash
+git clone https://github.com/linux-system-roles/test-harness
+cd test-harness
+buildah bud -f Dockerfile.centos7 -t lsr:centos7
+podman run -it --entrypoint /bin/bash -v $HOME:$HOME -u 0 --privileged lsr:centos7
+```
+then inside the container
+```
+cd /home/USER_FROM_HOST/linux-system-roles/ROLENAME/tests
+TEST_SUBJECTS=./IMAGE.qcow2 ANSIBLE_STDOUT_CALLBACK=debug \
+ansible-playbook -vv -i /usr/share/ansible/inventory/standard-inventory-qcow2 \
+tests_MYTEST.yml
+```
+NOTE: you probably don't want to write to `$HOME` unless you know what you are doing.
+If you want to write out a log file, use `/tmp`.
+
 ### Some important tips
 
 - Make sure your fork and branch are up-to-date with the main project. First of all, 
