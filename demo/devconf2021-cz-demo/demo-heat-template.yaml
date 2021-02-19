@@ -1,0 +1,142 @@
+heat_template_version: 2016-10-14
+
+description: This template creates the demo environment for DevConf2021 cz
+
+parameters:
+  image:
+    type: string
+    label: Image name or ID
+    description: Image name or ID.
+    default: "Fedora-Cloud-Base-33"
+    #CentOS-8-x86_64-GenericCloud-released-latest"
+  flavor:
+    type: string
+    label: Flavor
+    description: Type of instance (flavor) to be used on the compute instance.
+    default: m1.medium
+  key:
+    type: string
+    label: Key name
+    description: Name of key-pair to be installed on the compute instance.
+    default: myusername-pubkey
+  public_network:
+    type: string
+    label: Public network name or ID
+    description: Public network with external IP addresses.
+    default: "provider_net_shared"
+  run_stack_name:
+    type: string
+    label: name of stack used to run the tests
+    description: name of stack used to produce the image
+    default: username.oal.test
+resources:
+  boot_config:
+    type: OS::Heat::CloudConfig
+    properties:
+      cloud_config:
+        cloud_config_modules:
+          - timezone
+          - runcmd
+          - bootcmd
+          - package_update_upgrade_install
+        system_info:
+          default_user:
+            name: demo
+            plain_text_passwd: password
+            lock_passwd: False
+            sudo: ALL=(ALL) NOPASSWD:ALL
+        password: password
+        chpasswd: {expire: False}
+        ssh_pwauth: True
+        package_upgrade: true
+        packages:
+          - git
+          - screen
+        write_files:
+          - path: /etc/sudoers.d/999-cloud-init-requiretty
+            owner: root:root
+            permissions: '0440'
+            content: |
+              Defaults !requiretty
+  demo_security_group:
+    type: OS::Neutron::SecurityGroup
+    properties:
+      description: for demo - just open everything for now
+      name: demo-secgroup
+      rules:
+        - protocol: icmp
+        - protocol: udp
+        - protocol: tcp
+
+  data_volume:
+    type: OS::Cinder::data_volume
+    properties:
+      size: 100
+      name: data_volume
+
+  machineA:
+    type: OS::Nova::Server
+    properties:
+      image: { get_param: image }
+      flavor: { get_param: flavor }
+      key_name: { get_param: key }
+      networks:
+        - network: { get_param: public_network }
+      user_data_format: RAW
+      user_data: { get_resource: boot_config }
+
+  machineB:
+    type: OS::Nova::Server
+    properties:
+      image: { get_param: image }
+      flavor: { get_param: flavor }
+      key_name: { get_param: key }
+      networks:
+        - network: { get_param: public_network }
+      user_data_format: RAW
+      user_data: { get_resource: boot_config }
+
+  machineC:
+    type: OS::Nova::Server
+    properties:
+      image: { get_param: image }
+      flavor: { get_param: flavor }
+      key_name: { get_param: key }
+      networks:
+        - network: { get_param: public_network }
+      user_data_format: RAW
+      user_data: { get_resource: boot_config }
+
+  data_volume:
+    type: OS::Cinder::Volume
+    properties:
+      size: 100
+
+  data_volume_attachment:
+    type: OS::Cinder::VolumeAttachment
+    properties:
+      volume_id: { get_resource: data_volume }
+      instance_uuid: { get_resource: machineA }
+
+outputs:
+  machineA_name:
+    description: Name of A
+    value: { get_attr: [machineA, name] }
+  machineA_ip:
+    description: The IP address of A
+    value: { get_attr: [machineA, first_address] }
+  machineB_name:
+    description: Name of B
+    value: { get_attr: [machineB, name] }
+  machineB_ip:
+    description: The IP address of B
+    value: { get_attr: [machineB, first_address] }
+  machineC_name:
+    description: Name of C
+    value: { get_attr: [machineC, name] }
+  machineC_ip:
+    description: The IP address of C
+    value: { get_attr: [machineC, first_address] }
+  data_volume_path:
+    description: disk path of data_volume
+    value: { get_attr: [data_volume, attachments_list, 0, device] }

@@ -1,0 +1,3 @@
+# not used - the only setting currently used is
+# metrics_monitored_hosts which is dynamically
+# generated in inventory.yml

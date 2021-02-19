@@ -1,0 +1,85 @@
+- delegate_to: localhost
+  run_once: true
+  block:
+    # - name: Install python2-cryptography
+    #   package:
+    #     name:
+    #       - python2-cryptography
+    #     state: present
+    #   become: true
+
+    - name: local cert directory
+      file:
+        path: certs
+        state: directory
+
+    - name: Generate a CA key
+      openssl_privatekey:
+        path: certs/ca.key
+        type: RSA
+
+    - name: Generate a CA Certificate Signing Request
+      openssl_csr:
+        path: certs/ca.csr
+        privatekey_path: certs/ca.key
+        common_name: demo-ca.demo.test
+
+    - name: Generate a self signed CA cert using the CA key
+      openssl_certificate:
+        path: certs/ca.crt
+        privatekey_path: certs/ca.key
+        csr_path: certs/ca.csr
+        provider: selfsigned
+
+    - name: Generate a server/client key
+      openssl_privatekey:
+        path: certs/{{ item }}.key
+        type: RSA
+      loop: "{{ ansible_play_hosts_all }}"
+
+    - name: Generate a server Certificate Signing Request
+      openssl_csr:
+        path: certs/{{ item }}.csr
+        privatekey_path: certs/{{ item }}.key
+        country_name: US
+        organization_name: Demo
+        common_name: "{{ item }}"
+        subject_alt_name: "DNS:{{ item }},IP:{{ hostvars[item]['ansible_all_ipv4_addresses'][0] }}"
+      loop: "{{ ansible_play_hosts_all }}"
+
+    - name: Generate a server/client cert using the key, and signed by the self signed CA
+      openssl_certificate:
+        path: certs/{{ item }}.crt
+        privatekey_path: certs/{{ item }}.key
+        csr_path: certs/{{ item }}.csr
+        ownca_path: certs/ca.crt
+        ownca_privatekey_path: certs/ca.key
+        provider: ownca
+      loop: "{{ ansible_play_hosts_all }}"
+
+- name: install ca package
+  package:
+    name: ca-certificates
+    state: present
+
+- name: place new CA cert
+  copy:
+    src: certs/ca.crt
+    dest: /etc/pki/ca-trust/source/anchors/demo-ca.crt
+    mode: "0644"
+
+- name: update trusted ca
+  command: /bin/update-ca-trust
+  changed_when: false
+
+- name: install server cert
+  copy:
+    src: certs/{{ inventory_hostname }}.crt
+    dest: /etc/pki/tls/certs/{{ inventory_hostname }}.crt
+    mode: "0644"
+
+- name: install server key
+  copy:
+    src: certs/{{ inventory_hostname }}.key
+    dest: /etc/pki/tls/private/{{ inventory_hostname }}.key
+    mode: "0644"
