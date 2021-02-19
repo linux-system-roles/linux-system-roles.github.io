@@ -1,0 +1,132 @@
+kernel_settings_sysctl:
+  - name: net.ipv4.tcp_rmem
+    value: "4096 87380 16777216"
+  - name: net.ipv4.tcp_wmem
+    value: "4096 16384 16777216"
+  - name: net.ipv4.udp_mem
+    value: "3145728 4194304 16777216"
+  - name: net.ipv4.conf.default.secure_redirects
+    value: '0'
+  - name: net.ipv6.conf.all.accept_source_route
+    value: '0'
+
+kernel_settings_sysfs:
+  - name: /sys/kernel/debug/x86/pti_enabled
+    value: 0
+  - name: /sys/kernel/debug/x86/retp_enabled
+    value: 0
+  - name: /sys/kernel/debug/x86/ibrs_enabled
+    value: 0
+
+crypto_policies_policy: "DEFAULT:NO-SHA1"
+crypto_policies_reload: true
+
+# session recording for all users
+tlog_scope_sssd: all
+
+firewall:
+  # metrics
+  - port: '44321/tcp'
+    state: enabled
+  # logging
+  - port: '514/tcp'
+    state: enabled
+  - port: '20514/tcp'
+    state: enabled
+  # nfs
+  - service: nfs
+    state: enabled
+  # ipsec/vpn
+  - service: ipsec
+    state: enabled
+
+timesync_ntp_servers:
+  - hostname: clock.corp.redhat.com
+    iburst: yes
+    maxpoll: 10
+
+nfs_client_packages:
+  - nfs-utils
+nfs_client_directory:
+  name: /data
+  state: directory
+  mode: '0777'
+  owner: root
+  group: root
+nfs_client_mount:
+  name: /data
+  src: "{{ hostvars[groups['nfs_servers'][0]]['ansible_eth0']['ipv4']['address'] }}:/data"
+  fstype: nfs
+  opts: defaults
+  state: mounted
+
+sshd_gssapi_authentication: 'yes'
+sshd_gssapi_cleanup_credentials: 'no'
+sshd_kerberos_authentication: 'no'
+sshd_password_authentication: 'no'
+sshd_pubkey_authentication: 'yes'
+sshd_syslog_facility: AUTHPRIV
+sshd_use_dns: 'no'
+sshd_use_pam: 'yes'
+sshd_x11_forwarding: 'no'
+sshd_rekey_limit: '512M 1h'
+sshd_max_sessions: 10
+sshd_max_startups: 10:30:100
+sshd_max_auth_tries: 6
+sshd_client_alive_interval: 600
+sshd_client_alive_count_max: 3
+
+logging_inputs:
+  - name: system_input
+    type: basics
+logging_outputs:
+  - name: relp_client
+    type: relp
+    target: "{{ logging_server }}"
+    tls: true
+    ca_cert: /etc/pki/ca-trust/source/anchors/demo-ca.crt
+    cert: /etc/pki/tls/certs/{{ inventory_hostname }}.crt
+    private_key: /etc/pki/tls/private/{{ inventory_hostname }}.key
+    permitted_servers:
+      - "*.{{ logging_domain }}"
+logging_flows:
+  - name: flow
+    inputs: [system_input]
+    outputs: [relp_client]
+
+network_connections:
+  - name: br0
+    type: bridge
+    ip:
+      address:
+        - "2001:db8::23/64"
+    state: up
+  - name: bond0
+    type: bond
+    port_type: bridge
+    controller: br0
+    state: up
+  - name: br29
+    type: bridge
+    ip:
+      address:
+        - "2001:db8:29::23/64"
+    state: up
+  - name: vlan29
+    type: vlan
+    parent: bond0
+    vlan:
+      id: 29
+    port_type: bridge
+    controller: br29
+    state: up
+  - name: eth1
+    type: ethernet
+    controller: bond0
+    port_type: bond
+    state: up
+  - name: eth2
+    type: ethernet
+    controller: bond0
+    port_type: bond
+    state: up

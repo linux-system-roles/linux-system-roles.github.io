@@ -1,0 +1,61 @@
+# these are the preliminary settings that must be applied first
+# all of the settings are set in inventory/group_vars/HOSTGROUP.yml
+- hosts: all
+  roles:
+    - fedora.linux_system_roles.kernel_settings
+    - fedora.linux_system_roles.crypto_policies
+    - fedora.linux_system_roles.network
+    - fedora.linux_system_roles.firewall
+    - fedora.linux_system_roles.timesync
+    - fedora.linux_system_roles.kdump
+    - fedora.linux_system_roles.tlog
+    - fedora.linux_system_roles.sshd
+    - fedora.linux_system_roles.vpn
+
+# deploy x509 certs/keys
+- hosts: all
+  tasks:
+    - name: create and deploy certs and keys
+      include_tasks: create_certs_keys.yml
+
+# set up NFS servers
+- hosts: nfs_servers
+  roles:
+    - fedora.linux_system_roles.storage
+    - oasis_roles.system.nfs_server
+
+# set up logging servers
+- hosts: logging_servers
+  roles:
+    - fedora.linux_system_roles.logging
+
+# set up logging clients
+- hosts: all:!logging_servers
+  roles:
+    - fedora.linux_system_roles.logging
+
+# set up metrics clients
+- hosts: all:!metrics_servers
+  roles:
+    - fedora.linux_system_roles.metrics
+
+# set up nfs clients
+- hosts: all:!nfs_servers
+  tasks:
+    - name: install nfs client packages
+      package:
+        name: "{{ nfs_client_packages }}"
+        state: present
+
+    - name: create directory for mount
+      when:
+        - not ansible_mounts | selectattr('fstype', 'equalto', 'nfs4') | selectattr('mount', 'equalto', '/data') | list
+      file: "{{ nfs_client_directory }}"
+
+    - name: do the nfs mount
+      mount: "{{ nfs_client_mount }}"
+
+# set up metrics servers
+- hosts: metrics_servers
+  roles:
+    - fedora.linux_system_roles.metrics

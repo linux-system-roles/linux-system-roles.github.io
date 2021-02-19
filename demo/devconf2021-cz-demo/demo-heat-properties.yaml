@@ -1,0 +1,3 @@
+parameters:
+  flavor: m1.medium
+  key: rmeggins-pubkey

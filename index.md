@@ -12,7 +12,6 @@ and minor releases. The roles are available in Ansible Galaxy at
 would prefer to use a collection instead of individual roles, see
 [https://galaxy.ansible.com/fedora/linux_system_roles](https://galaxy.ansible.com/fedora/linux_system_roles)
 
-
 ## Consistent and abstract
 
 A major objective is that a role will provide a consistent user interface to
@@ -44,7 +43,12 @@ only on EL8/Fedora.  See the documentation for the individual roles.
 
 ## Collection
 If you would prefer to use a collection instead of individual roles, see
-https://galaxy.ansible.com/fedora/linux_system_roles
+[Linux System Roles Collection](https://galaxy.ansible.com/fedora/linux_system_roles)
+
+## Demos
+* [Demo home page](https://github.com/linux-system-roles/linux-system-roles.github.io/tree/master/demo)
+* [DevConf2020.cz](https://github.com/linux-system-roles/linux-system-roles.github.io/tree/master/demo/devconf-demo)
+* [DevConf2021.cz](https://github.com/linux-system-roles/linux-system-roles.github.io/tree/master/demo/devconf2021-cz-demo/)
 
 ## Currently supported subsystems
 
@@ -61,17 +65,18 @@ https://galaxy.ansible.com/fedora/linux_system_roles
 - [nbde_client](https://galaxy.ansible.com/linux-system-roles/nbde_client/)
 - [certificate](https://galaxy.ansible.com/linux-system-roles/certificate/)
 - [kernel_settings (sysctl, sysfs, etc.)](https://galaxy.ansible.com/linux-system-roles/kernel_settings/)
+- SSH server (used in the collection) [ansible-sshd](https://github.com/willshersystems/ansible-sshd/)
+- [SSH client](https://github.com/linux-system-roles/ssh/)
+- [VPN (IPSec - libreswan)](https://github.com/linux-system-roles/vpn/)
+- [Crypto policies](https://github.com/linux-system-roles/crypto_policies/)
+- [Cluster HA (pacemaker/corosync)](https://github.com/linux-system-roles/ha_cluster/)
 
 ## Subsystems on the roadmap
 
-- SSH server and client (for now we are using [ansible-sshd](https://github.com/willshersystems/ansible-sshd))
-- [VPN (IPSec - libreswan)](https://github.com/linux-system-roles/vpn)
-- [Crypto policy](https://github.com/linux-system-roles/crypto_policies/)
 - [firewall](https://galaxy.ansible.com/linux-system-roles/firewall/)
 - [Cockpit](https://github.com/linux-system-roles/cockpit)
-- Cluster HA (pacemaker/corosync)
 - AuditD
 - Red Hat Subscription Management
 - Kerberos authentication
-- Bootloader
+- [bootloader](https://github.com/linux-system-roles/bootloader/)
 - [tuned (power management)](https://galaxy.ansible.com/linux-system-roles/tuned/)

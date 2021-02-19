@@ -1,0 +1,7 @@
+---
+- hosts: all
+  tasks:
+    - command: ip link add eth1 type veth peer eth1p
+    - command: ip link set up eth1p
+    - command: ip link add eth2 type veth peer eth2p
+    - command: ip link set up eth2p

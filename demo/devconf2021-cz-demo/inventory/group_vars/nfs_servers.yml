@@ -1,0 +1,19 @@
+storage_volumes:
+  - name: data
+    type: disk
+    mount_point: /data
+    disks:
+      - "{{ storage_data_volume }}"
+
+# other settings are dynamically generated in inventory.yml
+nfs_server_shares:
+  - share_path: /data
+    host_allow: '*'
+    opts: rw,sync,all_squash
+    create_dir: true
+    owner: nobody
+    group: nobody
+    mode: '0755'
+nfs_server_services:
+  - rpcbind
+  - nfs-server

@@ -1,0 +1,18 @@
+logging_inputs:
+  - name: system_input
+    type: basics
+  - name: relp_server
+    type: relp
+    tls: true
+    ca_cert: /etc/pki/ca-trust/source/anchors/demo-ca.crt
+    cert: /etc/pki/tls/certs/{{ inventory_hostname }}.crt
+    private_key: /etc/pki/tls/private/{{ inventory_hostname }}.key
+    permitted_clients:
+      - "*.{{ logging_domain }}"
+logging_outputs:
+  - name: remote_files_output
+    type: remote_files
+logging_flows:
+  - name: flow
+    inputs: [system_input,relp_server]
+    outputs: [remote_files_output]
