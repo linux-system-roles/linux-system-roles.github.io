@@ -59,6 +59,20 @@ the list of objects being managed (like the `sysctl` module, which will remove
 the parameter from the `/etc/sysctl.conf` file, but the actual value of the
 parameter will not revert to its original value until after a reboot).
 
+Extending the usage, some scalar parameters could be a target of removal with
+`state: absent`. Here is an example. Assuming a scalar parameter
+`kernel_settings_systemd_cpu_affinity` has a string value "1,3,5,7".
+```yaml
+kernel_settings_systemd_cpu_affinity: "1,3,5,7"
+```
+To remove the value, use the `dict` value `{"state": "absent"}`.
+```yaml
+kernel_settings_systemd_cpu_affinity:
+  state: absent
+```
+The `kernel_settings` already implemented the feature. For the implementation
+details, we recommend to see the role.
+
 ## Replacing an entire list of items with the given values with `previous: replaced`
 
 This is the case where you want to remove all of the existing values in the
