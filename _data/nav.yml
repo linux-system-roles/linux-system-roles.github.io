@@ -25,6 +25,10 @@
   - title: "HowTo"
     path: "howto/"
 
+    subitems:
+    - title: "How to Tag and Release a Role Repo"
+      path: "tag-and-release-role.html"
+
   - title: "Incremental Settings for Ansible Values"
     path: "incremental_settings.html"
 
