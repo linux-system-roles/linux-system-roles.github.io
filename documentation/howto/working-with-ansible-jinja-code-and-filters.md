@@ -155,7 +155,7 @@ https://github.com/pallets/jinja/blob/2.7.3/jinja2/filters.py and https://github
 filter/test is supported.  Some notable differences:
 
 * `namespace` is not available
-* the filters `eq`, `equalto`, and `==` are not available
+* the tests `eq`, `equalto`, and `==` are not available
 
 For `namespace`, you'll just have to figure out how to write your `for` loops in
 such a way that they don't need `namespace`.
