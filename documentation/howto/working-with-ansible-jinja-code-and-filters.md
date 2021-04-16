@@ -10,7 +10,7 @@ machine just to test one filter output in one task.
 
 ## Example playbook
 Here is an example of such a playbook:
-
+<!-- {% raw %} -->
 ```yaml
 - hosts: localhost
   gather_facts: false
@@ -21,6 +21,7 @@ Here is an example of such a playbook:
         msg: |
           foo is {{ foo | to_nice_json }}
 ```
+<!-- {% endraw %} -->
 
 Run this playbook like this:
 
@@ -38,6 +39,7 @@ newlines.
 Here is an example testing out a filter in a complex nested data structure -
 given the `result` dict, I want to extract a list of `cidr_block` values:
 
+<!-- {% raw %} -->
 ```yaml
 - hosts: localhost
   gather_facts: false
@@ -57,9 +59,11 @@ given the `result` dict, I want to extract a list of `cidr_block` values:
     - debug:
         msg: blocks {{ result.vpc.cidr_block_association_set | map(attribute="cidr_block") | list | to_nice_json }}
 ```
+<!-- {% endraw %} -->
 
 and this is the output of the task:
 
+<!-- {% raw %} -->
 ```
 TASK [debug] *******************************************************************************
 task path: /home/rmeggins/ansible_sandbox/vpc-test.yml:16
@@ -72,6 +76,7 @@ blocks [
     "192.168.123.0/24"
 ]
 ```
+<!-- {% endraw %} -->
 
 ## Example that uses facts
 
@@ -80,6 +85,7 @@ don't need system facts.  Even fact gathering from localhost takes time.
 However, if you do need to test some functionality that requires
 `ansible_facts`, omit the `gather_facts: false`.  
 
+<!-- {% raw %} -->
 ```yaml
 ---
 - hosts: localhost
@@ -97,9 +103,11 @@ However, if you do need to test some functionality that requires
     - debug:
         msg: varfiles {{ varfiles | to_nice_json }}
 ```
+<!-- {% endraw %} -->
 
 Here is an example that parses `service_facts`:
 
+<!-- {% raw %} -->
 ```yaml
 ---
 - hosts: localhost
@@ -111,6 +119,7 @@ Here is an example that parses `service_facts`:
           service_facts {{ ansible_facts.services | to_nice_json }}
           again {{ ansible_facts.services | dict2items | selectattr('key', 'match', '^systemd-cryptsetup@') | map(attribute='value') | map(attribute='name') | list }}
 ```
+<!-- {% endraw %} -->
 
 ## Using Different Jinja2 Versions
 
@@ -154,17 +163,22 @@ such a way that they don't need `namespace`.
 For the `eq` filter - it is quite common to want to write a filter expression
 like this:
 
+<!-- {% raw %} -->
 ```
 {{ somelistofdicts | selectattr('someattr', '==', 'somevalue') | list }}
 ```
+<!-- {% endraw %} -->
 
 but that will not work in jinja 2.7 because the test `==` is not available.
 Fortunately, ansible 2.8 provides the `match` test, so you can rewrite the above
 like this:
 
+<!-- {% raw %} -->
 ```
 {{ somelistofdicts | selectattr('someattr', 'match', '^somevalue$') | list }}
 ```
+<!-- {% endraw %} -->
+
 which will work on all versions of ansible and jinja2.
 
 ## References
