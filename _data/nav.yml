@@ -26,6 +26,9 @@
     path: "howto/"
 
     subitems:
+    - title: "Working with Ansible Jinja2 code and filters"
+      path: "working-with-ansible-jinja-code-and-filters.html"
+
     - title: "How to Tag and Release a Role Repo"
       path: "tag-and-release-role.html"
 
