@@ -166,7 +166,7 @@ conflicts. On the rebase you have to compare what the other person added to what
 added, and merge both file versions into one that combines it all.
 
 - If you have any doubt, do not hesitate to ask! You can join IRC channel \#systemroles
-  on freenode, or ask on the PR/issue itself.
+  on Libera.chat, or ask on the PR/issue itself.
 
 ### Best Practices
 
@@ -315,8 +315,8 @@ The mailing list for developers: systemroles@lists.fedorahosted.org
 
 [Archive of the mailing list](https://lists.fedorahosted.org/archives/list/systemroles@lists.fedorahosted.org/)
 
-If you are using IRC, join the `#systemroles` IRC channel on 
-[freenode](https://freenode.net/kb/answer/chat)
+If you are using IRC, join the `[#systemroles](irc://irc.libera.chat/systemroles)` IRC channel on 
+[Libera.chat](https://libera.chat)
 
 
 *Thanks for contributing and happy coding!!*

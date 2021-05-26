@@ -11,4 +11,4 @@ Do you need help solving a linux-system-roles related problem? Do you want to di
 
 ## IRC
 
-#systemroles@freenode.org ([Web IRC](https://webchat.freenode.net/?channels=#systemroles))
+#[systemroles@libera.chat](irc://irc.libera.chat/systemroles)
