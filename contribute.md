@@ -193,20 +193,20 @@ added, and merge both file versions into one that combines it all.
 - If you have any doubt, do not hesitate to ask! You can join IRC channel \#systemroles
   on Libera.chat, or ask on the PR/issue itself.
 
-### Best Practices
+### Recommended Practices
 
-Please refer to [Best Practices](https://github.com/oasis-roles/meta_standards/blob/master/README.md) for best practices to follow while making a contribution .
+Please refer to [Recommended Practices](https://github.com/redhat-cop/automation-good-practices) for recommended practices to follow while making a contribution.
 
 The following sections are a good place to start:
 
-* [Naming Things](https://github.com/oasis-roles/meta_standards/blob/master/README.md#naming-things)
-* [Providers](https://github.com/oasis-roles/meta_standards/blob/master/README.md#providers)
-* [Supporting Multiple providers](https://github.com/oasis-roles/meta_standards/blob/master/README.md#supporting-multiple-providers)
-* [Check Mode and Idempotency Issues](https://github.com/oasis-roles/meta_standards/blob/master/README.md#check-mode-and-idempotency-issues)
-* [YAML and Jinja2 Syntax](https://github.com/oasis-roles/meta_standards/blob/master/README.md#yaml-and-jinja2-syntax)
-* [Ansible Best Practices](https://github.com/oasis-roles/meta_standards/blob/master/README.md#ansible-best-practices)
-* [Vars vs Defaults](https://github.com/oasis-roles/meta_standards/blob/master/README.md#vars-vs-defaults)
-* [Documentation conventions](https://github.com/oasis-roles/meta_standards/blob/master/README.md#documentation-conventions)
+* [Naming Things](https://github.com/redhat-cop/automation-good-practices/blob/main/roles/README.adoc#naming-things)
+* [Providers](https://github.com/redhat-cop/automation-good-practices/blob/main/roles/README.adoc#providers)
+* [Supporting Multiple providers](https://github.com/redhat-cop/automation-good-practices/blob/main/roles/README.adoc#supporting-multiple-providers)
+* [Check Mode and Idempotency Issues](https://github.com/redhat-cop/automation-good-practices/blob/main/roles/README.adoc#check-mode-and-idempotency-issues)
+* [YAML and Jinja2 Syntax](https://github.com/redhat-cop/automation-good-practices/blob/main/coding_style/README.adoc#yaml-and-jinja2-syntax)
+* [Ansible Best Practices](https://github.com/redhat-cop/automation-good-practices/blob/main/coding_style/README.adoc#ansible-guidelines)
+* [Vars vs Defaults](https://github.com/redhat-cop/automation-good-practices/blob/main/roles/README.adoc#vars-vs-defaults)
+* [Documentation conventions](https://github.com/redhat-cop/automation-good-practices/blob/main/roles/README.adoc#documentation-conventions)
 
 
 ### Write a good commit message
