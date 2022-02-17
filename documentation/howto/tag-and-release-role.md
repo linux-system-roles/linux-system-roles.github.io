@@ -6,6 +6,13 @@ We use [Semantic Versioning](https://semver.org) for release numbering.  We use
 the release number for the git tag and for the version number used when
 publishing to [Ansible Galaxy](https://galaxy.ansible.com)
 
+There are some helper scripts for tagging and publishing roles, and releasing a
+collection by converting the roles into a collection, checking, and publishing
+to Galaxy.  See
+[roles-tag-and-release.sh](https://github.com/linux-system-roles/auto-maintenance/#roles-tag-and-releasesh)
+and
+[release_collection.py](https://github.com/linux-system-roles/auto-maintenance/#release_collectionpy)
+
 ## Version Number format
 
 The version is required to be in the form `X.Y.Z` where `X`, `Y`, and `Z` are

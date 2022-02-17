@@ -20,8 +20,8 @@ implementation.  For example, assigning an IP Address to a network interface
 should be a generic concept separate from any particular implementations such
 as init networking scripts, NetworkManager, or systemd-networkd.
 
-Another part of the consistency is a set of [Best
-Practices](https://github.com/oasis-roles/meta_standards/blob/master/README.md)
+Another part of the consistency is a set of [Good
+Practices](https://github.com/redhat-cop/automation-good-practices)
 which role users and developers follow in order to maintain a consistent
 behavior and interface for all of the roles.
 
@@ -39,7 +39,7 @@ interfaces which provide robust and strictly defined inputs.
 - RHEL 6+ derivatives such as CentOS 6+
 
 Note that some components are not available on EL6, and some are available
-only on EL8/Fedora.  See the documentation for the individual roles.
+only on EL8+/Fedora.  See the documentation for the individual roles.
 
 ## Collection
 If you would prefer to use a collection instead of individual roles, see
@@ -70,11 +70,11 @@ If you would prefer to use a collection instead of individual roles, see
 - [VPN (IPSec - libreswan)](https://github.com/linux-system-roles/vpn/)
 - [Crypto policies](https://github.com/linux-system-roles/crypto_policies/)
 - [Cluster HA (pacemaker/corosync)](https://github.com/linux-system-roles/ha_cluster/)
+- [Cockpit](https://github.com/linux-system-roles/cockpit/)
+- [firewall](https://galaxy.ansible.com/linux-system-roles/firewall/)
 
 ## Subsystems on the roadmap
 
-- [firewall](https://galaxy.ansible.com/linux-system-roles/firewall/)
-- [Cockpit](https://github.com/linux-system-roles/cockpit)
 - AuditD
 - Red Hat Subscription Management
 - Kerberos authentication

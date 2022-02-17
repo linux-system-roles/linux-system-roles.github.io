@@ -13,6 +13,10 @@ requests welcome!
 
 ## Using tox and tox-lsr
 
+*NOTE*: The "python3-tox" package in Fedora is *BROKEN*.  You'll have to install
+tox with pip: "pip install tox --user", and make sure "$HOME/.local/bin" is in
+your $PATH.
+
 Local unit tests and linting is done using
 [tox](https://tox.readthedocs.io/en/latest/).  You will typically install this
 using your platform packages e.g. `dnf install python3-tox`.  You can also
@@ -26,7 +30,27 @@ the linters, unit tests, etc.  See the
 for information about how to install and use this plugin.
 
 After making changes, you should run `tox` to check that your changes conform to
-project coding standards.  Otherwise, your pull request will likely be flagged.
+project coding standards.  Otherwise, your pull request will likely fail one or more tests.
+
+### Use tox-lsr with qemu
+
+The latest version of tox-lsr supports qemu testing.  https://github.com/linux-system-roles/tox-lsr#qemu-testing
+
+After you have installed `tox` and `tox-lsr` (see above), use yum or dnf to
+install `standard-test-roles-inventory-qemu`
+
+* Download the config file to `~/.config/linux-system-roles.json` from [here](https://github.com/linux-system-roles/linux-system-roles.github.io/download/linux-system-roles.json)
+
+Assuming you are in a git clone of a role repo which has a `tox.ini` file - you can use e.g.
+
+```
+tox -e qemu-ansible-core-2.12 -- --image-name centos-8 tests/tests_default.yml
+```
+
+There are many command line options and environment variables which can be used to control the behavior, and you can customize the testenv in tox.ini.  See  https://github.com/linux-system-roles/tox-lsr#qemu-testing
+
+This will create a directory named `artifacts/` in the current directory which
+may contain additional logs useful for debugging.
 
 ## Code structure
 The repository is structured as described in [Ansible Roles documentation](https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse_roles.html#role-directory-structure)
@@ -44,12 +68,10 @@ In addition to the standard roles files described in the roles documentation, th
 The rest of files in the root folder mostly serve as configuration files for different
 testing tools and bots that help with the maintenance of the project.
 
-
 For Python code, in the source file, the imports will generally come first, followed by constants, classes, and methods. The style of python coding for this project
 is [**PEP 8**](https://www.python.org/dev/peps/pep-0008/),  with automatic formatting
 thanks to [Python Black](https://black.readthedocs.io/en/stable/). Use `tox -e black` to 
 run formatting tests or use `tox` to run all configured tests.
-
 
 ## Configuring Git
 
@@ -95,7 +117,10 @@ of this repository.
   - Integration tests are executed as
     [ansible-playbooks](https://docs.ansible.com/ansible/latest/user_guide/playbooks.html).
 
-To run integration tests, use a cloud image like the [CentOS 8.1
+To run integration tests, use `tox` with `qemu` (see above).
+
+If you want to configure and run everything manually, use a cloud image like the
+[CentOS 8.1
 VM](https://cloud.centos.org/centos/8/x86_64/images/CentOS-8-GenericCloud-8.1.1911-20200113.3.x86_64.qcow2)
 and execute the command and download the package
 `standard-test-roles-inventory-qemu` from the Fedora repository:
@@ -104,11 +129,11 @@ and execute the command and download the package
 
 Then `cd tests` to change to the `tests` subdirectory, and run the test playbook like this:
 ```
-ANSIBLE_STDOUT_CALLBACK=debug TEST_SUBJECTS=CentOS-8-GenericCloud-8.1.1911-20200113.3.x86_64.qcow2
+TEST_SUBJECTS=CentOS-8-GenericCloud-8.1.1911-20200113.3.x86_64.qcow2
 ansible-playbook -vv -i /usr/share/ansible/inventory/standard-inventory-qcow2
 tests_default.yml
 ```
-Use the stdout callback to format the output nicely.  Replace `tests_default.yml` with the actual test you want to run.
+Replace `tests_default.yml` with the actual test you want to run.
 
 4. Once the work is ready and committed, push the branch to your remote fork and click on
    "new Pull Request" on Github (or use `gh` or `hub`).
@@ -235,7 +260,8 @@ how to write a good commit message). This content is licensed under
 [CC-BY-SA](https://creativecommons.org/licenses/by-sa/4.0/).
 
 ### Debugging
-For debugging, use `TEST_DEBUG=true`.  Remember that the last path is one of the test you want to run.
+For debugging, use `tox` with `qemu` (see above), and use the `--debug`
+flag.  For the manual method, use `TEST_DEBUG=true`.  Remember that the last path is one of the test you want to run.
 ```
 cd tests
 TEST_DEBUG=true ANSIBLE_STDOUT_CALLBACK=debug \
@@ -243,9 +269,10 @@ TEST_SUBJECTS=CentOS-8-GenericCloud-8.1.1911-20200113.3.x86_64.qcow2 \
 ansible-playbook -vv -i /usr/share/ansible/inventory/standard-inventory-qcow2 \
 tests_default.yml
 ```
-Using `TEST_DEBUG=true` will allow you to `ssh` into the managed host
+Using debug will allow you to `ssh` into the managed host
 after the test has run. It will print out instructions about the exact command to use 
-to `ssh`, and how to destroy the managed host after you are done.
+to `ssh`, and how to destroy the managed host after you are done.  Or,
+check the `artifacts/default_provisioners.log` for the ssh command.
 
 **The next part is specific for debugging the network role**
 
@@ -267,14 +294,18 @@ ansible-playbook --skip-tags tests::cleanup \
 The [continuous integration](https://en.wikipedia.org/wiki/Continuous_integration) (CI)
 contains a set of automated tests that are triggered on a remote server. Some of them
 are immediately triggered when pushing new content to a PR (i.e. the tests hosted on
-TravisCI) while other need to be triggered by members of the project. This second
+Github Actions) while other need to be triggered by members of the project. This second
 set of tests can be manually triggered. To trigger them, write a command as a PR
 comment. The available commands are:
 
-- [citest] - Trigger a re-test for all machines.
-- [citest bad] - Trigger a re-test for all machines with an error or failure status.
-- [citest pending] - Trigger a re-test for all machines with a pending status.
-- [citest commit:<sha1\>] - specify a commit to be tested if the submitter is not trusted.
+- `[citest]` - Trigger a re-test for all machines.
+- `[citest bad]` - Trigger a re-test for all machines with an error or failure status.
+- `[citest pending]` - Trigger a re-test for all machines with a pending status.
+- `[citest commit:<sha1>]` - specify a commit to be tested if the submitter is not trusted.
+- `[citest skip]` - if you have a change to the documentation, or otherwise it
+would be a waste of time to do integration CI testing on your change, you can
+put `[citest skip]` in the title of your pull request.  This will save a lot of
+time.
 
 ## Blog Post Contribution
 
