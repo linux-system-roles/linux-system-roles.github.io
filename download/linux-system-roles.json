@@ -1,0 +1,92 @@
+{
+  "repositories": [
+    "linux-system-roles/certificate",
+    "linux-system-roles/cockpit",
+    "linux-system-roles/crypto_policies",
+    "linux-system-roles/firewall",
+    "linux-system-roles/ha_cluster",
+    "linux-system-roles/kdump",
+    "linux-system-roles/kernel_settings",
+    "linux-system-roles/logging",
+    "linux-system-roles/metrics",
+    "linux-system-roles/mssql",
+    "linux-system-roles/nbde_client",
+    "linux-system-roles/nbde_server",
+    "linux-system-roles/network",
+    "linux-system-roles/postfix",
+    "linux-system-roles/selinux",
+    "linux-system-roles/ssh",
+    "linux-system-roles/storage",
+    "linux-system-roles/timesync",
+    "linux-system-roles/tlog",
+    "linux-system-roles/tuned",
+    "linux-system-roles/vpn"
+  ],
+  "images": [
+    {
+      "name": "fedora-34",
+      "compose": "https://kojipkgs.fedoraproject.org/compose/cloud/latest-Fedora-Cloud-34/compose/",
+      "openstack_image": "Fedora-Cloud-Base-34",
+      "upload_results": true,
+      "min_ansible_version": "2.9"
+    },
+    {
+      "name": "fedora-35",
+      "compose": "https://kojipkgs.fedoraproject.org/compose/cloud/latest-Fedora-Cloud-35/compose/",
+      "openstack_image": "Fedora-Cloud-Base-35",
+      "upload_results": true,
+      "min_ansible_version": "2.9"
+    },
+    {
+      "name": "centos-6",
+      "source": "https://cloud.centos.org/centos/6/images/CentOS-6-x86_64-GenericCloud-1907.qcow2c",
+      "openstack_image": "CentOS-6-x86_64-GenericCloud-released-latest",
+      "upload_results": true,
+      "env": {
+        "TEST_EXTRA_SSH_ARGS": "-o PubkeyAcceptedKeyTypes=+ssh-rsa"
+      },
+      "setup": [
+        {
+          "name": "Change repos to use vault",
+          "hosts": "all",
+          "become": true,
+          "gather_facts": false,
+          "tasks": [
+            { "name": "fix yum repos to use vault.centos.org",
+              "shell": "set -euo pipefail; for file in /etc/yum.repos.d/CentOS-*.repo; do if ! grep '^baseurl=.*vault[.]centos[.]org' \"$file\"; then sed -i -e 's,^mirrorlist,#mirrorlist,' -e 's,^#baseurl=,baseurl=,' -e 's,mirror.centos.org/centos/$releasever,vault.centos.org/6.10,' \"$file\"; fi; done",
+              "no_log": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "centos-7",
+      "source": "https://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud.qcow2c",
+      "openstack_image": "CentOS-7-x86_64-GenericCloud-released-latest",
+      "env": {
+        "TEST_SSHD_USEDNS_NO": "True"
+      },
+      "upload_results": true
+    },
+    {
+      "name": "centos-8",
+      "source": "https://cloud.centos.org/centos/8-stream/x86_64/images/CentOS-Stream-GenericCloud-8-20220125.1.x86_64.qcow2",
+      "openstack_image": "CentOS-8-x86_64-GenericCloud-released-latest",
+      "upload_results": true,
+      "setup": [
+        {
+          "name": "Enable HA repos",
+          "hosts": "all",
+          "become": true,
+          "gather_facts": false,
+          "tasks": [
+            { "name": "Enable HA repos",
+              "command": "dnf config-manager --set-enabled ha"
+            }
+          ]
+        }
+      ]
+    },
+  ]
+}
