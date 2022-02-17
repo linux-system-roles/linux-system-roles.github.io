@@ -39,7 +39,7 @@ The latest version of tox-lsr supports qemu testing.  https://github.com/linux-s
 After you have installed `tox` and `tox-lsr` (see above), use yum or dnf to
 install `standard-test-roles-inventory-qemu`
 
-* Download the config file to `~/.config/linux-system-roles.json` from [here](https://github.com/linux-system-roles/linux-system-roles.github.io/download/linux-system-roles.json)
+* Download the config file to `~/.config/linux-system-roles.json` from [here](https://raw.githubusercontent.com/linux-system-roles/linux-system-roles.github.io/master/download/linux-system-roles.json)
 
 Assuming you are in a git clone of a role repo which has a `tox.ini` file - you can use e.g.
 
