@@ -13,10 +13,6 @@ requests welcome!
 
 ## Using tox and tox-lsr
 
-*NOTE*: The "python3-tox" package in Fedora is *BROKEN*.  You'll have to install
-tox with pip: "pip install tox --user", and make sure "$HOME/.local/bin" is in
-your $PATH.
-
 Local unit tests and linting is done using
 [tox](https://tox.readthedocs.io/en/latest/).  You will typically install this
 using your platform packages e.g. `dnf install python3-tox`.  You can also
