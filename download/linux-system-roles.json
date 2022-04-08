@@ -26,6 +26,7 @@
     {
       "name": "fedora-34",
       "compose": "https://kojipkgs.fedoraproject.org/compose/cloud/latest-Fedora-Cloud-34/compose/",
+      "container": "registry.fedoraproject.org/fedora-toolbox:34",
       "openstack_image": "Fedora-Cloud-Base-34",
       "upload_results": true,
       "min_ansible_version": "2.9"
@@ -33,6 +34,7 @@
     {
       "name": "fedora-35",
       "compose": "https://kojipkgs.fedoraproject.org/compose/cloud/latest-Fedora-Cloud-35/compose/",
+      "container": "registry.fedoraproject.org/fedora-toolbox:35",
       "openstack_image": "Fedora-Cloud-Base-35",
       "upload_results": true,
       "min_ansible_version": "2.9"
@@ -49,7 +51,6 @@
         {
           "name": "Change repos to use vault",
           "hosts": "all",
-          "become": true,
           "gather_facts": false,
           "tasks": [
             { "name": "fix yum repos to use vault.centos.org",
@@ -63,6 +64,7 @@
     {
       "name": "centos-7",
       "source": "https://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud-2111.qcow2c",
+      "container": "quay.io/centos/centos:centos7",
       "openstack_image": "CentOS-7-x86_64-GenericCloud-released-latest",
       "env": {
         "TEST_SSHD_USEDNS_NO": "True"
@@ -72,13 +74,13 @@
     {
       "name": "centos-8",
       "centoshtml": "https://cloud.centos.org/centos/8-stream/x86_64/images",
+      "container": "quay.io/centos/centos:stream8",
       "openstack_image": "CentOS-8-x86_64-GenericCloud-released-latest",
       "upload_results": true,
       "setup": [
         {
           "name": "Enable HA repos",
           "hosts": "all",
-          "become": true,
           "gather_facts": false,
           "tasks": [
             { "name": "Enable HA repos",
@@ -91,13 +93,13 @@
     {
       "name": "centos-9",
       "centoshtml": "https://cloud.centos.org/centos/9-stream/x86_64/images",
+      "container": "quay.io/centos/centos:stream9",
       "openstack_image": "CentOS-9-x86_64-GenericCloud-released-latest",
       "upload_results": true,
       "setup": [
         {
           "name": "Enable HA repos",
           "hosts": "all",
-          "become": true,
           "gather_facts": false,
           "tasks": [
             { "name": "Enable HA repos",
