@@ -75,6 +75,7 @@ If you would prefer to use a collection instead of individual roles, see
 
 ## Subsystems on the roadmap
 
+- [podman](https://github.com/linux-system-roles/podman)
 - AuditD
 - Red Hat Subscription Management
 - Kerberos authentication
