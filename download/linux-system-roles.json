@@ -13,29 +13,29 @@
     "linux-system-roles/nbde_client",
     "linux-system-roles/nbde_server",
     "linux-system-roles/network",
+    "linux-system-roles/podman",
     "linux-system-roles/postfix",
     "linux-system-roles/selinux",
     "linux-system-roles/ssh",
     "linux-system-roles/storage",
     "linux-system-roles/timesync",
     "linux-system-roles/tlog",
-    "linux-system-roles/tuned",
     "linux-system-roles/vpn"
   ],
   "images": [
-    {
-      "name": "fedora-34",
-      "compose": "https://kojipkgs.fedoraproject.org/compose/cloud/latest-Fedora-Cloud-34/compose/",
-      "container": "registry.fedoraproject.org/fedora-toolbox:34",
-      "openstack_image": "Fedora-Cloud-Base-34",
-      "upload_results": true,
-      "min_ansible_version": "2.9"
-    },
     {
       "name": "fedora-35",
       "compose": "https://kojipkgs.fedoraproject.org/compose/cloud/latest-Fedora-Cloud-35/compose/",
       "container": "registry.fedoraproject.org/fedora-toolbox:35",
       "openstack_image": "Fedora-Cloud-Base-35",
+      "upload_results": true,
+      "min_ansible_version": "2.9"
+    },
+    {
+      "name": "fedora-36",
+      "compose": "https://kojipkgs.fedoraproject.org/compose/cloud/latest-Fedora-Cloud-36/compose/",
+      "container": "registry.fedoraproject.org/fedora-toolbox:36",
+      "openstack_image": "Fedora-Cloud-Base-36",
       "upload_results": true,
       "min_ansible_version": "2.9"
     },
@@ -77,6 +77,11 @@
       "container": "quay.io/centos/centos:stream8",
       "openstack_image": "CentOS-8-x86_64-GenericCloud-released-latest",
       "upload_results": true,
+      "runqemu_args": {
+        "use_snapshot": false,
+        "use_yum_cache": false,
+        "setup_yml": []
+      },
       "setup": [
         {
           "name": "Enable HA repos",
