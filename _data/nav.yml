@@ -47,6 +47,9 @@
   - title: "System Roles Collection - How to Build and Publish"
     path: "collection-building-publishing.html"
 
+  - title: "How to Specify Roles Used by Other Roles"
+    path: "role-requirements.html"
+
   - title: "FAQ"
     path: "faq/"
 
