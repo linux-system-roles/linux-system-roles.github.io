@@ -9,7 +9,7 @@ Many of our roles need to use the functionality provided by another role.
 An example for the Logging role:
 * When new certs need to be generated with deploying the logging system,
   integration with the certificate role. See also
-  (Certificate README)[https://github.com/linux-system-roles/certificate/blob/master/README.md]
+  [Certificate README](https://github.com/linux-system-roles/certificate/blob/master/README.md)
 * A RELP connection may need to open a port in the firewall, and could use the
   firewall role.
 * A RELP connection may need to set SELinux attributes for a port, and could use
