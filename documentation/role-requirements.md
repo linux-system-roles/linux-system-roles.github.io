@@ -37,8 +37,8 @@ using the other role.  The role must specify the other roles using the FQCN e.g.
 
 # Dependencies/Requirements
 
-The collections will be specified in the `meta/collection-requirements.yml`
-file, as are done for other collections.
+The collections required at runtime will be specified in the
+`meta/collection-requirements.yml` file, as are done for other collections.
 ```yaml
 collections:
   - name: fedora.linux_system_roles
@@ -55,6 +55,10 @@ The role requires additional collections which are specified in `meta/collection
 `ansible-galaxy install -vv -r meta/collection-requirements.yml`
 ```
 We will have to update any existing wording to be more generic like the above.
+
+Collections required at test-time will be specified in
+`tests/collection-requirements.yml`.  Users will typically not need to know
+about this, but developers can use this with tox-lsr, the CI system, etc.
 
 # Collections
 
