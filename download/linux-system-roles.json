@@ -1,41 +1,18 @@
 {
-  "repositories": [
-    "linux-system-roles/certificate",
-    "linux-system-roles/cockpit",
-    "linux-system-roles/crypto_policies",
-    "linux-system-roles/firewall",
-    "linux-system-roles/ha_cluster",
-    "linux-system-roles/kdump",
-    "linux-system-roles/kernel_settings",
-    "linux-system-roles/logging",
-    "linux-system-roles/metrics",
-    "linux-system-roles/mssql",
-    "linux-system-roles/nbde_client",
-    "linux-system-roles/nbde_server",
-    "linux-system-roles/network",
-    "linux-system-roles/podman",
-    "linux-system-roles/postfix",
-    "linux-system-roles/selinux",
-    "linux-system-roles/ssh",
-    "linux-system-roles/storage",
-    "linux-system-roles/timesync",
-    "linux-system-roles/tlog",
-    "linux-system-roles/vpn"
-  ],
   "images": [
-    {
-      "name": "fedora-35",
-      "compose": "https://kojipkgs.fedoraproject.org/compose/cloud/latest-Fedora-Cloud-35/compose/",
-      "container": "registry.fedoraproject.org/fedora-toolbox:35",
-      "openstack_image": "Fedora-Cloud-Base-35",
-      "upload_results": true,
-      "min_ansible_version": "2.9"
-    },
     {
       "name": "fedora-36",
       "compose": "https://kojipkgs.fedoraproject.org/compose/cloud/latest-Fedora-Cloud-36/compose/",
       "container": "registry.fedoraproject.org/fedora-toolbox:36",
       "openstack_image": "Fedora-Cloud-Base-36",
+      "upload_results": true,
+      "min_ansible_version": "2.9"
+    },
+    {
+      "name": "fedora-37",
+      "compose": "https://kojipkgs.fedoraproject.org/compose/cloud/latest-Fedora-Cloud-37/compose/",
+      "container": "registry.fedoraproject.org/fedora-toolbox:37",
+      "openstack_image": "Fedora-Cloud-Base-37",
       "upload_results": true,
       "min_ansible_version": "2.9"
     },
