@@ -37,6 +37,12 @@ using the other role.  The role must specify the other roles using the FQCN e.g.
 
 # Dependencies/Requirements
 
+We can not use standard [role dependencies](https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_reuse_roles.html#role-dependencies)
+as defined in `meta/main.yml`, because they do not lead only to installation
+of these dependencies, but also their invocation. But we do not know if we want
+to invoke them at the installation time nor what arguments we want to pass.
+Therefore we will use the collection requirements here.
+
 The collections required at runtime will be specified in the
 `meta/collection-requirements.yml` file, as are done for other collections.
 ```yaml
