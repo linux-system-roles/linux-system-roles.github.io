@@ -335,6 +335,11 @@ https://github.com/linux-system-roles/linux-system-roles.github.io/pulls - once
 your PR is merged, it may take a few minutes before it is published at
 https://linux-system-roles.github.io/blog/  NOTE: If you are viewing the above in plain text or github markdown render, replace the `lcub` template with `{` and the `rcub` template with `}`.
 
+## Update Changelogs, Tag, and Release a Role Repo
+
+Tagging and releasing a role repo is now automated by updating the CHANGELOG.md file.
+Please see {% link documentation/howto/tag-and-release-role.md %} for more details.
+
 ## How to reach us
 The mailing list for developers: systemroles@lists.fedorahosted.org
 
