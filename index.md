@@ -45,6 +45,12 @@ only on EL8+/Fedora.  See the documentation for the individual roles.
 If you would prefer to use a collection instead of individual roles, see
 [Linux System Roles Collection](https://galaxy.ansible.com/fedora/linux_system_roles)
 
+## Submit an Issue
+
+If the issue is specific to a role, file an issue at the role repository - for example, [network issues](https://github.com/linux-system-roles/network/issues/new/choose)
+
+If the issue is not specific to a role e.g. a general question, or a request to add a new role, use [General issues](https://github.com/linux-system-roles/linux-system-roles.github.io/issues/new)
+
 ## Demos
 * [Demo home page](https://github.com/linux-system-roles/linux-system-roles.github.io/tree/master/demo)
 * [DevConf2020.cz](https://github.com/linux-system-roles/linux-system-roles.github.io/tree/master/demo/devconf-demo)
@@ -66,18 +72,23 @@ If you would prefer to use a collection instead of individual roles, see
 - [certificate](https://galaxy.ansible.com/linux-system-roles/certificate/)
 - [kernel_settings (sysctl, sysfs, etc.)](https://galaxy.ansible.com/linux-system-roles/kernel_settings/)
 - SSH server (used in the collection) [ansible-sshd](https://github.com/willshersystems/ansible-sshd/)
-- [SSH client](https://github.com/linux-system-roles/ssh/)
-- [VPN (IPSec - libreswan)](https://github.com/linux-system-roles/vpn/)
-- [Crypto policies](https://github.com/linux-system-roles/crypto_policies/)
-- [Cluster HA (pacemaker/corosync)](https://github.com/linux-system-roles/ha_cluster/)
-- [Cockpit](https://github.com/linux-system-roles/cockpit/)
+- [SSH client](https://galaxy.ansible.com/linux-system-roles/ssh/)
+- [VPN (IPSec - libreswan)](https://galaxy.ansible.com/linux-system-roles/vpn/)
+- [Crypto policies](https://galaxy.ansible.com/linux-system-roles/crypto_policies/)
+- [Cluster HA (pacemaker/corosync)](https://galaxy.ansible.com/linux-system-roles/ha_cluster/)
+- [Cockpit](https://galaxy.ansible.com/linux-system-roles/cockpit/)
 - [firewall](https://galaxy.ansible.com/linux-system-roles/firewall/)
+- [Systemd journald](https://galaxy.ansible.com/linux-system-roles/journald/)
+- [Active Directory join](https://galaxy.ansible.com/linux-system-roles/ad_integration/)
+- [podman](https://galaxy.ansible.com/linux-system-roles/podman)
+- [Red Hat Subscription Management and Insights](https://galaxy.ansible.com/linux-system-roles/rhc)
 
 ## Subsystems on the roadmap
 
-- [podman](https://github.com/linux-system-roles/podman)
+- [PostgreSQL](https://github.com/linux-system-roles/postgresql/)
+- [pam_pwd](https://github.com/linux-system-roles/pam_pwd/)
 - AuditD
-- Red Hat Subscription Management
 - Kerberos authentication
+- Systemd - manage unit files, services
 - [bootloader](https://github.com/linux-system-roles/bootloader/)
 - [tuned (power management)](https://galaxy.ansible.com/linux-system-roles/tuned/)
