@@ -32,6 +32,9 @@
     - title: "How to Tag and Release a Role Repo"
       path: "tag-and-release-role.html"
 
+  - title: "Introduction to Ansible for Linux System Roles"
+    path: "intro-to-ansible-for-system-roles.html"
+
   - title: "Incremental Settings for Ansible Values"
     path: "incremental_settings.html"
 

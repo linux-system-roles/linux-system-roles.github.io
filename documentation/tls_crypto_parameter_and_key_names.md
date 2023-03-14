@@ -1,4 +1,7 @@
-# TLS/Crypto Parameter and Key Names
+---
+layout: page
+title: "TLS/Crypto Parameter and Key Names"
+---
 Many system roles have parameter and configuration key names that relate to TLS and other common cryptographic concepts.  This document describes the naming convention we are using in system roles for things like: the name of the parameter used for the full path to X509 certificate files on managed nodes; the name of the parameter which holds the value used for the LUKS encryption passphrase; and so on.
 
 ## Description
