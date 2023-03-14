@@ -77,9 +77,27 @@ is a good place to start.
 
 To use Linux System Roles from your playbook, you can include them in a legacy
 style, as described in
-["Roles"](https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_reuse_roles.html)
+["Roles"](https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_reuse_roles.html),
+for example,
+```
+- name: Manage logging on my systems
+  hosts: all
+  vars:
+    logging_inputs: basic
+  roles:
+    - linux-system-roles.logging
+```
 or in the collection format, as described in
-["Using collections in playbooks"](https://docs.ansible.com/ansible/latest/collections_guide/collections_using_playbooks.html#using-collections-in-playbooks)
+["Using collections in playbooks"](https://docs.ansible.com/ansible/latest/collections_guide/collections_using_playbooks.html#using-collections-in-playbooks),
+for example,
+```
+- name: Manage logging on my systems
+  hosts: all
+  vars:
+    logging_inputs: basic
+  roles:
+    - fedora.linux_system_roles.logging
+```
 The Linux System Roles support both styles.
 
 ## How to Use Vault
@@ -106,7 +124,16 @@ my_secret_var_name: !vault |
           <<snip>>
 ```
 Instead of specifying the real secret value "my_secret_value", you can use
-"my_secret_var_name" in your playbook.
+"my_secret_var_name" in your playbook as follows.
+```
+- name: Use the secret
+  some_task:
+    password: "{{ my_secret_var_name }}"
+  ...
+  no_log: true
+```
+Ansible will keep the value of "my_secret_var_name" encrypted until needed
+(and use no_log: true to avoid leaking the value in the Ansible logs).
 
 Then, run `ansible-playbook` as follows:
 ```
