@@ -285,6 +285,9 @@ common, so we can "pre-digest" that with a local variable:
     __pre_digest: "{{ a_very.long_variable.name | some_filter }}"
 ```
 <!-- {% endraw %} -->
+You can use a `vars` on *any* task - even `include_role`, `include_tasks`, etc.
+You can also use `vars` in a `block` to create variables used by multiple tasks
+in the `block` that are locally scoped to the `block`.
 
 #### Use backslash escapes in double quoted strings
 
