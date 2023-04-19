@@ -191,6 +191,11 @@ like this:
 
 which will work on all versions of ansible and jinja2.
 
+## Complex Ansible/Jinja Data Manipulation
+
+See [Manipulating data](https://docs.ansible.com/ansible/latest/playbook_guide/complex_data_manipulation.html)
+for many examples of complex data parsing and manipulation.
+
 ## How to solve some common ansible-lint issues
 
 ### Line Wrapping
