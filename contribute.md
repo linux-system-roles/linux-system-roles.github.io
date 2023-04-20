@@ -220,53 +220,97 @@ commits](https://help.github.com/en/github/collaborating-with-issues-and-pull-re
   \#systemroles on Libera.chat, or ask on the PR/issue itself.
 
 ### Write a good commit message
-Here are a few rules to keep in mind while writing a commit message
 
-   1. Separate subject from body with a blank line
-   2. Limit the subject line to 50 characters
-   3. Capitalize the subject line
-   4. Do not end the subject line with a period
-   5. Use the imperative mood in the subject line
-   6. Wrap the body at 72 characters
-   7. Use the body to explain what and why vs. how
+This section covers the Conventional Commits format that system roles use to collect the changelog and release roles automatically, and then gives some general advices on writing commit messages.
 
- A good commit message looks something like this
+#### Conventional Commits format
+
+System roles follow the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) format, there is a CI job that ensures that all commits follow the format.
+Conventional commits make it possible to generate the changelog and update the release version fully automatically.
+
+We use an automation that collects commit messages into the changelog and release notes, please ensure that you write the commits properly and treat them as a customer facing content.
+
+The commit message should be structured as follows:
+
 ```
- Summarize changes in around 50 characters or less
+<required type>(optional scope)<optional !>: <your commit description>
 
- More detailed explanatory text, if necessary. Wrap it to about 72
- characters or so. In some contexts, the first line is treated as the
- subject of the commit and the rest of the text as the body. The
- blank line separating the summary from the body is critical (unless
- you omit the body entirely); various tools like `log`, `shortlog`
- and `rebase` can get confused if you run the two together.
+[optional body]
 
- Explain the problem that this commit is solving. Focus on why you
- are making this change as opposed to how (the code explains that).
- Are there side effects or other unintuitive consequences of this
- change? Here's the place to explain them.
+[optional footer(s)]
+```
 
- Further paragraphs come after blank lines.
+Here are rules that you must follow while writing a conventional commit message:
 
-  - Bullet points are okay, too
+1. You must include a type of the commit at the beginning of the commit, followed by a colon and a space, e.g. `feat: <your commit description>`.
 
-  - Typically a hyphen or asterisk is used for the bullet, preceded
-    by a single space, with blank lines in between, but conventions
-    vary here
+    The type `feat` MUST be used when a commit adds a new feature to your application or library.
+    The type `fix` MUST be used when a commit fixes a bug.
+    Other commit types may be `test`, `docs`, `ci`, `refactor`, `style`, `build`, `chore`, `perf`, `performance`, and others, use your common sense here.
 
- If you use an issue tracker, put references to them at the bottom,
- like this:
+    Considering [Semantic Versioning](http://semver.org/#summary):
+    - The type `feat` correlates with `MINOR`
+    - All other types correlate with `PATCH`
 
- Resolves: #123
- See also: #456, #789
+    Considering changelog and release notes categories:
+    - The type `feat` correlates with `New Features`
+    - The type `fix` correlates with `Bug Fixes`
+    - All other types correlate with `Other Changes` 
+
+2. You must mark commits that introduce a breaking API change by appending `!` after the commit type, e.g. `fix!: <your commit description>`.
+Considering [Semantic Versioning](http://semver.org/#summary), this correlates with `MAJOR`.
+A BREAKING CHANGE can be part of commits of any type.
+
+3. You may optionally provide a commit scope after a commit type.
+This is not required but you can use it to further structure commits.
+If provided, a scope MUST consist of a noun describing a section of the codebase surrounded by parenthesis, e.g. `fix(parser): <your commit description>`.
+This does not affect the versioning.
+
+#### General best practice rules
+
+Here are some general best practice rules taken from [chris beams git commit](https://chris.beams.io/posts/git-commit/).
+You may want to read this for a more detailed explanation (and links to other posts on how to write a good commit message).
+This content is licensed under [CC-BY-SA](https://creativecommons.org/licenses/by-sa/4.0/).
+
+1. Separate the subject from the body with a blank line
+2. Limit the subject line to 50 characters
+3. Capitalize the subject line
+4. Do not end the subject line with a period
+5. Use the imperative mood in the subject line
+6. Wrap the body at 72 characters
+7. Use the body to explain what and why vs. how
+
+A good commit message looks something like this
+```
+<required type>(optional scope)<optional !>: Summarize changes in around 50 characters or less
+
+More detailed explanatory text, if necessary. Wrap it to about 72
+characters or so. In some contexts, the first line is treated as the
+subject of the commit and the rest of the text as the body. The
+blank line separating the summary from the body is critical (unless
+you omit the body entirely); various tools like `log`, `shortlog`
+and `rebase` can get confused if you run the two together.
+
+Explain the problem that this commit is solving. Focus on why you
+are making this change as opposed to how (the code explains that).
+Are there side effects or other unintuitive consequences of this
+change? Here's the place to explain them.
+
+Further paragraphs come after blank lines.
+
+ - Bullet points are okay, too
+
+ - Typically a hyphen or asterisk is used for the bullet, preceded
+   by a single space, with blank lines in between, but conventions
+   vary here
+
+If you use an issue tracker, put references to them at the bottom,
+like this:
+
+Resolves: rhbz#123456
 ```
 
 Do not forget to sign your commit! Use `git commit -s`
-
-This is taken from [chris beams git commit](https://chris.beams.io/posts/git-commit/).
-You may want to read this for a more detailed explanation (and links to other
-posts on how to write a good commit message). This content is licensed under
-[CC-BY-SA](https://creativecommons.org/licenses/by-sa/4.0/).
 
 ## Debugging Integration Tests
 
