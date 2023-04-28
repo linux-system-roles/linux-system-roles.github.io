@@ -246,7 +246,8 @@ Here are rules that you must follow while writing a conventional commit message:
 
     The type `feat` MUST be used when a commit adds a new feature to your application or library.
     The type `fix` MUST be used when a commit fixes a bug.
-    Other commit types may be `test`, `docs`, `ci`, `refactor`, `style`, `build`, `chore`, `perf`, `performance`, and others, use your common sense here.
+    Other allowed commit types are `build`, `chore`, `ci`, `docs`, `feat`, `fix`, `perf`, `refractor`, `revert`, `style`, `test`, `tests`.
+    Let us know if you want to add some other type to the allowed list.
 
     Considering [Semantic Versioning](http://semver.org/#summary):
     - The type `feat` correlates with `MINOR`
