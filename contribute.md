@@ -225,10 +225,15 @@ This section covers the Conventional Commits format that system roles use to col
 
 #### Conventional Commits format
 
-System roles follow the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) format, there is a CI job that ensures that all commits follow the format.
+System roles follow the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) format, repositories have a Commitlint GitHub action that ensures that all commit and PR titles and description follow the format.
 Conventional commits make it possible to generate the changelog and update the release version fully automatically.
 
-We use an automation that collects commit messages into the changelog and release notes, please ensure that you write the commits properly and treat them as a customer facing content.
+We ensure the conventional commits format not only on commits but also on PR titles and description to be able to automate collecting PR titles and descriptions in the changelog and release notes based on the set type. Therefore, please ensure that you write the commits and PR titles and descriptions properly and treat them as a customer facing content.
+
+If your PR has 1 commit, make commit and PR titles and messages identical.
+If you must include several commits in your PR, summarize the changes that commits do in the PR title and commit.
+
+The following information applies both to commit messages and PR titles and description.
 
 The commit message should be structured as follows:
 
