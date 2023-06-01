@@ -1,19 +1,18 @@
 {
   "images": [
     {
-      "name": "fedora-36",
-      "compose": "https://kojipkgs.fedoraproject.org/compose/cloud/latest-Fedora-Cloud-36/compose/",
-      "container": "registry.fedoraproject.org/fedora-toolbox:36",
-      "openstack_image": "Fedora-Cloud-Base-36",
-      "upload_results": true,
-      "min_ansible_version": "2.9"
-    },
-    {
       "name": "fedora-37",
       "compose": "https://kojipkgs.fedoraproject.org/compose/cloud/latest-Fedora-Cloud-37/compose/",
       "container": "registry.fedoraproject.org/fedora-toolbox:37",
       "openstack_image": "Fedora-Cloud-Base-37",
       "upload_results": true,
+      "min_ansible_version": "2.9"
+    },
+    {
+      "name": "fedora-38",
+      "compose": "https://kojipkgs.fedoraproject.org/compose/cloud/latest-Fedora-Cloud-38/compose/",
+      "container": "registry.fedoraproject.org/fedora-toolbox:38",
+      "openstack_image": "Fedora-Cloud-Base-38",
       "min_ansible_version": "2.9"
     },
     {
@@ -40,7 +39,7 @@
     },
     {
       "name": "centos-7",
-      "source": "https://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud-2111.qcow2c",
+      "source": "https://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud.qcow2c",
       "container": "quay.io/centos/centos:centos7",
       "openstack_image": "CentOS-7-x86_64-GenericCloud-released-latest",
       "env": {
@@ -50,7 +49,7 @@
     },
     {
       "name": "centos-8",
-      "centoshtml": "https://cloud.centos.org/centos/8-stream/x86_64/images",
+      "source": "https://cloud.centos.org/centos/8-stream/x86_64/images/CentOS-Stream-GenericCloud-8-latest.x86_64.qcow2",
       "container": "quay.io/centos/centos:stream8",
       "openstack_image": "CentOS-8-x86_64-GenericCloud-released-latest",
       "upload_results": true,
@@ -74,7 +73,7 @@
     },
     {
       "name": "centos-9",
-      "centoshtml": "https://cloud.centos.org/centos/9-stream/x86_64/images",
+      "source": "https://cloud.centos.org/centos/9-stream/x86_64/images/CentOS-Stream-GenericCloud-9-latest.x86_64.qcow2",
       "container": "quay.io/centos/centos:stream9",
       "openstack_image": "CentOS-9-x86_64-GenericCloud-released-latest",
       "upload_results": true,
