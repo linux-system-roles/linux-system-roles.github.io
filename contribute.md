@@ -221,59 +221,6 @@ commits](https://help.github.com/en/github/collaborating-with-issues-and-pull-re
 
 ### Write a good commit message
 
-This section covers the Conventional Commits format that system roles use to collect the changelog and release roles automatically, and then gives some general advices on writing commit messages.
-
-#### Conventional Commits format
-
-System roles follow the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) format, repositories have a Commitlint GitHub action that ensures that all commit and PR titles and description follow the format.
-Conventional commits make it possible to generate the changelog and update the release version fully automatically.
-
-We ensure the conventional commits format not only on commits but also on PR titles and description to be able to automate collecting PR titles and descriptions in the changelog and release notes based on the set type. Therefore, please ensure that you write the commits and PR titles and descriptions properly and treat them as a customer facing content.
-
-If your PR has 1 commit, make commit and PR titles and messages identical.
-If you must include several commits in your PR, summarize the changes that commits do in the PR title and commit.
-
-The following information applies both to commit messages and PR titles and description.
-
-The commit message should be structured as follows:
-
-```
-<required type>(optional scope)<optional !>: <your commit description>
-
-[optional body]
-
-[optional footer(s)]
-```
-
-Here are rules that you must follow while writing a conventional commit message:
-
-1. You must include a type of the commit at the beginning of the commit, followed by a colon and a space, e.g. `feat: <your commit description>`.
-
-    The type `feat` MUST be used when a commit adds a new feature to your application or library.
-    The type `fix` MUST be used when a commit fixes a bug.
-    Other allowed commit types are `build`, `chore`, `ci`, `docs`, `feat`, `fix`, `perf`, `refractor`, `revert`, `style`, `test`, `tests`.
-    Let us know if you want to add some other type to the allowed list.
-
-    Considering [Semantic Versioning](http://semver.org/#summary):
-    - The type `feat` correlates with `MINOR`
-    - All other types correlate with `PATCH`
-
-    Considering changelog and release notes categories:
-    - The type `feat` correlates with `New Features`
-    - The type `fix` correlates with `Bug Fixes`
-    - All other types correlate with `Other Changes` 
-
-2. You must mark commits that introduce a breaking API change by appending `!` after the commit type, e.g. `fix!: <your commit description>`.
-Considering [Semantic Versioning](http://semver.org/#summary), this correlates with `MAJOR`.
-A BREAKING CHANGE can be part of commits of any type.
-
-3. You may optionally provide a commit scope after a commit type.
-This is not required but you can use it to further structure commits.
-If provided, a scope MUST consist of a noun describing a section of the codebase surrounded by parenthesis, e.g. `fix(parser): <your commit description>`.
-This does not affect the versioning.
-
-#### General best practice rules
-
 Here are some general best practice rules taken from [chris beams git commit](https://chris.beams.io/posts/git-commit/).
 You may want to read this for a more detailed explanation (and links to other posts on how to write a good commit message).
 This content is licensed under [CC-BY-SA](https://creativecommons.org/licenses/by-sa/4.0/).
@@ -288,7 +235,7 @@ This content is licensed under [CC-BY-SA](https://creativecommons.org/licenses/b
 
 A good commit message looks something like this
 ```
-<required type>(optional scope)<optional !>: Summarize changes in around 50 characters or less
+Summarize changes in around 50 characters or less
 
 More detailed explanatory text, if necessary. Wrap it to about 72
 characters or so. In some contexts, the first line is treated as the
@@ -315,8 +262,81 @@ like this:
 
 Resolves: rhbz#123456
 ```
+Do not forget to sign your commit! Use `git commit -s`.
 
-Do not forget to sign your commit! Use `git commit -s`
+Now continue to the following section to write a good PR title and description.
+
+## Write a good PR title and description
+
+For PR titles, system roles follow the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) format, repositories have a Commitlint GitHub action that ensures that all PR titles follow the format.
+It makes it possible to generate the changelog and update the release version fully automatically.
+
+Note that we ensure the conventional commits format only on PR titles and not on commits to let developers keep commit messages targeted for other developers i.e. describe actual changes to code that users should not care about.
+And PR titles, on the contrary, must be aimed at end users.
+
+We automatically collect PR titles and descriptions to changelog and release notes based on the set type.
+Therefore, please ensure that you write PR titles and descriptions properly and treat them as a customer facing content.
+
+### PR titles format
+
+PR titles should be structured as follows:
+
+```
+<required type><optional !>: <your PR title>
+```
+
+Here are rules that you must follow while writing a conventional PR title:
+
+1. You must include a type of the change at the beginning of the title, followed by a colon and a space, e.g. `feat: <your PR title>`.
+
+    The type `feat` MUST be used when you add a new feature.
+    The type `fix` MUST be used when you fix a bug.
+    Other allowed types are `build`, `chore`, `ci`, `docs`, `feat`, `fix`, `perf`, `refractor`, `revert`, `style`, `test`, `tests`.
+    Let us know if you want to add some other type to the allowed list.
+
+    Considering [Semantic Versioning](http://semver.org/#summary):
+    - The type `feat` correlates with `MINOR`
+    - All other types correlate with `PATCH`
+    - For `MAJOR`, see point 2 below.
+
+    Considering changelog and release notes categories:
+    - The type `feat` correlates with `New Features`
+    - The type `fix` correlates with `Bug Fixes`
+    - All other types correlate with `Other Changes` 
+
+2. You must mark PRs that introduce a breaking API change by appending `!` after the type, e.g. `fix!: <your PR title>`.
+Considering [Semantic Versioning](http://semver.org/#summary), this correlates with `MAJOR`.
+A BREAKING CHANGE can be part of PR of any type.
+
+### PR description format
+
+For the PR description, write it as a release not that you want end users to see.
+When creating a PR, you will see the following template, please fill it in to ensure that users get informed about what causes the change and how to make use of it:
+
+```Markdown
+Enhancement:
+
+Reason:
+
+Result:
+
+Issue Tracker Tickets (Jira or BZ if any):
+```
+
+### Example PR title and desctiption
+
+feat: Support custom data and logs storage paths
+
+Enhancement: Custom data and logs storage paths
+
+Reason: Previously, the role was configuring the default data and logs storage paths.
+
+Result: Currently, you can optionally provide custom storage paths with variables `mssql_datadir` and `mssql_logdir`.
+And optionally set permissions for the custom paths with `mssql_datadir`_mode and `mssql_logdir`_mode variables.
+
+Issue Tracker Tickets (Jira or BZ if any):
+https://issues.redhat.com/browse/RHEL-528
+https://issues.redhat.com/browse/RHEL-529
 
 ## Debugging Integration Tests
 
