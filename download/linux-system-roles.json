@@ -65,7 +65,7 @@
           "gather_facts": false,
           "tasks": [
             { "name": "Enable HA repos",
-              "command": "dnf config-manager --set-enabled ha"
+              "command": "dnf config-manager --set-enabled ha resilientstorage"
             }
           ]
         }
@@ -84,7 +84,7 @@
           "gather_facts": false,
           "tasks": [
             { "name": "Enable HA repos",
-              "command": "dnf config-manager --set-enabled highavailability"
+              "command": "dnf config-manager --set-enabled highavailability resilientstorage"
             }
           ]
         }
