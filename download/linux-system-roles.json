@@ -1,18 +1,18 @@
 {
   "images": [
     {
-      "name": "fedora-37",
-      "compose": "https://kojipkgs.fedoraproject.org/compose/cloud/latest-Fedora-Cloud-37/compose/",
-      "container": "registry.fedoraproject.org/fedora-toolbox:37",
-      "openstack_image": "Fedora-Cloud-Base-37",
-      "upload_results": true,
-      "min_ansible_version": "2.9"
-    },
-    {
       "name": "fedora-38",
       "compose": "https://kojipkgs.fedoraproject.org/compose/cloud/latest-Fedora-Cloud-38/compose/",
       "container": "registry.fedoraproject.org/fedora-toolbox:38",
       "openstack_image": "Fedora-Cloud-Base-38",
+      "min_ansible_version": "2.9"
+    },
+    {
+      "name": "fedora-39",
+      "compose": "https://kojipkgs.fedoraproject.org/compose/cloud/latest-Fedora-Cloud-39/compose/",
+      "container": "registry.fedoraproject.org/fedora-toolbox:39",
+      "openstack_image": "Fedora-Cloud-Base-39",
+      "upload_results": true,
       "min_ansible_version": "2.9"
     },
     {
