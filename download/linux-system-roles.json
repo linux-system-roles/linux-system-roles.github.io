@@ -16,6 +16,26 @@
       "min_ansible_version": "2.9"
     },
     {
+      "name": "fedora-40",
+      "variant": "Generic",
+      "subvariant": "Cloud_Base",
+      "compose": "https://kojipkgs.fedoraproject.org/compose/cloud/latest-Fedora-Cloud-39/compose/",
+      "container": "registry.fedoraproject.org/fedora-toolbox:39",
+      "openstack_image": "Fedora-Cloud-Base-39",
+      "upload_results": true,
+      "min_ansible_version": "2.9"
+    },
+    {
+      "name": "fedora-rawhide",
+      "variant": "Generic",
+      "subvariant": "Cloud_Base",
+      "compose": "https://kojipkgs.fedoraproject.org/compose/rawhide/latest-Fedora-Rawhide/compose",
+      "container": "registry.fedoraproject.org/fedora-toolbox:39",
+      "openstack_image": "Fedora-Cloud-Base-39",
+      "upload_results": true,
+      "min_ansible_version": "2.9"
+    },
+    {
       "name": "centos-6",
       "source": "https://cloud.centos.org/centos/6/images/CentOS-6-x86_64-GenericCloud-1907.qcow2c",
       "openstack_image": "CentOS-6-x86_64-GenericCloud-released-latest",
