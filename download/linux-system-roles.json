@@ -109,6 +109,42 @@
           ]
         }
       ]
+    },
+    {
+      "name": "centos-10",
+      "compose": "https://composes.stream.centos.org/stream-10/production/latest-CentOS-Stream/compose/",
+      "variant": "BaseOS",
+      "subvariant": "generic",
+      "container": "quay.io/centos/centos:stream10-development",
+      "openstack_image": "CentOS-10-x86_64-GenericCloud-released-latest",
+      "upload_results": true,
+      "setup": [
+        {
+          "name": "Setup repos",
+          "hosts": "all",
+          "gather_facts": false,
+          "vars": {
+            "repourls": {
+              "centos-HighAvailability": "https://composes.stream.centos.org/stream-10/production/latest-CentOS-Stream/compose/HighAvailability/x86_64/os/",
+              "centos-ResilientStorage": "https://composes.stream.centos.org/stream-10/production/latest-CentOS-Stream/compose/ResilientStorage/x86_64/os/"
+            }
+          },
+          "tasks": [
+            {
+              "name": "set up internal repositories",
+              "yum_repository": {
+                "name": "{{ item.key }}",
+                "description": "{{ item.key }}",
+                "baseurl": "{{ item.value }}",
+                "gpgcheck": false,
+                "file": "/etc/yum.repos.d/rhel.repo"
+              },
+              "no_log": true,
+              "loop": "{{ repourls | dict2items }}"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
