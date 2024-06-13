@@ -73,7 +73,7 @@ window will be a button called Import. Click this button to start importing.
 Galaxy will import and create releases for each release under
 `https://github.com/linux-system-roles/$ROLENAME/releases`.
 Once the import is complete, go to the role's page on Galaxy e.g.
-`https://galaxy.ansible.com/linux-system-roles/network`.
+`https://galaxy.ansible.com/ui/standalone/roles/linux-system-roles/network`.
 You should see your release version listed under `Versions`. If you do not,
 check the import log for errors.
 

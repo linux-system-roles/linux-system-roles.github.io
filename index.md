@@ -8,9 +8,9 @@ Ansible Collection, used to manage and configure common GNU/Linux operating
 system components. Conceptually, the intent is to provide for the operating
 system components an automation "API" that is consistent across multiple major
 and minor releases. The roles are available in Ansible Galaxy at
-[linux-system-roles](https://galaxy.ansible.com/linux-system-roles/).  If you
+[linux-system-roles](https://galaxy.ansible.com/ui/standalone/namespaces/4114).  If you
 would prefer to use a collection instead of individual roles, see
-[https://galaxy.ansible.com/fedora/linux_system_roles](https://galaxy.ansible.com/fedora/linux_system_roles)
+[fedora.linux_system_roles collection](https://galaxy.ansible.com/ui/repo/published/fedora/linux_system_roles)
 
 ## Consistent and abstract
 
@@ -36,14 +36,15 @@ interfaces which provide robust and strictly defined inputs.
 
 - Fedora
 - Red Hat Enterprise Linux (RHEL 6+)
-- RHEL 6+ derivatives such as CentOS 6+
+- CentOS and CentOS Stream
 
 Note that some components are not available on EL6, and some are available
 only on EL8+/Fedora.  See the documentation for the individual roles.
 
 ## Collection
+
 If you would prefer to use a collection instead of individual roles, see
-[Linux System Roles Collection](https://galaxy.ansible.com/fedora/linux_system_roles)
+[Linux System Roles Collection](https://galaxy.ansible.com/ui/repo/published/fedora/linux_system_roles)
 
 ## Submit an Issue
 
@@ -52,43 +53,48 @@ If the issue is specific to a role, file an issue at the role repository - for e
 If the issue is not specific to a role e.g. a general question, or a request to add a new role, use [General issues](https://github.com/linux-system-roles/linux-system-roles.github.io/issues/new)
 
 ## Demos
+
 * [Demo home page](https://github.com/linux-system-roles/linux-system-roles.github.io/tree/master/demo)
 * [DevConf2020.cz](https://github.com/linux-system-roles/linux-system-roles.github.io/tree/master/demo/devconf-demo)
 * [DevConf2021.cz](https://github.com/linux-system-roles/linux-system-roles.github.io/tree/master/demo/devconf2021-cz-demo/)
 
 ## Currently supported subsystems
 
-- [email (postfix)](https://galaxy.ansible.com/linux-system-roles/postfix/)
-- [kdump (kernel crash dump)](https://galaxy.ansible.com/linux-system-roles/kdump/)
-- [network](https://galaxy.ansible.com/linux-system-roles/network/)
-- [selinux](https://galaxy.ansible.com/linux-system-roles/selinux/)
-- [timesync](https://galaxy.ansible.com/linux-system-roles/timesync/)
-- [storage](https://galaxy.ansible.com/linux-system-roles/storage/)
-- [tlog (terminal logging, session recording)](https://galaxy.ansible.com/linux-system-roles/tlog/)
-- [logging](https://galaxy.ansible.com/linux-system-roles/logging/)
-- [metrics](https://galaxy.ansible.com/linux-system-roles/metrics/)
-- [nbde_server](https://galaxy.ansible.com/linux-system-roles/nbde_server/)
-- [nbde_client](https://galaxy.ansible.com/linux-system-roles/nbde_client/)
-- [certificate](https://galaxy.ansible.com/linux-system-roles/certificate/)
-- [kernel_settings (sysctl, sysfs, etc.)](https://galaxy.ansible.com/linux-system-roles/kernel_settings/)
+- [email (postfix)](https://galaxy.ansible.com/ui/standalone/roles/linux-system-roles/postfix/)
+- [kdump (kernel crash dump)](https://galaxy.ansible.com/ui/standalone/roles/linux-system-roles/kdump/)
+- [network](https://galaxy.ansible.com/ui/standalone/roles/linux-system-roles/network/)
+- [selinux](https://galaxy.ansible.com/ui/standalone/roles/linux-system-roles/selinux/)
+- [timesync](https://galaxy.ansible.com/ui/standalone/roles/linux-system-roles/timesync/)
+- [storage](https://galaxy.ansible.com/ui/standalone/roles/linux-system-roles/storage/)
+- [tlog (terminal logging, session recording)](https://galaxy.ansible.com/ui/standalone/roles/linux-system-roles/tlog/)
+- [logging](https://galaxy.ansible.com/ui/standalone/roles/linux-system-roles/logging/)
+- [metrics](https://galaxy.ansible.com/ui/standalone/roles/linux-system-roles/metrics/)
+- [nbde_server](https://galaxy.ansible.com/ui/standalone/roles/linux-system-roles/nbde_server/)
+- [nbde_client](https://galaxy.ansible.com/ui/standalone/roles/linux-system-roles/nbde_client/)
+- [certificate](https://galaxy.ansible.com/ui/standalone/roles/linux-system-roles/certificate/)
+- [kernel_settings (sysctl, sysfs, etc.)](https://galaxy.ansible.com/ui/standalone/roles/linux-system-roles/kernel_settings/)
 - SSH server (used in the collection) [ansible-sshd](https://github.com/willshersystems/ansible-sshd/)
-- [SSH client](https://galaxy.ansible.com/linux-system-roles/ssh/)
-- [VPN (IPSec - libreswan)](https://galaxy.ansible.com/linux-system-roles/vpn/)
-- [Crypto policies](https://galaxy.ansible.com/linux-system-roles/crypto_policies/)
-- [Cluster HA (pacemaker/corosync)](https://galaxy.ansible.com/linux-system-roles/ha_cluster/)
-- [Cockpit](https://galaxy.ansible.com/linux-system-roles/cockpit/)
-- [firewall](https://galaxy.ansible.com/linux-system-roles/firewall/)
-- [Systemd journald](https://galaxy.ansible.com/linux-system-roles/journald/)
-- [Active Directory join](https://galaxy.ansible.com/linux-system-roles/ad_integration/)
-- [podman](https://galaxy.ansible.com/linux-system-roles/podman)
-- [Red Hat Subscription Management and Insights](https://galaxy.ansible.com/linux-system-roles/rhc)
+- [SSH client](https://galaxy.ansible.com/ui/standalone/roles/linux-system-roles/ssh/)
+- [VPN (IPSec - libreswan)](https://galaxy.ansible.com/ui/standalone/roles/linux-system-roles/vpn/)
+- [Crypto policies](https://galaxy.ansible.com/ui/standalone/roles/linux-system-roles/crypto_policies/)
+- [Cluster HA (pacemaker/corosync)](https://galaxy.ansible.com/ui/standalone/roles/linux-system-roles/ha_cluster/)
+- [Cockpit](https://galaxy.ansible.com/ui/standalone/roles/linux-system-roles/cockpit/)
+- [firewall](https://galaxy.ansible.com/ui/standalone/roles/linux-system-roles/firewall/)
+- [Systemd journald](https://galaxy.ansible.com/ui/standalone/roles/linux-system-roles/journald/)
+- [Active Directory join](https://galaxy.ansible.com/ui/standalone/roles/linux-system-roles/ad_integration/)
+- [podman](https://galaxy.ansible.com/ui/standalone/roles/linux-system-roles/podman)
+- [Red Hat Subscription Management and Insights](https://galaxy.ansible.com/ui/standalone/roles/linux-system-roles/rhc)
+- [PostgreSQL](https://galaxy.ansible.com/ui/standalone/roles/linux-system-roles/postgresql/)
+- [keylime_server](https://galaxy.ansible.com/ui/standalone/roles/linux-system-roles/keylime_server/)
+- [fapolicyd](https://galaxy.ansible.com/ui/standalone/roles/linux-system-roles/fapolicyd/)
+- [snapshot (lvm)](https://galaxy.ansible.com/ui/standalone/roles/linux-system-roles/snapshot/)
+- [bootloader](https://galaxy.ansible.com/ui/standalone/roles/linux-system-roles/bootloader/)
+- [gfs2](https://galaxy.ansible.com/ui/standalone/roles/linux-system-roles/gfs2/)
+- [sudo](https://galaxy.ansible.com/ui/standalone/roles/linux-system-roles/sudo/)
 
 ## Subsystems on the roadmap
 
-- [PostgreSQL](https://github.com/linux-system-roles/postgresql/)
 - [pam_pwd](https://github.com/linux-system-roles/pam_pwd/)
 - AuditD
 - Kerberos authentication
-- Systemd - manage unit files, services
-- [bootloader](https://github.com/linux-system-roles/bootloader/)
-- [tuned (power management)](https://galaxy.ansible.com/linux-system-roles/tuned/)
+- [tuned (power management)](https://github.com/linux-system-roles/tuned/)
