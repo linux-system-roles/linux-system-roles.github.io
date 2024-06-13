@@ -76,6 +76,7 @@ If the issue is not specific to a role e.g. a general question, or a request to 
 - SSH server (used in the collection) [ansible-sshd](https://github.com/willshersystems/ansible-sshd/)
 - [SSH client](https://galaxy.ansible.com/ui/standalone/roles/linux-system-roles/ssh/)
 - [VPN (IPSec - libreswan)](https://galaxy.ansible.com/ui/standalone/roles/linux-system-roles/vpn/)
+- [Microsoft SQL Server](https://galaxy.ansible.com/ui/repo/published/microsoft/sql/)
 - [Crypto policies](https://galaxy.ansible.com/ui/standalone/roles/linux-system-roles/crypto_policies/)
 - [Cluster HA (pacemaker/corosync)](https://galaxy.ansible.com/ui/standalone/roles/linux-system-roles/ha_cluster/)
 - [Cockpit](https://galaxy.ansible.com/ui/standalone/roles/linux-system-roles/cockpit/)

@@ -64,8 +64,8 @@
     - title: "Logging"
       path: "logging/"
 
-- title: "Download"
-  path: "download.html"
+- title: "Download/Releases"
+  path: "documentation/download.html"
 
 - title: "Search"
   path: "search.html"
