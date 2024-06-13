@@ -1,7 +1,7 @@
 ---
 # Template playbook for Linux System Roles
 # https://linux-system-roles.github.io/
-# https://galaxy.ansible.com/linux-system-roles/
+# https://galaxy.ansible.com/ui/standalone/namespaces/4114
 # https://github.com/linux-system-roles/
 
 - hosts: rhel

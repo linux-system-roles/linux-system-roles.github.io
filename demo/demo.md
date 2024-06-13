@@ -11,7 +11,7 @@ Ansible to assist Linux admins in the configuration of common GNU/Linux
 subsystems. Conceptually, the intent is to serve as a consistent "API" to a
 give Linux distribution that is consistent across multiple major and minor
 releases. This collection is available in Ansible Galaxy at
-[linux-system-roles](https://galaxy.ansible.com/linux-system-roles/).
+[linux-system-roles](https://galaxy.ansible.com/ui/repo/published/fedora/linux_system_roles/).
 
 ## Demo time!
 This demo provides a collection of ansible playbooks that call upon the Linux System Roles to configure aspects of a test subject virtual machine.

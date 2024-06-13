@@ -19,8 +19,11 @@
   #autosubitems: true
 
   subitems:
-  - title: "Concepts"
-    path: "concepts.html"
+  - title: "Role README.md"
+    path: "role-readme-md.html"
+
+  - title: "Introduction to Ansible for Linux System Roles"
+    path: "intro-to-ansible-for-system-roles.html"
 
   - title: "HowTo"
     path: "howto/"
@@ -32,14 +35,8 @@
     - title: "How to Tag and Release a Role Repo"
       path: "tag-and-release-role.html"
 
-  - title: "Introduction to Ansible for Linux System Roles"
-    path: "intro-to-ansible-for-system-roles.html"
-
   - title: "Incremental Settings for Ansible Values"
     path: "incremental_settings.html"
-
-  - title: "External Resources"
-    path: "external.html"
 
   - title: "Working With The Source"
     path: "working-with-the-source.html"
@@ -68,11 +65,7 @@
       path: "logging/"
 
 - title: "Download"
-  path: "download/"
-
-  subitems:
-  - title: "All Releases"
-    path: "all.html"
+  path: "download.html"
 
 - title: "Search"
   path: "search.html"
