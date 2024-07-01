@@ -65,7 +65,20 @@
       "env": {
         "TEST_SSHD_USEDNS_NO": "True"
       },
-      "upload_results": true
+      "upload_results": true,
+      "setup": [
+        {
+          "name": "Use vault repos",
+          "hosts": "all",
+          "gather_facts": false,
+          "tasks": [
+            {
+              "name": "Use vault repos",
+              "shell": "sed -i '/^mirror/d;s/#\\(baseurl=http:\\/\\/\\)mirror/\\1vault/' /etc/yum.repos.d/*.repo"
+            }
+          ]
+        }
+      ]
     },
     {
       "name": "centos-8",
