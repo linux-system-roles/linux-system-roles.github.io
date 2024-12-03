@@ -142,8 +142,7 @@
           "gather_facts": false,
           "vars": {
             "repourls": {
-              "centos-HighAvailability": "https://composes.stream.centos.org/stream-10/production/latest-CentOS-Stream/compose/HighAvailability/x86_64/os/",
-              "centos-ResilientStorage": "https://composes.stream.centos.org/stream-10/production/latest-CentOS-Stream/compose/ResilientStorage/x86_64/os/"
+              "centos-HighAvailability": "https://composes.stream.centos.org/stream-10/production/latest-CentOS-Stream/compose/HighAvailability/x86_64/os/"
             }
           },
           "tasks": [
