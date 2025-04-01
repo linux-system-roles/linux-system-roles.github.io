@@ -18,7 +18,7 @@
       "container": "registry.fedoraproject.org/fedora-toolbox:rawhide",
       "openstack_image": "Fedora-Cloud-Base-Rawhide",
       "upload_results": true,
-      "min_ansible_version": "2.9"
+      "min_ansible_version": "2.16"
     },
     {
       "name": "centos-6",
