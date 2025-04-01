@@ -63,7 +63,7 @@ You can run individual tests e.g. `tox -e ansible-lint`
 ## Running tests with tox-lsr and qemu
 
 You can run the test playbooks in `tests/tests_*.yml` with `tox` and `tox-lsr`
-using qemu/kvm.  https://github.com/linux-system-roles/tox-lsr#qemu-testing
+using qemu/kvm.
 
 * Install `tox` and `tox-lsr` (see above)
 * Use yum or dnf to install `standard-test-roles-inventory-qemu`
@@ -82,7 +82,7 @@ download progress.  For subsequent runs, `tox` will check if the qcow image is
 up-to-date, and will automatically download a new image if the current image is
 not up-to-date.
 
-There are many command line options and environment variables which can be used to control the behavior, and you can customize the testenv in tox.ini.  See  https://github.com/linux-system-roles/tox-lsr#qemu-testing
+There are many command line options and environment variables which can be used to control the behavior, and you can customize the testenv in tox.ini.  See its [documentation](https://github.com/linux-system-roles/tox-lsr#qemu-testing) for details.
 
 Running a qemu test will create a directory named `artifacts/` in the current
 directory which may contain additional logs useful for debugging.
