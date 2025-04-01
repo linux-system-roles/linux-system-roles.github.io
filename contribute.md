@@ -72,7 +72,7 @@ using qemu/kvm.
 Assuming you are in a git clone of a role repo which has a `tox.ini` file - you can use e.g.
 
 ```
-tox -e qemu-ansible-core-2.14 -- --image-name centos-9 tests/tests_default.yml
+tox -e qemu-ansible-core-2.16 -- --image-name centos-9 tests/tests_default.yml
 ```
 
 NOTE: This will download a qcow image to `~/.cache/linux-system-roles`. The
@@ -177,7 +177,7 @@ gh repo fork
   - Check the Ansible files are correctly formatted using `tox -e ansible-lint`.
 
   - Check your integration tests e.g.
-    `tox -e qemu-ansible-core-2.14 -- --image-name centos-9 tests/tests_mynewtest.yml`
+    `tox -e qemu-ansible-core-2.16 -- --image-name centos-9 tests/tests_mynewtest.yml`
 
 4. Once the work is ready, create a git commit.  Use `git commit -s` to create
    a signed commit.  See below `Write a good commit message`.
@@ -343,7 +343,7 @@ https://issues.redhat.com/browse/RHEL-529
 For debugging, use `tox` with `qemu` (see above), and use the `--debug`
 flag.
 ```
-tox -e qemu-ansible-core-2.14 -- --image-name centos-9 --debug tests/tests_mytest.yml
+tox -e qemu-ansible-core-2.16 -- --image-name centos-9 --debug tests/tests_mytest.yml
 grep ssh artifacts/default_provisioners.log | tail -1
 ```
 Then use that `ssh` command to log into the VM.
