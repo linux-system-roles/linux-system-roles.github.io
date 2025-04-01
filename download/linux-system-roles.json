@@ -11,6 +11,26 @@
       "min_ansible_version": "2.9"
     },
     {
+      "name": "fedora-41",
+      "variant": "Generic",
+      "subvariant": "Cloud_Base",
+      "compose": "https://kojipkgs.fedoraproject.org/compose/41/latest-Fedora-41/compose/",
+      "container": "registry.fedoraproject.org/fedora-toolbox:41",
+      "openstack_image": "Fedora-Cloud-Base-41",
+      "upload_results": true,
+      "min_ansible_version": "2.16"
+    },
+    {
+      "name": "fedora-42",
+      "variant": "Generic",
+      "subvariant": "Cloud_Base",
+      "compose": "https://kojipkgs.fedoraproject.org/compose/42/latest-Fedora-42/compose/",
+      "container": "registry.fedoraproject.org/fedora-toolbox:42",
+      "openstack_image": "Fedora-Cloud-Base-42",
+      "upload_results": true,
+      "min_ansible_version": "2.16"
+    },
+    {
       "name": "fedora-rawhide",
       "variant": "Generic",
       "subvariant": "Cloud_Base",
