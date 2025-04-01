@@ -122,7 +122,7 @@ The following sections are a good place to start:
 
 For Python code, in the source file, the imports will generally come first, followed by constants, classes, and methods. The style of python coding for this project
 is [**PEP 8**](https://www.python.org/dev/peps/pep-0008/),  with automatic formatting
-thanks to [Python Black](https://black.readthedocs.io/en/stable/). Use `tox -e black` to 
+thanks to [Python Black](https://black.readthedocs.io/en/stable/). Use `tox -e black` to
 run formatting tests, and also `tox -e flake8`.
 
 Unit tests should go into the `tests/unit/` directory.  You can use `tox -e
@@ -302,7 +302,7 @@ Here are rules that you must follow while writing a conventional PR title:
     Considering changelog and release notes categories:
     - The type `feat` correlates with `New Features`
     - The type `fix` correlates with `Bug Fixes`
-    - All other types correlate with `Other Changes` 
+    - All other types correlate with `Other Changes`
 
 2. You must mark PRs that introduce a breaking API change by appending `!` after the type, e.g. `fix!: <your PR title>`.
 Considering [Semantic Versioning](http://semver.org/#summary), this correlates with `MAJOR`.
@@ -433,7 +433,7 @@ The mailing list for developers: systemroles@lists.fedorahosted.org
 
 [Archive of the mailing list](https://lists.fedorahosted.org/archives/list/systemroles@lists.fedorahosted.org/)
 
-If you are using IRC, join the `[#systemroles](irc://irc.libera.chat/systemroles)` IRC channel on 
+If you are using IRC, join the `[#systemroles](irc://irc.libera.chat/systemroles)` IRC channel on
 [Libera.chat](https://libera.chat)
 
 
