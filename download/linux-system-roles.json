@@ -134,6 +134,7 @@
     },
     {
       "name": "centos-10",
+      "source": "https://cloud.centos.org/centos/10-stream/x86_64/images/CentOS-Stream-GenericCloud-10-latest.x86_64.qcow2",
       "compose": "https://composes.stream.centos.org/stream-10/production/latest-CentOS-Stream/compose/",
       "variant": "BaseOS",
       "subvariant": "generic",
