@@ -21,6 +21,12 @@
       "min_ansible_version": "2.16"
     },
     {
+      "name": "fedora-41-bootc",
+      "container": "quay.io/fedora/fedora-bootc:41",
+      "upload_results": true,
+      "setup": []
+    },
+    {
       "name": "fedora-42",
       "variant": "Generic",
       "subvariant": "Cloud_Base",
@@ -31,6 +37,12 @@
       "min_ansible_version": "2.16"
     },
     {
+      "name": "fedora-42-bootc",
+      "container": "quay.io/fedora/fedora-bootc:42",
+      "upload_results": true,
+      "setup": []
+    },
+    {
       "name": "fedora-rawhide",
       "variant": "Generic",
       "subvariant": "Cloud_Base",
@@ -39,6 +51,12 @@
       "openstack_image": "Fedora-Cloud-Base-Rawhide",
       "upload_results": true,
       "min_ansible_version": "2.16"
+    },
+    {
+      "name": "fedora-rawhide-bootc",
+      "container": "quay.io/fedora/fedora-bootc:rawhide",
+      "upload_results": true,
+      "setup": []
     },
     {
       "name": "centos-6",
