@@ -37,9 +37,13 @@ interfaces which provide robust and strictly defined inputs.
 - Fedora
 - Red Hat Enterprise Linux (RHEL 6+)
 - CentOS and CentOS Stream
+- openSUSE and SUSE Linux Enterprise (SLE SP6+)
 
-Note that some components are not available on EL6, and some are available
-only on EL8+/Fedora.  See the documentation for the individual roles.
+Note:
+
+- Some components are not available on EL6, and some are available only on EL8+/Fedora.
+- Support for SUSE and openSUSE is in progress and currently limited to a subset of roles.
+- Refer to the documentation of each role to verify compatibility across distributions.
 
 ## Collection
 
@@ -54,9 +58,9 @@ If the issue is not specific to a role e.g. a general question, or a request to 
 
 ## Demos
 
-* [Demo home page](https://github.com/linux-system-roles/linux-system-roles.github.io/tree/master/demo)
-* [DevConf2020.cz](https://github.com/linux-system-roles/linux-system-roles.github.io/tree/master/demo/devconf-demo)
-* [DevConf2021.cz](https://github.com/linux-system-roles/linux-system-roles.github.io/tree/master/demo/devconf2021-cz-demo/)
+- [Demo home page](https://github.com/linux-system-roles/linux-system-roles.github.io/tree/master/demo)
+- [DevConf2020.cz](https://github.com/linux-system-roles/linux-system-roles.github.io/tree/master/demo/devconf-demo)
+- [DevConf2021.cz](https://github.com/linux-system-roles/linux-system-roles.github.io/tree/master/demo/devconf2021-cz-demo/)
 
 ## Currently supported subsystems
 
