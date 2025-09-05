@@ -69,6 +69,9 @@ using qemu/kvm.
 * Use yum or dnf to install `standard-test-roles-inventory-qemu`
 * Download the config file to `~/.config/linux-system-roles.json` from [here](https://raw.githubusercontent.com/linux-system-roles/linux-system-roles.github.io/master/download/linux-system-roles.json)
 
+NOTE: linux-system-roles.json has support for `extra_images_file` - if you have additional images defined in
+another file, copy that file to `~/.config/extra-images.json`.
+
 Assuming you are in a git clone of a role repo which has a `tox.ini` file - you can use e.g.
 
 ```
