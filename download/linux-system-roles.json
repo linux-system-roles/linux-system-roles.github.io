@@ -226,5 +226,6 @@
         }
       ]
     }
-  ]
+  ],
+  "extra_images_file": "extra-images.json"
 }
