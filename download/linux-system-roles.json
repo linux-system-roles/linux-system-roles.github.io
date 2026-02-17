@@ -236,7 +236,7 @@
             },
             {
               "name": "Install python311",
-              "raw": "LANG=C zypper -n install python311",
+              "raw": "LANG=C zypper -n install python311 python311-rpm",
               "register": "zypper_install_output",
               "changed_when": "'Nothing to do' not in zypper_install_output.stdout"
             }
