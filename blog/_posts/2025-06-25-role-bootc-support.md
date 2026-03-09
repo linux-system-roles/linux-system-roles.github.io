@@ -110,12 +110,12 @@ making a particular role compatible with image mode builds, please follow these 
    [integration test setup](https://github.com/linux-system-roles/tox-lsr?tab=readme-ov-file#integration-test-setup) and also read the following sections about running QEMU and container tests.
    E.g. running a QEMU test should work:
    ```sh
-   tox -e qemu-ansible-core-2.16 -- --image-name centos-9 --log-level=debug -- tests/tests_default.yml
+   tox -e qemu-ansible-core-2-20 -- --image-name centos-9 --log-level=debug -- tests/tests_default.yml
    ```
 
 1. Do an initial run of the default or other test during a bootc container build, to get a first impression:
    ```sh
-   LSR_CONTAINER_PROFILE=false LSR_CONTAINER_PRETTY=false tox -e container-ansible-core-2.16 -- --image-name centos-9-bootc tests/tests_default.yml
+   LSR_CONTAINER_PROFILE=false LSR_CONTAINER_PRETTY=false tox -e container-ansible-core-2-20 -- --image-name centos-9-bootc tests/tests_default.yml
    ```
 
 1. The most common causes of failures are `service_facts:` which just simply
@@ -159,7 +159,7 @@ making a particular role compatible with image mode builds, please follow these 
    containers and temp files from the previous run:
 
    ```sh
-   buildah rm --all; rm -rf /tmp/runcontainer.*; LSR_DEBUG=1 LSR_CONTAINER_PROFILE=false LSR_CONTAINER_PRETTY=false tox -e container-ansible-core-2.16 -- --image-name centos-9-bootc tests/tests_default.yml
+   buildah rm --all; rm -rf /tmp/runcontainer.*; LSR_DEBUG=1 LSR_CONTAINER_PROFILE=false LSR_CONTAINER_PRETTY=false tox -e container-ansible-core-2-20 -- --image-name centos-9-bootc tests/tests_default.yml
    ```
 
    You can enter the container and debug with `buildah run tests_default bash`.
