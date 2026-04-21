@@ -127,7 +127,7 @@ When writing Ansible code for System Roles, you must consider specific practices
 Some of the practices are included in the [template role](https://github.com/linux-system-roles/template) repository, so that you don't need to do anything.
 But others should be included in the code, these are things that developers should know in advance.
 
-Most of this code is managed centrally from the [linux-system-roles/.github](https://github.com/linux-system-roles/.github) repository.
+Some of this code is managed centrally from the [linux-system-roles/.github](https://github.com/linux-system-roles/.github) repository.  Before editing a role file, check its header to see if it is managed.  If it is, and you need to change it, consider submitting a PR to the `.github` repository.
 
 ### Installing packages
 
@@ -163,7 +163,7 @@ The task to be included in a test playbook:
 ### Running Role in test playbooks
 
 Each role has a centrally managed task file `tests/tasks/run_role_with_clear_facts.yml` that runs roles with clearing Ansible facts prior to invocation.
-You must run roles by including this task file instead of the `include_role` and `import_role` modules.
+You must run roles by including this task file instead of the `include_role` and `import_role` modules, or instead of using the `roles` keyword.
 This is required to ensure that roles gather all facts that they use, hence work fine with `ANSIBLE_GATHERING=explicit`.
 For more information, see https://github.com/linux-system-roles/.github/pull/159.
 
@@ -226,9 +226,9 @@ Each role includes a file `tests/vars/rh_distros_vars.yml` that you can include 
 If your PR introduces new functionality to be used by users, you must describe it in README.md.
 
 If your PR introduces new untested functionality, you should add tests for it.
-This can be ommited if the funcionality cannot be tested in our infrastructure.
+This can be omitted if the functionality cannot be tested in our infrastructure.
 
-### Placing roles variables correctly
+### Defining role variables in the correct directory
 
 Variables in `defaults/main.yml` are the variables that the role expects users to change.
 They should be prefixed with `<role_name_>`.
@@ -239,7 +239,7 @@ You should place variables that are common to all OSes to `vars/main.yml`, and v
 
 ### Using third-party content
 
-We avoud using third-party Ansible content to keep the System Roles self-contained.
+We avoid using third-party Ansible content to keep the System Roles self-contained.
 So instead of using modules from community.general, ansible.posix and other collections, we try to use the `command` module, or other System Roles to perform those tasks.
 
 Example - instead of using `community.general.archive`, we can do a series of tasks like this:
@@ -290,7 +290,8 @@ Roles will implement support for the following variables/keys if they need the c
 
 The type prefix is used to further specify what type of thing it is e.g. `server_ + cert == server_cert`.  The suffix is used to specify the source of the data - `cert + _content = cert_content`.  The suffix is only applicable for those parameters/keys which have a filename form (e.g. not applicable to `private_key_password`, `encryption_password`)
 For example - `server_cert_content` would be a string blob consisting of a TLS server certificate.  `client_private_key_src` would be the path/filename of a file on the controller host containing the private key corresponding to the client certificate.
-## Table of Base Names With Explanation
+
+#### Table of Base Names With Explanation
 <table>
   <tr>
     <td>Param/Key Base Name</td>
@@ -416,7 +417,7 @@ Note that "key_content" is virtually identical to "password" - it is up to the r
 
 If a task uses sensitive data, it should have the option `no_log: "{{ <rolename>_no_log }}"` on the task level.
 The role should define the `<rolename>_no_log: true` variable in `defaults/main.yml` and document the use of this variable in `README.md`.
-We give cusers the availability to rewrite this variable to false for debugging purposes.
+We give users the ability to rewrite this variable to false for debugging purposes.
 
 Example:
 
