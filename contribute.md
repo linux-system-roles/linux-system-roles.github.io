@@ -415,9 +415,12 @@ Note that "key_content" is virtually identical to "password" - it is up to the r
 
 ### Working with sensitive data
 
-If a task uses sensitive data, it should have the option `no_log: "{{ <rolename>_no_log }}"` on the task level.
-The role should define the `<rolename>_no_log: true` variable in `defaults/main.yml` and document the use of this variable in `README.md`.
-We give users the ability to rewrite this variable to false for debugging purposes.
+Tasks that handle sensitive data (credentials, secrets, private keys, passwords, etc.) must use `no_log` to prevent sensitive information from appearing in Ansible logs and console output. The role must provide a way for users to disable this for debugging purposes.
+
+If a task uses sensitive data, it must have the option `no_log: "{{ <rolename>_secure_logging }}"` on the task level.
+The role must define the `<rolename>_secure_logging: true` variable in `defaults/main.yml` and document the use of this variable in `README.md`.
+
+**IMPORTANT**: Do NOT use the `| bool` filter with the variable - the variable is already boolean.
 
 Example:
 
@@ -426,8 +429,42 @@ Example:
   ansible.builtin.slurp:
     src: "{{ __cvm_deploy_tmp_key.path }}"
   register: slurped_key
-  no_log: "{{ trustee_client_no_log }}"
+  no_log: "{{ trustee_client_secure_logging }}"
 ```
+
+The `<rolename>_secure_logging` variable should be documented in `README.md` with guidance similar to this:
+
+```markdown
+### <rolename>_secure_logging
+
+If `true`, suppress potentially sensitive output from tasks that handle
+credentials, secrets, and other sensitive data by setting `no_log: true` on
+those tasks. This prevents passwords, API tokens, private keys, and similar
+sensitive information from appearing in Ansible logs and console output.
+
+If you need to debug issues with credential handling or secret management, you
+can temporarily set `<rolename>_secure_logging: false` to see the full output from
+these tasks. However, be aware that this may expose sensitive information in
+logs, so it should only be used in development or troubleshooting scenarios.
+
+Default: `true`
+```
+
+### Reducing verbosity of facts modules
+
+Facts gathering modules like `package_facts`, `service_facts`, and custom facts modules (e.g., `firewall_lib_facts`, `selinux_modules_facts`) produce verbose output that clutters logs during normal operation. To reduce log clutter while still allowing full output when debugging, use verbosity-based `no_log`:
+
+```yaml
+- name: Gather package facts
+  package_facts:
+  no_log: "{{ ansible_verbosity < 2 }}"
+
+- name: Gather service facts
+  service_facts:
+  no_log: "{{ ansible_verbosity < 2 }}"
+```
+
+This pattern hides verbose facts output unless the playbook is run with `-vv` or higher verbosity. This does NOT require adding a new variable to `defaults/main.yml` or documenting it in `README.md`, as it's purely an implementation detail to improve log readability.
 
 ## Python plugin development
 
