@@ -457,14 +457,14 @@ Facts gathering modules like `package_facts`, `service_facts`, and custom facts 
 ```yaml
 - name: Gather package facts
   package_facts:
-  no_log: "{{ ansible_verbosity < 2 }}"
+  no_log: "{{ ansible_verbosity < 3 }}"
 
 - name: Gather service facts
   service_facts:
-  no_log: "{{ ansible_verbosity < 2 }}"
+  no_log: "{{ ansible_verbosity < 3 }}"
 ```
 
-This pattern hides verbose facts output unless the playbook is run with `-vv` or higher verbosity. This does NOT require adding a new variable to `defaults/main.yml` or documenting it in `README.md`, as it's purely an implementation detail to improve log readability.
+This pattern hides verbose facts output unless the playbook is run with `-vvv` or higher verbosity. This does NOT require adding a new variable to `defaults/main.yml` or documenting it in `README.md`, as it's purely an implementation detail to improve log readability.
 
 ## Python plugin development
 
