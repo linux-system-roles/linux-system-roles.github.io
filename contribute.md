@@ -483,15 +483,11 @@ Your name and email. This will be useful when signing your contributions. The
 following commands will set your global name and email, although you can change
 it later per repo:
 
-```
-git config --global user.name "Jane Doe"
-git config --global user.email janedoe@example.com`
-```
 
 The git editor is your system's default. If you feel more comfortable with a
 different editor for writing your commits (such as Vim), change it with:
 
-```
+```bash
 git config --global core.editor vim
 ```
 
@@ -507,7 +503,8 @@ more, without leaving the comfort of your cli.
 1. Make a
    [fork](https://help.github.com/en/github/getting-started-with-github/fork-a-repo)
 of the role repository.  For example:
-```
+
+```bash
 gh repo clone linux-system-roles/network
 cd network
 gh repo fork
@@ -528,7 +525,7 @@ gh repo fork
     `tox -e qemu-ansible-core-2-20 -- --image-name centos-9 tests/tests_mynewtest.yml`
 
 4. Once the work is ready, create a git commit.  Use `git commit -s` to create
-   a signed commit.  See below `Write a good commit message`.
+   a signed commit.  See below `Write a good commit/PR message title and body`.
 
 5. Push the branch to your remote fork. The response message will usually
    contain a link and instructions about how to use the GitHub UI to submit a
@@ -567,80 +564,66 @@ commits](https://help.github.com/en/github/collaborating-with-issues-and-pull-re
 - If you have any doubt, do not hesitate to ask! You can join IRC channel
   \#systemroles on Libera.chat, or ask on the PR/issue itself.
 
-### Write a good commit message
+## Write a good commit/PR message title and body
 
-Here are some general best practice rules taken from [chris beams git commit](https://chris.beams.io/posts/git-commit/).
-You may want to read this for a more detailed explanation (and links to other posts on how to write a good commit message).
-This content is licensed under [CC-BY-SA](https://creativecommons.org/licenses/by-sa/4.0/).
+We use a specific format for the commit/PR title and body.  The title/subject is in a modified conventional
+commit format, and the body typically follows one of the templates below.
 
-1. Separate the subject from the body with a blank line
-2. Limit the subject line to 50 characters
-3. Capitalize the subject line
-4. Do not end the subject line with a period
-5. Use the imperative mood in the subject line
-6. Wrap the body at 72 characters
-7. Use the body to explain what and why vs. how
+1. The subject/title should be in conventional commit format - see below for details
+2. Separate the subject from the body with a blank line
+3. Try to limit the subject line to 50 characters - but up to 100 is allowed if necessary
+4. Capitalize the subject/title line
+5. Do not end the subject/title line with a period or whitespace
+6. Use the imperative mood in the subject/title
+7. Wrap the body at 72 characters
+8. Use the body to explain what and why vs. how - use the template provided
+9. Sign the commit using `git commit -s`
 
-A good commit message looks something like this
-```
-Summarize changes in around 50 characters or less
+### Write a good PR title and description
 
-More detailed explanatory text, if necessary. Wrap it to about 72
-characters or so. In some contexts, the first line is treated as the
-subject of the commit and the rest of the text as the body. The
-blank line separating the summary from the body is critical (unless
-you omit the body entirely); various tools like `log`, `shortlog`
-and `rebase` can get confused if you run the two together.
+For PR titles, system roles follow a relaxed, modified
+[Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) format.
+Repositories have a pr_title_lint GitHub action that ensures that all PR titles
+follow the format. Using this format makes it possible to generate the changelog
+and update the release version fully automatically.
 
-Explain the problem that this commit is solving. Focus on why you
-are making this change as opposed to how (the code explains that).
-Are there side effects or other unintuitive consequences of this
-change? Here's the place to explain them.
+Note that we ensure the conventional commits format only on PR titles and not on
+commits to let developers keep commit messages targeted for other developers
+i.e. describe actual changes to code that users should not care about. And PR
+titles, on the contrary, must be aimed at end users and changelogs.
 
-Further paragraphs come after blank lines.
-
- - Bullet points are okay, too
-
- - Typically a hyphen or asterisk is used for the bullet, preceded
-   by a single space, with blank lines in between, but conventions
-   vary here
-
-If you use an issue tracker, put references to them at the bottom,
-like this:
-
-Resolves: rhbz#123456
-```
-Do not forget to sign your commit! Use `git commit -s`.
-
-Now continue to the following section to write a good PR title and description.
-
-## Write a good PR title and description
-
-For PR titles, system roles follow the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) format, repositories have a Commitlint GitHub action that ensures that all PR titles follow the format.
-It makes it possible to generate the changelog and update the release version fully automatically.
-
-Note that we ensure the conventional commits format only on PR titles and not on commits to let developers keep commit messages targeted for other developers i.e. describe actual changes to code that users should not care about.
-And PR titles, on the contrary, must be aimed at end users.
-
-We automatically collect PR titles and descriptions to changelog and release notes based on the set type.
-Therefore, please ensure that you write PR titles and descriptions properly and treat them as a customer facing content.
+We automatically collect PR titles and descriptions to changelog and release
+notes based on the set type. Therefore, please ensure that you write PR titles
+and descriptions properly and treat them as a customer facing content.
 
 ### PR titles format
 
 PR titles should be structured as follows:
 
 ```
-<required type><optional !>: <your PR title>
+<required type><optional (category)><optional !>: <your PR title>
+```
+
+Examples:
+
+```
+feat: Add support for log file size
+fix: Check for empty user names
+fix(security): Check the permissions in the daemon config file
+chore(formatting): Fix the formatting in my_module.py
+docs: Fix the spelling in the README.md file [citest_skip]
 ```
 
 Here are rules that you must follow while writing a conventional PR title:
 
-1. You must include a type of the change at the beginning of the title, followed by a colon and a space, e.g. `feat: <your PR title>`.
+1. You must include a type of the change at the beginning of the title, followed
+   by a colon and a space, e.g. `feat: <your PR title>`.
 
-    The type `feat` MUST be used when you add a new feature.
+    The type `feat` MUST be used when you add a new feature or enhancement.
     The type `fix` MUST be used when you fix a bug.
-    Other allowed types are `build`, `chore`, `ci`, `docs`, `feat`, `fix`, `perf`, `refractor`, `revert`, `style`, `test`, `tests`.
-    Let us know if you want to add some other type to the allowed list.
+    Other allowed types are `build`, `chore`, `ci`, `docs`, `feat`, `fix`, `perf`, `refactor`, `revert`, `style`, `test`, `tests`.
+    Let us know if you want to add some other type to the allowed list.  The optional category can be used to provide
+    more context: `fix(security): Check the permissions on the daemon config file`
 
     Considering [Semantic Versioning](http://semver.org/#summary):
     - The type `feat` correlates with `MINOR`
@@ -652,62 +635,123 @@ Here are rules that you must follow while writing a conventional PR title:
     - The type `fix` correlates with `Bug Fixes`
     - All other types correlate with `Other Changes`
 
-2. You must mark PRs that introduce a breaking API change by appending `!` after the type, e.g. `fix!: <your PR title>`.
-Considering [Semantic Versioning](http://semver.org/#summary), this correlates with `MAJOR`.
-A BREAKING CHANGE can be part of PR of any type.
+2. You must mark PRs that introduce a breaking API change by appending `!` after
+the type, e.g. `fix!: <your PR title>`. Considering
+[Semantic Versioning](http://semver.org/#summary), this correlates with `MAJOR`.  A BREAKING
+CHANGE can be part of PR of any type.
+3. Add `[citest_skip]` to the end of the PR title in order to skip CI checking.  This can
+be used for trivial or documentation changes.
 
 ### PR description format
 
-For the PR description, write it as a release not that you want end users to see.
-When creating a PR, you will see the following template, please fill it in to ensure that users get informed about what causes the change and how to make use of it:
+For Bug Fix pull requests, and for new Feature/Enhancement pull requests, we use
+one of the following templates.
 
-```Markdown
-Enhancement:
+Bug Fix template:
 
-Reason:
+```
+fix: Summarize changes in around 50 characters or less
 
-Result:
+Cause: Explain the cause of the bug - for example - The variable rolename_user_name was being
+checked for a `none` value but was not being checked for string length greater than
+0 if a string.
 
+Consequences: Explain how the problem appears to a user - for example -
+The role allowed empty user names to be configured which caused the daemon
+to report "User not found".
+
+Fix: Explain what was done to fix the problem - for example - The variable rolename_user_name
+is now checked for string length if not `none`, and will report an error in
+that case if the length is 0.
+
+Result: Explain what happens now with the fix - for example - The role will not
+allow the user to provide an empty user name and will report an error if the
+rolename_user_name length is 0.
+
+# optional - if this is related to an issue in an issue tracker
 Issue Tracker Tickets (Jira or BZ if any):
+https://redhat.atlassian.net/browse/RHEL-9876543
+
+# optional - if you used AI to write a substantial amount of the code
+Assisted-by: Swim agent model Fish 6.2
+
+# this is added by `git commit -s`
+Signed-off-by: My Name myemail@mydomain.tld
 ```
 
-### Example PR title and desctiption
+New Feature/Enhancement template:
 
+```
+feat: Summarize changes in around 50 characters or less
+
+Enhancement: Explain what the enhancement is - for example - Added the variable
+rolename_max_log_size which allows the role to configure the maximum size
+of the daemon log file.  The size must be less than 256MB.
+
+Reason: Explain why this feature is needed - for example - Some users need
+to restrict the daemon log file size because it can fill up the partition.
+
+Result: Explain how the role or system is improved - for example - Users
+can control the daemon log file size to fit the disk partition space.
+
+# optional - if this is related to an issue in an issue tracker
+Issue Tracker Tickets (Jira or BZ if any):
+https://redhat.atlassian.net/browse/RHEL-9876543
+
+# optional - if you used AI to write a substantial amount of the code
+Assisted-by: Swim agent model Fish 6.2
+
+# this is added by `git commit -s`
+Signed-off-by: My Name myemail@mydomain.tld
+```
+
+If the PR is for some other type of change, like tests, refactor, docs, et. al., then
+please write a descriptive message that will help explain to others the purpose
+and result of the change.
+
+Do not forget to sign your commit! Use `git commit -s`.
+
+Now continue to the following section to write a good PR title and description.
+
+### Example PR title and description
+
+```Markdown
 feat: Support custom data and logs storage paths
 
 Enhancement: Custom data and logs storage paths
 
-Reason: Previously, the role was configuring the default data and logs storage paths.
+Reason: Previously, the role was configuring the default data
+and logs storage paths with hardcoded values.  This allows the
+user to provide their own custom paths.
 
-Result: Currently, you can optionally provide custom storage paths with variables `mssql_datadir` and `mssql_logdir`.
-And optionally set permissions for the custom paths with `mssql_datadir`_mode and `mssql_logdir`_mode variables.
+Result: Currently, you can optionally provide custom storage paths
+with variables `mssql_datadir` and `mssql_logdir`.  And optionally
+set permissions for the custom paths with `mssql_datadir_mode` and
+`mssql_logdir_mode` variables.
 
 Issue Tracker Tickets (Jira or BZ if any):
 https://issues.redhat.com/browse/RHEL-528
 https://issues.redhat.com/browse/RHEL-529
 
+Assisted-by: Swim using model Fish 5.3
+
+Signed-off-by: My Name myemail@mydomain.tld
+```
+
 ## Debugging Integration Tests
 
 For debugging, use `tox` with `qemu` (see above), and use the `--debug`
-flag.
+flag.  The `--debug` flag will leave the VM running so that you can ssh
+into it.  Be sure to kill the VM after you are done.
+
 ```
-tox -e qemu-ansible-core-2-20 -- --image-name centos-9 --debug tests/tests_mytest.yml
+# run the test with the debug flag
+tox -e qemu-ansible-core-2-21 -- --image-name centos-10 --debug -- tests/tests_mytest.yml
+# find the ssh command to use from the log
 grep ssh artifacts/default_provisioners.log | tail -1
 ```
-Then use that `ssh` command to log into the VM.
 
-For the manual method, use `TEST_DEBUG=true`.  Remember that the last path is one of the test you want to run.
-```
-cd tests
-TEST_DEBUG=true ANSIBLE_STDOUT_CALLBACK=debug \
-TEST_SUBJECTS=CentOS-8-GenericCloud-8.1.1911-20200113.3.x86_64.qcow2 \
-ansible-playbook -vv -i /usr/share/ansible/inventory/standard-inventory-qcow2 \
-tests_default.yml
-```
-Using debug will allow you to `ssh` into the managed host after the test has
-run. It will print out instructions about the exact command to use to `ssh`, and
-how to destroy the managed host after you are done.  Or, check the
-`artifacts/default_provisioners.log` for the ssh command.
+Then use that `ssh` command to log into the VM.
 
 When you are done with the VM, use `pkill -f standard-inventory` to destroy
 the VM and clean up.
@@ -726,14 +770,11 @@ a project maintainer.  To trigger them, write a command as a PR comment. The
 available commands are:
 
 - `[citest]` - Trigger a re-test for all machines.
-- `[citest bad]` - Trigger a re-test for all machines with an error or failure
+- `[citest_bad]` - Trigger a re-test for all machines with an error or failure
   status.
-- `[citest pending]` - Trigger a re-test for all machines with a pending status.
-- `[citest commit:<sha1>]` - specify a commit to be tested if the submitter is
-  not trusted.
-- `[citest skip]` - if you have a change to the documentation, or otherwise it
+- `[citest_skip]` - if you have a change to the documentation, or otherwise it
   would be a waste of time to do integration CI testing on your change, you can
-  put `[citest skip]` in the title of your pull request.  This will save a lot
+  put `[citest_skip]` in the title of your pull request.  This will save a lot
   of time.
 
 ## Blog Post Contribution
