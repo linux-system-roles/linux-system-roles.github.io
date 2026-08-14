@@ -9,7 +9,7 @@ If you are not familiar with Ansible, please visit
 ["How Ansible works"](https://www.ansible.com/overview/how-ansible-works).
 The documentation on the docs.ansible.com page has many good links
 to get started. Red Hat also provides good readings on Ansible such as
-["What is Ansible"](https://www.redhat.com/en/technologies/management/ansible/what-is-ansible) and
+["What is Ansible"](https://www.redhat.com/en/ansible-collaborative/how-ansible-works) and
 ["Learning Ansible basics"](https://www.redhat.com/en/topics/automation/learning-ansible-tutorial).
 
 This section provides a brief introduction to Ansible and how to use it.

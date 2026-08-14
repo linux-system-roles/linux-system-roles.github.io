@@ -129,9 +129,11 @@ making a particular role compatible with image mode builds, please follow these 
    conditionalize operations and tests which
    can't work in a container. E.g. the above `service: status:` can be fixed
    with
+   <!-- {% raw %} -->
    ```yaml
    state: "{{ 'started' if __myrole_is_booted else omit }}"
    ```
+   <!-- {% endraw %} -->
 
    `service_facts:` can be replaced with `systemctl is-enabled` or similar, see e.g. the corresponding
    [mssql fix](https://github.com/linux-system-roles/mssql/commit/e9d16e0eafaf1859f65e28a00c3de6a5283b2536) or

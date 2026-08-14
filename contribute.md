@@ -1,6 +1,7 @@
 ---
 layout: page
 title: Contribute
+render_with_liquid: false
 ---
 
 ## System Roles - Directories and Files
@@ -189,15 +190,18 @@ Jinja templates should contain an `ansible_managed` header at the top, and a rol
 
 Example:
 
-```yaml
+<!-- {% raw %} -->
+```
 {{ ansible_managed | comment }}
 {{ "system_role:auditd" | comment(prefix="", postfix="") }}
 ```
+<!-- {% endraw %} -->
 
 In the case when the role generates a template, there should be a test task in one of the tests that checks whether `ansible_managed` and the fingerprint are present in the generated file.
 
 Example:
 
+<!-- {% raw %} -->
 ```yaml
 # SPDX-License-Identifier: MIT
 ---
@@ -216,6 +220,7 @@ Example:
     content: "{{ (__file_content | d(__content)).content | b64decode }}"
     __ansible_managed: "{{ lookup('template', 'get_ansible_managed.j2') }}"
 ```
+<!-- {% endraw %} -->
 
 ### Checking managed node distribution
 
@@ -244,6 +249,7 @@ So instead of using modules from community.general, ansible.posix and other coll
 
 Example - instead of using `community.general.archive`, we can do a series of tasks like this:
 
+<!-- {% raw %} -->
 ```yaml
     - name: leapp_old_postgresql_data | Process remediation
       when: pgsql_data_stat.stat.exists
@@ -276,8 +282,9 @@ Example - instead of using `community.general.archive`, we can do a series of ta
             path: "{{ postgresql_data_path }}"
             state: absent
 ```
+<!-- {% endraw %} -->
 
-### TLS/Crypto Parameter and Key Names
+### TLS/Crypto Parameter and Key Names {#tls-crypto-parameter-and-key-names}
 
 Many system roles have parameter and configuration key names that relate to TLS and other common cryptographic concepts.  This document describes the naming convention we are using in system roles for things like: the name of the parameter used for the full path to X509 certificate files on managed nodes; the name of the parameter which holds the value used for the LUKS encryption passphrase; and so on.
 
@@ -292,12 +299,15 @@ The type prefix is used to further specify what type of thing it is e.g. `server
 For example - `server_cert_content` would be a string blob consisting of a TLS server certificate.  `client_private_key_src` would be the path/filename of a file on the controller host containing the private key corresponding to the client certificate.
 
 #### Table of Base Names With Explanation
-<table>
+<table class="documentation-table">
+  <thead>
   <tr>
-    <td>Param/Key Base Name</td>
-    <td>Concept</td>
-    <td>Notes</td>
+    <th>Param/Key Base Name</th>
+    <th>Concept</th>
+    <th>Notes</th>
   </tr>
+  </thead>
+  <tbody>
   <tr>
     <td>cert/client_cert/server_cert/..._cert</td>
     <td>Path to file on managed host containing a certificate</td>
@@ -343,6 +353,7 @@ For example - `server_cert_content` would be a string blob consisting of a TLS s
     <td>Used only by the certificate role as a special case.  May indicate the name of the cert in the cert provider, or the relative or absolute path to the cert file on the managed host.</td>
     <td>This is also used to construct the name for the corresponding private key file.</td>
   </tr>
+  </tbody>
 </table>
 
 **RATIONALE** for cert - I wanted to preserve the network role semantics (which uses the NetworkManager semantics), but it was too difficult to figure out how to make it so that e.g. "cert" could be either a path or a blob.  If someone can come up with a foolproof way, given a string, to determine if that string is a certificate (or key) blob or a filename with possibly a relative/absolute path, then we could go back to the NM semantics.  Also, it is better to be explicit and reduce the ambiguity.
@@ -350,12 +361,15 @@ For example - `server_cert_content` would be a string blob consisting of a TLS s
 **RATIONALE** for password - password is a more generic concept than passphrase, so the term "password" encompasses terms such as "passphrase", "pin", etc.
 
 #### Table of Name Suffixes With Explanation
-<table>
+<table class="documentation-table">
+  <thead>
   <tr>
-    <td>Param/Key Suffix</td>
-    <td>Concept</td>
-    <td>Notes</td>
+    <th>Param/Key Suffix</th>
+    <th>Concept</th>
+    <th>Notes</th>
   </tr>
+  </thead>
+  <tbody>
   <tr>
     <td>content</td>
     <td>a string containing the value to be used on the managed host e.g. a base64 encoded PEM blob used to populate a cert file on the managed host</td>
@@ -367,15 +381,19 @@ Note that "key_content" is virtually identical to "password" - it is up to the r
     <td>path to file on controller host containing a certificate, ca_cert, key</td>
     <td>we have pre-existing use cases where the user wants to specify the name of a file on the controller node, and doesn't want to or cannot specify the value as a blob in "contents".  Also, the Ansible "copy" module uses "src" for the same purpose.  https://docs.ansible.com/ansible/latest/modules/copy_module.html#copy-module</td>
   </tr>
+  </tbody>
 </table>
 
 #### Table of Name Prefixes With Explanation
-<table>
+<table class="documentation-table">
+  <thead>
   <tr>
-    <td>Param/Key Prefix</td>
-    <td>Concept</td>
-    <td>Notes</td>
+    <th>Param/Key Prefix</th>
+    <th>Concept</th>
+    <th>Notes</th>
   </tr>
+  </thead>
+  <tbody>
   <tr>
     <td>client</td>
     <td>Used with "cert" and "private_key" to denote that this is the client cert and key</td>
@@ -411,6 +429,7 @@ Note that "key_content" is virtually identical to "password" - it is up to the r
     <td>Used with "ca_cert" to denote that this is one or more intermediate CA certs</td>
     <td>Only use this if you need to distinguish between root CA certs and intermediate CA certs</td>
   </tr>
+  </tbody>
 </table>
 
 ### Working with sensitive data
@@ -424,6 +443,7 @@ The role must define the `<rolename>_secure_logging: true` variable in `defaults
 
 Example:
 
+<!-- {% raw %} -->
 ```yaml
 - name: Read key from remote host
   ansible.builtin.slurp:
@@ -431,6 +451,7 @@ Example:
   register: slurped_key
   no_log: "{{ trustee_client_secure_logging }}"
 ```
+<!-- {% endraw %} -->
 
 The `<rolename>_secure_logging` variable should be documented in `README.md` with guidance similar to this:
 
@@ -454,6 +475,7 @@ Default: `true`
 
 Facts gathering modules like `package_facts`, `service_facts`, and custom facts modules (e.g., `firewall_lib_facts`, `selinux_modules_facts`) produce verbose output that clutters logs during normal operation. To reduce log clutter while still allowing full output when debugging, use verbosity-based `no_log`:
 
+<!-- {% raw %} -->
 ```yaml
 - name: Gather package facts
   package_facts:
@@ -463,6 +485,7 @@ Facts gathering modules like `package_facts`, `service_facts`, and custom facts 
   service_facts:
   no_log: "{{ ansible_verbosity < 3 }}"
 ```
+<!-- {% endraw %} -->
 
 This pattern hides verbose facts output unless the playbook is run with `-vvv` or higher verbosity. This does NOT require adding a new variable to `defaults/main.yml` or documenting it in `README.md`, as it's purely an implementation detail to improve log readability.
 
@@ -822,7 +845,7 @@ The mailing list for developers: systemroles@lists.fedorahosted.org
 
 [Archive of the mailing list](https://lists.fedorahosted.org/archives/list/systemroles@lists.fedorahosted.org/)
 
-If you are using IRC, join the `[#systemroles](irc://irc.libera.chat/systemroles)` IRC channel on
+If you are using IRC, join the [#systemroles](irc://irc.libera.chat/systemroles) IRC channel on
 [Libera.chat](https://libera.chat)
 
 

@@ -1,0 +1,7 @@
+<div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+  <p class="caption" role="heading"><span class="caption-text">Site:</span></p>
+  <ul>
+    {% for _node in site.data.nav %}{% assign level = 1 %}{% include sidebar-nav-item.html level=level path="/" node=_node %}{% endfor %}
+  </ul>
+  {% include asides/quick_links.html %}
+</div>

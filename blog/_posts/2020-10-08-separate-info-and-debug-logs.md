@@ -83,7 +83,7 @@ The following Ansible logs is extracted from same qemu testing result after the 
 I made a demo video to show the bugs and refactoring logging of network module after bug fixed,
 as well as additional test cases running result.
 
-[![Separate INFO and DEBUG logs](https://img.youtube.com/vi/gmFN2wt8tv4/0.jpg)](https://www.youtube.com/watch?v=gmFN2wt8tv4)
+[Demo video: Separate INFO and DEBUG logs](https://www.youtube.com/watch?v=gmFN2wt8tv4)
 
 ## Reference
 

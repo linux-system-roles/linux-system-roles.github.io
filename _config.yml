@@ -9,11 +9,19 @@ description: > # this means to ignore newlines until "baseurl:"
   Welcome to the Linux System Roles project homepage!
 
 baseurl:
-url: linux-system-roles.github.io
+url: https://linux-system-roles.github.io
 #production_url: http://linux-system-roles.org
 
 # Exclude our ruby stuff
 exclude: [.bundle, bin, vendor, Gemfile, Gemfile.lock, Rakefile, s3_website.yml, .last_optimized, slim-pickins-jekyll-theme-master]
+
+# Include antsibull-docs static assets (underscore-prefixed directory).
+# Styles originate from https://github.com/ansible-community/antsibull-docs
+# (sphinx_antsibull_ext); copy from a docs build's _static/ when updating.
+# Jekyll excludes files whose names start with "_" unless listed here explicitly.
+include:
+  - "_static"
+  - "_static/_sphinx_javascript_frameworks_compat.js"
 
 
 # Build settings
@@ -23,10 +31,11 @@ kramdown:
 
 destination: _site
 
-gems:
+plugins:
   - jekyll-feed
   - jekyll-paginate
   - jekyll-seo-tag
+  - jekyll-redirect-from
 
 feed:
   path: atom.xml
@@ -38,6 +47,12 @@ sass:
 permalink: /:year/:month/:title
 paginate: 5
 paginate_path: "/blog/page/:num/"
+
+defaults:
+  - scope:
+      path: "documentation/design_docs/logging"
+    values:
+      render_with_liquid: false
 
 #### SEO Stuff
 # Google Analytics

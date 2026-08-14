@@ -29,7 +29,7 @@ without the later invocation clobbering the result of the previous invocation,
 and to preserve previous state of the managed systems.  We had a need to
 generalize the usual approach of modules to lists of settings for role
 parameters.  We based our approach on
-[Kubernetes JSON strategic merge](https://stupefied-goodall-e282f7.netlify.app/contributors/devel/strategic-merge-patch/),
+[Kubernetes JSON strategic merge](https://kubernetes.io/docs/tasks/manage-kubernetes-objects/update-api-object-kubectl-patch/#use-a-strategic-merge-patch-to-update-a-deployment),
 and reuse of the Ansible `state` keyword.  We use this to manage objects which
 are represented by a `list` of `dict` objects.
 

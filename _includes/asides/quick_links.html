@@ -1,26 +1,8 @@
-<aside class="small-12 quick-links">
-  <h2>Quick Links</h2>
-  <ul>
-    <li>
-      <a href="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html-single/automating_system_administration_by_using_rhel_system_roles/index">Red Hat System Roles documentation</a>
-    </li>
-    <li>
-      <a href="https://www.redhat.com/en/blog/rhel-system-roles">Red Hat Learn about System Roles Blog Series - many examples of many roles</a>
-    </li>
-    <li>
-      <a href="mailto:systemroles@lists.fedorahosted.org">Email</a>
-    </li>
-    <li>
-      <a href="https://app.element.io/#/room/#systemroles:libera.chat">IRC #systemroles</a>
-    </li>
-    <li>
-      <a href="https://github.com/orgs/linux-system-roles/discussions">GitHub Discussions</a>
-    </li>
-    <li>
-      <a href="https://github.com/linux-system-roles">GitHub</a>
-    </li>
-    <li>
-      <a href="https://galaxy.ansible.com/ui/standalone/namespaces/4114">Ansible Galaxy</a>
-    </li>
-  </ul>
-</aside>
+<p class="caption" role="heading"><span class="caption-text">Quick links:</span></p>
+<ul>
+  {% for link in site.data.quick_links %}
+  <li class="toctree-l{{ link.level | default: 1 }}">
+    <a class="reference external" href="{{ link.href }}">{{ link.title }}</a>
+  </li>
+  {% endfor %}
+</ul>

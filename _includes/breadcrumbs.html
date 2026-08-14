@@ -1,0 +1,15 @@
+<div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="{{ site.baseurl }}/" class="icon icon-home" aria-label="Home"></a></li>
+    {% if subnav_title_size > 0 %}
+      {% for title in subnav_title %}{% assign idx = forloop.index | minus: 1 %}
+      <li><a href="{{ subnav_url[idx] }}">{{ title }}</a></li>
+      {% endfor %}
+    {% endif %}
+    {% if page.title and page.title != "Home" %}
+      <li class="breadcrumb-item active">{{ page.title }}</li>
+    {% endif %}
+    <li class="wy-breadcrumbs-aside"></li>
+  </ul>
+  <hr/>
+</div>

@@ -1,6 +1,7 @@
 ---
 layout: page
 title: Working with Ansible Jinja2 code and filters
+render_with_liquid: false
 ---
 When working with Ansible Jinja2 code and filters, it is helpful to write small
 playbooks to test out functionality.  This is especially true if you are
@@ -168,7 +169,9 @@ filter/test is supported.  Some notable differences:
 * the tests `eq`, `equalto`, and `==` are not available
 
 For `namespace`, you'll just have to figure out how to write your `for` loops in
-such a way that they don't need `namespace`.
+such a way that they don't need `namespace`, or, better, do not use `for` loops
+and instead try to rewrite your loops using Ansible filters.
+See `Complex Ansible/Jinja Data Manipulation` below.
 
 For the `eq` filter - it is quite common to want to write a filter expression
 like this:
@@ -189,7 +192,16 @@ like this:
 ```
 <!-- {% endraw %} -->
 
-which will work on all versions of ansible and jinja2.
+which will work on all versions of ansible and jinja2.  If the `match` expression
+comes from a variable, or otherwise may have regex special characters, you *must*
+escape those values using `regex_escape`:
+
+<!-- {% raw %} -->
+```
+{{ something | select('match', '^' ~ (somevar | regex_escape) ~ '$') }}
+```
+<!-- {% endraw %} -->
+
 
 ## Complex Ansible/Jinja Data Manipulation
 
@@ -209,28 +221,35 @@ deal with line wrapping in common scenarios:
 #### Use the YAML `>-` flow scalars.
 
 For example - instead of this:
+
 ```yaml
 - name: This is a very, very, very, ........................... very long line
 ```
+
 use this:
+
 ```yaml
 - name: >-
     This is a very, very, very,
     ...........................
     very long line
 ```
+
 The `>-` flow scalar operator will concatenate each line into a single line
 string, with a single space character replacing the new line and leading spaces.
 
 #### Jinja expressions can be wrapped
 
 For example - instead of this:
+
 <!-- {% raw %} -->
 ```yaml
   foo: "{{ a_very.long_variable.name | somefilter('with', 'many', 'arguments') | another_filter | list }}"
 ```
 <!-- {% endraw %} -->
+
 use the filter `|` as a natural line break:
+
 <!-- {% raw %} -->
 ```yaml
   foo: "{{ a_very.long_variable.name |
@@ -238,8 +257,10 @@ use the filter `|` as a natural line break:
     another_filter | list }}"
 ```
 <!-- {% endraw %} -->
+
 Remember, in a `when`, `that`, `failed_when`, or other such keywords, you can just
-write Jinja code - you do not need the `"{{ ... }}"`:
+write Jinja code - you do not need the <!-- {% raw %} -->`"{{ ... }}"`<!-- {% endraw %} -->:
+
 ```yaml
   when: a_very.long_variable.name |
     somefilter('with', 'many', 'arguments') |
@@ -249,6 +270,7 @@ write Jinja code - you do not need the `"{{ ... }}"`:
 But what if the code is already indented a lot, and the variable I'm assigning to
 is already very long, and I can't put anything else on the line?  Just start the
 assignment on the next line:
+
 <!-- {% raw %} -->
 ```yaml
                     foo: "{{
@@ -257,7 +279,9 @@ assignment on the next line:
                       another_filter | list }}"
 ```
 <!-- {% endraw %} -->
+
 If you have to do the same thing in a `when`, `that`, etc., you can use a backslash:
+
 ```yaml
                     foo: \
                       a_very.long_variable.name |

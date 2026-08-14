@@ -42,13 +42,16 @@
     path: "working-with-the-source.html"
 
   - title: "TLS/Crypto Parameter and Key Naming"
-    path: "tls_crypto_parameter_and_key_names.html"
+    href: "/contribute.html#tls-crypto-parameter-and-key-names"
 
   - title: "System Roles Collection - How to Build and Publish"
     path: "collection-building-publishing.html"
 
   - title: "How to Specify Roles Used by Other Roles"
     path: "role-requirements.html"
+
+  - title: "Demo"
+    href: "/demo/demo.html"
 
   - title: "FAQ"
     path: "faq/"

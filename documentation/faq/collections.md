@@ -7,15 +7,20 @@ If you are developing a role in linux-system-roles, you may find your question a
 
 ## Module and Module_utils Name
 
-<b>Q:</b> My role has a custom module in the `library/` directory. Are there anything I should know of?<br>
-<b>A:</b> All of the files in the `library/` directory should have a `YOUR_ROLENAME_` prefix. For instance, if you are planning to name your module `getinfo`, please name it `YOUR_ROLENAME_getinfo`. This will help preventing the module name conflict when your role is converted to the collections format. In the format, all the modules are placed in the same directory `ansible_collections/NAMESPACE/COLLECTION_NAME/plugins/modules/`, where popular names could get conflicted.
+<div class="admonition note">
+<p class="admonition-title">My role has a custom module in the <code>library/</code> directory. Are there anything I should know of?</p>
+<p>All of the files in the <code>library/</code> directory should have a <code>YOUR_ROLENAME_</code> prefix. For instance, if you are planning to name your module <code>getinfo</code>, please name it <code>YOUR_ROLENAME_getinfo</code>. This will help preventing the module name conflict when your role is converted to the collections format. In the format, all the modules are placed in the same directory <code>ansible_collections/NAMESPACE/COLLECTION_NAME/plugins/modules/</code>, where popular names could get conflicted.</p>
+</div>
 
-<b>Q:</b> How about module_utils?<br>
-<b>A:</b> The `module_utils/` directory in the collections format is allowed to have sub-directories. Please put all the files in your `module_utils/` directory in the `module_utils/YOUR_ROLENAME_lsr/` sub-directory.
+<div class="admonition note">
+<p class="admonition-title">How about module_utils?</p>
+<p>The <code>module_utils/</code> directory in the collections format is allowed to have sub-directories. Please put all the files in your <code>module_utils/</code> directory in the <code>module_utils/YOUR_ROLENAME_lsr/</code> sub-directory.</p>
+</div>
 
-<b>Q:</b> What is the problem that you are trying to solve?<br>
-<b>A:</b> With collections, all of our modules are part of the public API - users can use them directly e.g. `fedora.system_roles.blivet:`. There is currently no mechanism in Ansible to make these private (although Thomas Woerner has asked Ansible to provide this), and there is currently no convention to denote such modules as "private" e.g. use "_" as the first character in the module name (and a convention won't prevent usage anyway).
-With collections, the user can use the collections: keyword, and we're back to global namespace collisions:
+<div class="admonition note">
+<p class="admonition-title">What is the problem that you are trying to solve?</p>
+<p>With collections, all of our modules are part of the public API - users can use them directly e.g. <code>fedora.system_roles.blivet:</code>. There is currently no mechanism in Ansible to make these private (although Thomas Woerner has asked Ansible to provide this), and there is currently no convention to denote such modules as "private" e.g. use "_" as the first character in the module name (and a convention won't prevent usage anyway).</p>
+<p>With collections, the user can use the collections: keyword, and we're back to global namespace collisions:</p>
 
 ```
 collections:
@@ -27,15 +32,22 @@ collections:
     ...
 ```
 
-This will use somenamespace.somename.blivet instead of the one from system roles. Although we can strongly recommend that users always use the FQCN fedora.system_roles.blivet we cannot guarantee that they will.
+<p>This will use somenamespace.somename.blivet instead of the one from system roles. Although we can strongly recommend that users always use the FQCN fedora.system_roles.blivet we cannot guarantee that they will.</p>
+</div>
 
-<b>Q:</b> Why not use a `YOUR_ROLENAME` subdir under library/ ?<br>
-<b>A:</b> Because it is not currently supported by galaxy.
+<div class="admonition note">
+<p class="admonition-title">Why not use a <code>YOUR_ROLENAME</code> subdir under library/ ?</p>
+<p>Because it is not currently supported by galaxy.</p>
+</div>
 
-<b>Q:</b> Why not use a `YOUR_ROLENAME_` prefix for module_utils file? Why use a subdir?<br>
-<b>A:</b> Ease of conversion - the sub-directory style module_utils have been used in multiple roles and guaranteed to work.
+<div class="admonition note">
+<p class="admonition-title">Why not use a <code>YOUR_ROLENAME_</code> prefix for module_utils file? Why use a subdir?</p>
+<p>Ease of conversion - the sub-directory style module_utils have been used in multiple roles and guaranteed to work.</p>
+</div>
 
 ## Sub-role Name
 
-<b>Q:</b> My role contains a sub-role. Are there any guidance for the sub-role naming?<br>
-<b>A:</b> A sub-role in a linux system role is completely private to the role. Thus, there is no restriction in naming. But now we have to consider how they are converted to the collections format. In short, the sub-role is promoted to the same level as the parent role is. The sub-role becomes reusable by the roles other than the original parent role in the collections format. But at the same time, it increases the risk of the naming conflict with the sub-roles from the other roles if the naming is too generic. We strongly recommend to name the sub-role name to be clear enough to reduce the risk. Although this is an imaginary example, if your main role is `rsyslog` and it has a sub-role named `relp`, it should be named `rsyslog_relp` which is more descriptive and less chance to conflict.
+<div class="admonition note">
+<p class="admonition-title">My role contains a sub-role. Are there any guidance for the sub-role naming?</p>
+<p>A sub-role in a linux system role is completely private to the role. Thus, there is no restriction in naming. But now we have to consider how they are converted to the collections format. In short, the sub-role is promoted to the same level as the parent role is. The sub-role becomes reusable by the roles other than the original parent role in the collections format. But at the same time, it increases the risk of the naming conflict with the sub-roles from the other roles if the naming is too generic. We strongly recommend to name the sub-role name to be clear enough to reduce the risk. Although this is an imaginary example, if your main role is <code>rsyslog</code> and it has a sub-role named <code>relp</code>, it should be named <code>rsyslog_relp</code> which is more descriptive and less chance to conflict.</p>
+</div>

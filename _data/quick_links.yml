@@ -1,0 +1,25 @@
+#
+# Quick links shown in the left sidebar. Optional level (1-3) controls
+# indentation via toctree-l1, toctree-l2, toctree-l3 classes.
+#
+
+- title: "Red Hat System Roles documentation"
+  href: "https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html-single/automating_system_administration_by_using_rhel_system_roles/index"
+
+- title: "Red Hat Learn about System Roles Blog Series - many examples of many roles"
+  href: "https://www.redhat.com/en/blog/rhel-system-roles"
+
+- title: "Email"
+  href: "mailto:systemroles@lists.fedorahosted.org"
+
+- title: "IRC #systemroles"
+  href: "https://app.element.io/#/room/#systemroles:libera.chat"
+
+- title: "GitHub Discussions"
+  href: "https://github.com/orgs/linux-system-roles/discussions"
+
+- title: "GitHub"
+  href: "https://github.com/linux-system-roles"
+
+- title: "Ansible Galaxy"
+  href: "https://galaxy.ansible.com/ui/standalone/namespaces/4114"

@@ -14,7 +14,7 @@ title: Manual Tests
   roles:
     - role: logging
 ```
-CONFIGURATION EXAMPLES are found [here](../roles/rsyslog/README.md#configuration-examples).
+CONFIGURATION EXAMPLES are found [here](https://github.com/linux-system-roles/logging/blob/main/roles/rsyslog/README.md#configuration-examples).
 
 ## Prepare a inventory file
 ### Target host is local.

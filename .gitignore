@@ -8,3 +8,4 @@ images/image_optim_cache.yml
 .jekyll-metadata
 slim-pickins-jekyll-theme-master
 .jekyll-cache
+.vendor

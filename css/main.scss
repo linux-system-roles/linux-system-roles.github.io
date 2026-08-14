@@ -4,33 +4,215 @@
 
 @charset "utf-8";
 
-// Variables
-@import "variables";
+// Site-specific overrides on top of antsibull-docs / RTD theme styles.
+// Typography comes from theme.css (16px body, 12px code) — do not override here.
 
-// Navigation Menu
-@import "navigation";
+// Preserve indentation and line breaks in fenced code blocks (Rouge/Kramdown).
+// ansible.css sets pre-wrap which wraps long lines and can distort YAML indent.
+// The RTD theme also styles all .rst-content code as inline (padding, border,
+// nowrap) which bleeds into pre > code and causes a visible first-line offset.
+.rst-content pre code,
+.rst-content div.highlight pre,
+.rst-content div.highlight pre code,
+.rst-content div[class^="highlight"] pre,
+.rst-content div[class^="highlight"] pre code,
+.rst-content .highlighter-rouge .highlight > pre,
+.rst-content .highlighter-rouge .highlight > pre > code,
+.rst-content pre.literal-block,
+.rst-content pre.literal-block code {
+  white-space: pre;
+  overflow-x: auto;
+  tab-size: 2;
+}
 
-// Breadcrumb Navigation
-@import "breadcrumb";
+.rst-content pre code,
+.rst-content div.highlight pre code,
+.rst-content div[class^="highlight"] pre code,
+.rst-content pre.literal-block code {
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: inherit;
+  font-size: inherit;
+  max-width: none;
+  overflow-x: visible;
+}
 
-// Blog Navigation
-@import "blognavigation";
+// documentation-table: borders, striping, and header background from
+// _static/antsibull-minimal.css and _static/css/ansible.css
+// RTD gives table.docutils margin-bottom: 24px; documentation-table needs the same.
+.rst-content table.documentation-table {
+  margin-bottom: 24px;
+}
 
-// Pagination Menu
-@import "pagination";
+// Kramdown pipe tables: apply antsibull documentation-table styling.
+.rst-content section table:not(.documentation-table):not(.ansible-option-table) {
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--antsibull-table-border, #000);
+  border-right: 1px solid var(--antsibull-table-border, #000);
 
-// Icomoon Font Icons
-@import "icomoon/base";
+  th {
+    background-color: var(--antsibull-table-background-header, #6ab0de);
+    font-weight: 700;
+  }
 
-// Core Layout
-@import "base";
-@import "layout";
+  td,
+  th {
+    padding: 4px;
+    border-left: 1px solid var(--antsibull-table-border, #000);
+    border-top: 1px solid var(--antsibull-table-border, #000);
+  }
 
-// Utility Classes
-@import "utility";
+  tr:nth-child(odd) {
+    background-color: var(--antsibull-table-background-odd, #fff);
+  }
 
-// Zurb Foundation Stuff
-@import "foundation/foundation";
+  tr:nth-child(even) {
+    background-color: var(--antsibull-table-background-even, #e7f2fa);
+  }
+}
 
+// Quick links use reference external; ansible.css only restores sidebar padding
+// for reference internal (Site nav). Match indentation and spacing here.
+.wy-menu-vertical a.reference.external {
+  padding: 0.4045em 1.618em;
+}
 
-// Misc.
+// Search page: RTD/antsibull wy-form + st-default-search-input (see sidebar search).
+.search-page-form {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 0.5em;
+  margin-bottom: 1em;
+  max-width: 40em;
+}
+
+.search-page-form input.st-default-search-input,
+.search-page-form input[type="text"] {
+  display: inline-block;
+  margin-bottom: 0;
+  flex: 1 1 auto;
+  min-width: 0;
+  width: auto;
+  max-width: none;
+}
+
+.search-page-form .btn {
+  flex: 0 0 auto;
+  margin-bottom: 0;
+}
+
+.search-item {
+  padding-top: 1em;
+}
+
+.search-excerpt {
+  font-size: 0.875em;
+  padding-top: 0.25em;
+}
+
+// Blog post prev/next navigation (uses ansible-links from antsibull-minimal.css)
+.blog-navigation {
+  margin-bottom: 1.5em;
+}
+
+.post-meta {
+  font-size: 0.875em;
+  color: #666;
+  margin-bottom: 1em;
+}
+
+// Blog index
+.entry {
+  margin-bottom: 2em;
+}
+
+.entry hr.thick,
+hr.thick {
+  border: 0;
+  border-top: 1px solid #e1e4e5;
+  margin: 2em 0;
+}
+
+.post-list {
+  list-style: none;
+  margin-left: 0;
+  padding-left: 0;
+}
+
+.post-list > li {
+  margin-bottom: 1.5em;
+}
+
+.post-link {
+  display: block;
+  font-size: 1.25em;
+}
+
+// Blog pagination
+ul.pagination {
+  list-style: none;
+  margin: 1em 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+ul.pagination li {
+  display: inline-block;
+  margin: 0 2px;
+}
+
+ul.pagination li a {
+  display: block;
+  padding: 4px 10px;
+  border-radius: 3px;
+  background-color: #5bbdbf;
+  color: #fff;
+  text-decoration: none;
+}
+
+ul.pagination li a:hover {
+  background-color: #91d9db;
+}
+
+ul.pagination li.active a {
+  background-color: #204748;
+}
+
+ul.pagination li.disabled {
+  padding: 4px 10px;
+  color: #999;
+}
+
+// Screen-reader only label (matches RTD theme)
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+// No ansible/DocSite header bar — reset offsets from ansible.css.
+.wy-nav-side {
+  top: 0;
+}
+
+@media screen and (min-width: 767px) {
+  section [id] {
+    padding-top: 0;
+    margin-top: 0;
+  }
+}
+
+@media print {
+  .wy-nav-side,
+  .wy-nav-top {
+    display: none;
+  }
+}

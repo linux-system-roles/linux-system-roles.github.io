@@ -3,11 +3,13 @@ layout: home
 title: "Search"
 ---
 
-<script src="{{ site.baseurl }}/js/jquery-3.5.1.min.js"></script>
+<script src="{{ site.baseurl }}/_static/jquery.js"></script>
 <script src="{{ site.baseurl }}/js/search.js"></script>
 
-<form class="search-form" action="{{ site.baseurl }}/search.html" method="get">
-  <input id="search-input" class="search-input" type="text" name="search" placeholder="Search..."></input><input class="search-submit" type="submit" value="Search"></input>
+<form id="page-search-form" class="wy-form search-page-form" action="{{ site.baseurl }}/search.html" method="get">
+  <label class="sr-only" for="search-input">Search docs:</label>
+  <input id="search-input" class="st-default-search-input" type="text" name="search" placeholder="Search docs">
+  <input class="btn btn-neutral" type="submit" value="Search">
 </form>
 
 <script type="text/javascript">
@@ -40,7 +42,6 @@ title: "Search"
         html: items.join("")
       }).appendTo(".results-container");
     });
-  } else {
   }
 </script>
 
