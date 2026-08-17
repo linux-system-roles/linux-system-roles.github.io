@@ -21,6 +21,46 @@
   subitems:
   - title: "Roles"
     roles_menu: true
+    roles:
+    - ad_integration
+    - aide
+    - auditd
+    - bootloader
+    - certificate
+    - cockpit
+    - crypto_policies
+    - fapolicyd
+    - firewall
+    - gfs2
+    - ha_cluster
+    - hpc
+    - journald
+    - kdump
+    - kernel_settings
+    - keylime_server
+    - logging
+    - metrics
+    - mssql
+    - nbde_client
+    - nbde_server
+    - network
+    - pam_pwd
+    - podman
+    - postfix
+    - postgresql
+    - rhc
+    - selinux
+    - snapshot
+    - ssh
+    - sshd
+    - storage
+    - sudo
+    - systemd
+    - timesync
+    - tlog
+    - trustee_client
+    - trustee_server
+    - vpn
 
   - title: "Role README.md"
     path: "role-readme-md.html"

@@ -35,7 +35,13 @@
   <a class="{{ link_class }}" href="{{ url }}">{{ include.node.title }}</a>
 {% if include.node.roles_menu %}
   <ul>
-    {% assign sorted_roles = site.data.roles | sort %}
+    {% if include.node.roles %}
+      {% assign sorted_roles = include.node.roles | sort %}
+    {% elsif site.data.roles %}
+      {% assign sorted_roles = site.data.roles | sort %}
+    {% else %}
+      {% assign sorted_roles = "" | split: " " %}
+    {% endif %}
     {% assign child_level = include.level | plus: 1 %}
     {% assign child_class = "toctree-l" | append: child_level %}
     {% for role in sorted_roles %}
