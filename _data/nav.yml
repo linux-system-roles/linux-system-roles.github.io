@@ -19,6 +19,9 @@
   #autosubitems: true
 
   subitems:
+  - title: "Roles"
+    roles_menu: true
+
   - title: "Role README.md"
     path: "role-readme-md.html"
 
