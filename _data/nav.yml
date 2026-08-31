@@ -107,6 +107,9 @@
     path: "design_docs/"
 
     subitems:
+    - title: "Role Argument Specification used by System Roles"
+      path: "argument_specs/"
+
     - title: "Logging"
       path: "logging/"
 
