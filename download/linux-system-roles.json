@@ -78,6 +78,23 @@
       "setup": []
     },
     {
+      "name": "fedora-45",
+      "variant": "Generic",
+      "subvariant": "Cloud_Base",
+      "source": "https://download.fedoraproject.org/pub/fedora/linux/releases/45/Cloud/x86_64/images/Fedora-Cloud-Base-Generic-45-1.4.x86_64.qcow2",
+      "compose_unused_Anubis": "https://kojipkgs.fedoraproject.org/compose/45/latest-Fedora-45",
+      "container": "quay.io/fedora/fedora-toolbox:45",
+      "openstack_image": "Fedora-Cloud-Base-45",
+      "upload_results": true,
+      "min_ansible_version": "2.22"
+    },
+    {
+      "name": "fedora-45-bootc",
+      "container": "quay.io/fedora/fedora-bootc:45",
+      "upload_results": true,
+      "setup": []
+    },
+    {
       "name": "fedora-rawhide",
       "variant": "Generic",
       "subvariant": "Cloud_Base",
@@ -85,7 +102,7 @@
       "container": "quay.io/fedora/fedora-toolbox:rawhide",
       "openstack_image": "Fedora-Cloud-Base-Rawhide",
       "upload_results": true,
-      "min_ansible_version": "2.16"
+      "min_ansible_version": "2.22"
     },
     {
       "name": "fedora-rawhide-bootc",
