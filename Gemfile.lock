@@ -5,7 +5,7 @@ GEM
       Platform (>= 0.4.0)
       open4
     Platform (0.4.2)
-    addressable (2.9.0)
+    addressable (2.9.1)
       public_suffix (>= 2.0.2, < 8.0)
     base64 (0.3.0)
     bigdecimal (4.1.2)
