@@ -332,7 +332,7 @@ console with trusted certificates in one run.
   <tr>
     <td>sshd</td>
     <td>SSH server</td>
-    <td><a href="https://linux-system-roles.github.io/sshd">Docs</a></td>
+    <td><a href="https://github.com/willshersystems/ansible-sshd/blob/main/README.md">Docs</a></td>
     <td><a href="https://galaxy.ansible.com/ui/standalone/roles/willshersystems/sshd/">Galaxy</a></td>
     <td><a href="https://github.com/willshersystems/ansible-sshd">willshersystems/ansible-sshd</a></td>
   </tr>
@@ -394,6 +394,8 @@ console with trusted certificates in one run.
   </tr>
   </tbody>
 </table>
+
+**Note:** The sshd role is maintained in an external GitHub organization at [willshersystems/ansible-sshd](https://github.com/willshersystems/ansible-sshd). It follows the same Linux System Roles standards and best practices.
 
 ## Collection
 
